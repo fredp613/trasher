@@ -11,6 +11,8 @@
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
 		2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */; };
 		2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */; };
+		2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */; };
+		2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */; };
 		2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0550219F2E5190068B2E2 /* AppDelegate.swift */; };
 		2AC0550619F2E5190068B2E2 /* Trasher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0550419F2E5190068B2E2 /* Trasher.xcdatamodeld */; };
 		2AC0550D19F2E5190068B2E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC0550C19F2E5190068B2E2 /* Images.xcassets */; };
@@ -42,6 +44,8 @@
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		2AC054FD19F2E5190068B2E2 /* Trasher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trasher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AC0550119F2E5190068B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AC0550219F2E5190068B2E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */,
 				2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */,
 				2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */,
 				2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */,
@@ -115,6 +120,7 @@
 				2AC0550219F2E5190068B2E2 /* AppDelegate.swift */,
 				2AC0552719F2E57F0068B2E2 /* DetailViewController.swift */,
 				2AC0550C19F2E5190068B2E2 /* Images.xcassets */,
+				2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */,
 				2AC0550E19F2E5190068B2E2 /* LaunchScreen.xib */,
 				2AC0550419F2E5190068B2E2 /* Trasher.xcdatamodeld */,
 				2AC0550019F2E5190068B2E2 /* Supporting Files */,
@@ -160,6 +166,7 @@
 		2AFF5AE819F42C32002B8B57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */,
 				2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */,
 				2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */,
 				2A073E0919F5ADBE0067D132 /* CoreLocation.framework */,
@@ -273,6 +280,7 @@
 				2AC0553419F2F0A70068B2E2 /* Trash.swift in Sources */,
 				2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */,
 				2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */,
+				2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */,
 				2AC0552C19F2E6110068B2E2 /* MasterTableViewController.swift in Sources */,
 				2AC0553619F2F4A20068B2E2 /* User.swift in Sources */,
 				2AC0552E19F2E7610068B2E2 /* AddTrashViewController.swift in Sources */,

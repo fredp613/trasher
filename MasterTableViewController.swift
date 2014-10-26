@@ -11,6 +11,7 @@ import MobileCoreServices
 import CoreLocation
 import QuartzCore
 
+
 class MasterTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var textSearch: UISearchBar!
@@ -23,7 +24,9 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
      override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
+       
+        
         var trash = Trash()
         trash.desc = "Trash description trash descriptions Trash description trash descriptions Trash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptionsTrash description trash descriptions"
         trash.title = "Used TV"
@@ -82,10 +85,17 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        self.tableView.reloadData()
+//        self.view.hidden = true
+//        var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
+//        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("SignUpViewController") as UIViewController
+//        
+//        self.parentViewController?.presentViewController(vc, animated: false, completion: nil)
+        
+
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,7 +127,7 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 //        var trashItem  = trashArray.objectAtIndex(indexPath.row)
         var trashItem: Trash = self.trashArray.objectAtIndex(indexPath.row) as Trash
-        cell.textLabel?.text = trashItem.title
+        cell.textLabel.text = trashItem.title
         cell.detailTextLabel?.text = trashItem.fullAddress()
         
         if (trashItem.image != nil) {
