@@ -19,10 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch
         
         var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
-        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("SignUpViewController") as UIViewController
-        
-//        self.presentViewController(vc, animated: false, completion: nil)
+        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("ProfileViewController") as UIViewController
+
         self.window?.rootViewController = vc
+        
+        var currentUser = User()
         
         return true
     }

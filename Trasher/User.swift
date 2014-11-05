@@ -14,12 +14,14 @@ class User {
     var username: String
     var email: String
     var authType: Int
+    var distance: Int
     
     init() {
         userId = 1
         username = "fredp613"
         email = "fredp613@gmail.com"
         authType = 1
+        distance = 50
     }
         
 }

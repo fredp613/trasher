@@ -12,10 +12,12 @@ import CoreLocation
 import QuartzCore
 
 
-class MasterTableViewController: UITableViewController, CLLocationManagerDelegate {
+class MasterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate, UITabBarDelegate {
     
     @IBOutlet weak var textSearch: UISearchBar!
     
+ 
+    @IBOutlet weak var tableView: UITableView!
     var locationManager = CLLocationManager()
 
 
@@ -23,7 +25,6 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
     
      override func viewDidLoad() {
         super.viewDidLoad()
-        
         
        
         
@@ -105,25 +106,27 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return self.trashArray.count
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80.00
     }
     
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 //        var trashItem  = trashArray.objectAtIndex(indexPath.row)
         var trashItem: Trash = self.trashArray.objectAtIndex(indexPath.row) as Trash
@@ -256,6 +259,9 @@ class MasterTableViewController: UITableViewController, CLLocationManagerDelegat
 //        locationManager.startUpdatingLocation()
 //    }
 
+    
+     //MARK: -tab functionality
+   
     
 
 }

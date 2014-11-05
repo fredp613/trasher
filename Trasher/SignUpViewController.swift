@@ -158,6 +158,12 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func verifyCode(sender: AnyObject) {
+//        self.performSegueWithIdentifier("showMaster", sender: self)
+//        var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
+//        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("Master") as UIViewController
+//        
+//        self.presentViewController(vc, animated: true, completion: nil)
+        self.performSegueWithIdentifier("showMaster", sender: self)
     }
     
 
