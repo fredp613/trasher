@@ -18,13 +18,13 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var buttonVerify: UIButton!
     @IBOutlet weak var activityIndicatorViewVerrify: UIActivityIndicatorView!
     
-    @IBOutlet weak var barButtons: UINavigationItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textVerification.hidden = true
         self.buttonVerify.hidden = true
-
+        
 //        self.navigationItem.setHidesBackButton(true, animated: false)
 //
 //        self.navigationController?.navigationBar.topItem?.title = " "
@@ -135,15 +135,17 @@ class SignUpViewController: UIViewController {
             sleep(1)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.buttonVerification.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
                 self.buttonVerification.setTitle("Verification Code Sent", forState: UIControlState.Normal)
-                self.buttonVerification.backgroundColor = UIColor.whiteColor()
+                self.buttonVerification.backgroundColor = UIColor.greenColor()
+                self.buttonVerification.enabled = false
                 self.buttonVerification.hidden = false
                 self.buttonVerify.hidden = false
                 self.textVerification.hidden = false
                 
                 self.activityIndicatorView.stopAnimating()
+                self.activityIndicatorView.hidden = true
             })
+
         })
         
        

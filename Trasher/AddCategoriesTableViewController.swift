@@ -1,67 +1,58 @@
 //
-//  AddCategoryTableViewController.swift
+//  AddCategoriesTableViewController.swift
 //  Trasher
 //
-//  Created by Fred Pearson on 2014-10-28.
+//  Created by Fred Pearson on 2014-11-08.
 //  Copyright (c) 2014 Frederick Pearson. All rights reserved.
 //
 
 import UIKit
 
-class AddCategoryTableViewController: UIViewController, UITableViewDelegate {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    var initialCategories = Category().initials1
+protocol tableViewProtocol {
+    func tableViewDelegate(tableData: [Int:String])
+}
 
+class AddCategoriesTableViewController: UITableViewController {
+
+    var delegate: tableViewProtocol?
+    var currentData: [Int:String]! = [Int: String]()
+    var category: Category! = Category()
+    var pvc: ProfileViewController! = ProfileViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        var headerView  = CGRectMake(40.0, 40.0, 40.0, 40.0)
-//        self.tableView.tableHeaderView = headerView
-
+//                currentData = category.initialCategories
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func doneWasClicked(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
     // MARK: - Table view data source
-    
-//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
-//        return ""
-//    }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        
-        return Category().defaults.count
+        return InitializeTestData().defaulCategories.count
     }
-
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-
-        var categoryItem = Category().defaults[indexPath.row + 1]
+        
+        var categoryItem : String! = InitializeTestData().defaulCategories[indexPath.row + 1]
+        
         
         var catId = indexPath.row + 1
         
@@ -70,48 +61,61 @@ class AddCategoryTableViewController: UIViewController, UITableViewDelegate {
         
         if !self.existingCategory(categoryItem!) {
             cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
-            initialCategories.updateValue(categoryItem!, forKey: catId)
-            println("\(initialCategories)")
-
+            currentData.updateValue(categoryItem!, forKey: catId)
+            println("Current data categories are: \(currentData)")
         } else {
             cell?.accessoryType = UITableViewCellAccessoryType.None
-            initialCategories.removeValueForKey(catId)
-            println("\(initialCategories)")
-
+            
+            if currentData.count != 0 {
+                currentData.removeValueForKey(catId)
+                
+            } else {
+                println("some error msg")
+            }
+            
+            println("Current data categories are: \(currentData)")
         }
-
+        
+       
+        
+        
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
-        var categoryItem = Category().defaults[indexPath.row + 1]
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        
+        var categoryItem = InitializeTestData().defaulCategories[indexPath.row + 1]
         cell.textLabel.text = categoryItem
         
-     
+        
         
         if self.existingCategory(categoryItem!) {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.None
         }
         
-
+        
+        
+        
         return cell
     }
     
 
     
     // Override to support conditional editing of the table view.
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the specified item to be editable.
         return true
     }
-
+    
 
     
     // Override to support editing the table view.
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
@@ -146,26 +150,26 @@ class AddCategoryTableViewController: UIViewController, UITableViewDelegate {
     }
     */
     
-    //MARK: - Custom Methods
+    // MARK: - Custom Actions
     
- 
     
+    // MARK: - Custom Methods
     func existingCategory(var category : String) -> Bool {
         
-//        for var i = 0; i < Category.initialCategories().count; i++ {
-//            if var cat = Category.initialCategories()[i].category {
-//                if category == cat  {
-//                    return true
-//                }
-//            }
-//        }
-        for (key, value) in initialCategories {
+     
+        for (key, value) in currentData {
+            
             
             if category == value {
                 return true
             }
         }
         return false
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        delegate?.tableViewDelegate(currentData)
+        
     }
 
 }

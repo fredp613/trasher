@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailAddress: UILabel!
     @IBOutlet weak var detailTitle: UILabel!
     @IBOutlet weak var detailImageButton: UIButton!
-    @IBOutlet weak var detailDesc: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
     var currentTrash = Trash()
@@ -33,9 +32,10 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = false
         self.detailAddress.text = currentTrash.fullAddress()
         self.detailTitle.text = currentTrash.title
-        self.detailDesc.text = currentTrash.desc
+
         if currentTrash.image == nil {
             self.detailImageButton.setTitle("No Image Provided", forState: nil)
             self.detailImageButton.enabled = false

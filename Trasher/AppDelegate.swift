@@ -18,12 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch
         
-        var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
-        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("ProfileViewController") as UIViewController
-
-        self.window?.rootViewController = vc
+//        var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
+//        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("SignUpViewController") as UIViewController
+//
+//        self.window?.rootViewController = vc
         
-        var currentUser = User()
+        InitializeTestData()
+//        let test = NSEntityDescription.insertNewObjectForEntityForName("Address", inManagedObjectContext: self.managedObjectContext!) as Address
+//        test.addressLine1 = "hi how are you"
+//        test.city = "ottawa"
+//        println("\(test)")
         
         return true
     }

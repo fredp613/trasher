@@ -11,24 +11,26 @@ import MobileCoreServices
 import CoreLocation
 import SystemConfiguration
 
-class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate {
+protocol TrashTableViewProtocol {
+    func trashTableViewDelegate(tableData: NSMutableArray)
+}
+
+class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol {
+
     
     @IBOutlet weak var actvityIndicatorView: UIActivityIndicatorView!
     var pickedImage = UIImage()
-    var trashArray = NSMutableArray()
+    var trashArray : NSMutableArray!
     var currentLocation = NSString()
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var trash = Trash()
+    var delegate: TrashTableViewProtocol?
     
-    @IBAction func cancelButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-   
     @IBOutlet weak var currentLocationLabel: UILabel!
     
-    @IBOutlet weak var trashDesc: UITextView!
 
+    
     @IBOutlet weak var imageButton: UIButton!
     
     @IBAction func changeLocationButton(sender: AnyObject) {
@@ -41,16 +43,11 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//        dispatch_async(dispatch_get_global_queue(priority, 0), { () -> Void in
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-////                self.getCurrentLocation()
-//            })
-//        })
-//        println("hello from UI thread")
+        
          self.actvityIndicatorView.startAnimating()
          self.getCurrentLocation()
-        
+         self.actvityIndicatorView.stopAnimating()
+
 
         
     }
@@ -128,32 +125,18 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
         }
     }
     
-    /*
+  
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    @IBAction func addTrash(sender: AnyObject) {
-        
-        
-        
-        var mvc : MasterTableViewController = MasterTableViewController()
 
-        if (self.trashDesc.text != "") {
-            self.trash.desc = self.trashDesc.text
-        }
-        
+    @IBAction func saveTrash(sender: AnyObject) {
+                
         self.trash.image = self.imageButton.imageView?.image
-        
         trashArray.addObject(self.trash)
-        NSLog(String(trashArray.count))
-        self.dismissViewControllerAnimated(true, completion: nil)
-        mvc.tableView.reloadData()
-        
+        MainTabBarViewController().trashArray = trashArray
+//        trashTableViewDelegate(trashArray)
+        self.navigationController?.popViewControllerAnimated(true)
+
     }
 
     //MARK: - CLLocationManagerDelegate
@@ -185,7 +168,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
                     self.actvityIndicatorView.stopAnimating()
                 } else {
                     
-
+                    
                     self.currentLocationLabel.text = "Cannot get your current location, please click on add location to find an address for pickup"
                     self.actvityIndicatorView.stopAnimating()
                 }
@@ -213,6 +196,9 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
         locationManager.startUpdatingLocation()
     }
     
+    func trashTableViewDelegate(tableData: NSMutableArray) {
+        delegate?.trashTableViewDelegate(trashArray)
+    }
    
     
    
