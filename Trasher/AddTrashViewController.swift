@@ -11,45 +11,65 @@ import MobileCoreServices
 import CoreLocation
 import SystemConfiguration
 
+
 protocol TrashTableViewProtocol {
-    func trashTableViewDelegate(tableData: NSMutableArray)
+    func trashTableViewDelegate(tableData: Array<Trash>)
 }
 
-class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol {
+class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol {
 
+    @IBOutlet weak var textTitle: UITextView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var btnSave: UIButton!
+
+  
+   
+    @IBOutlet weak var changeLocationButton: UIButton!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var actvityIndicatorView: UIActivityIndicatorView!
     var pickedImage = UIImage()
-    var trashArray : NSMutableArray!
+    var trashArray  = [Trash]()
     var currentLocation = NSString()
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var trash = Trash()
-    var delegate: TrashTableViewProtocol?
+
+
+    var delegate:TrashTableViewProtocol? = nil
     
     @IBOutlet weak var currentLocationLabel: UILabel!
-    
 
     
     @IBOutlet weak var imageButton: UIButton!
     
     @IBAction func changeLocationButton(sender: AnyObject) {
 
-
     }
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //dont forget to remove the sleep
+        
+      
         
         
-         self.actvityIndicatorView.startAnimating()
-         self.getCurrentLocation()
-         self.actvityIndicatorView.stopAnimating()
+        
+        self.textTitle.becomeFirstResponder()
+        self.actvityIndicatorView.startAnimating()
+        self.getCurrentLocation()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+//        self.registerForKeyboardNotifications()
 
-
-        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+//        self.deregisterForKeyboardNotifications()
+        super.viewWillDisappear(true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,7 +86,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
 //                self.imageButton.layer.cornerRadius = CGRectGetWidth(self.imageButton.frame) / 2.0f;
             
             self.imageButton.setImage(img, forState: UIControlState.Normal)
-            
+            self.trash.image = UIImageJPEGRepresentation(img, 0.75)
             
 
         } else {
@@ -130,11 +150,18 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
 
 
     @IBAction func saveTrash(sender: AnyObject) {
-                
-        self.trash.image = self.imageButton.imageView?.image
-        trashArray.addObject(self.trash)
-        MainTabBarViewController().trashArray = trashArray
-//        trashTableViewDelegate(trashArray)
+        
+        if !self.textTitle.text.isEmpty {
+            self.trash.title = self.textTitle.text
+        }
+
+        trashArray.append(self.trash)
+        println("\(trashArray.count)")
+        
+        if (delegate != nil) {
+            trashTableViewDelegate(trashArray)
+        }
+        
         self.navigationController?.popViewControllerAnimated(true)
 
     }
@@ -143,6 +170,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         var alertView = UIAlertView(title: "Location error", message: "You are not connected to either wifi or your mobile network", delegate: self, cancelButtonTitle: "OK")
+        self.actvityIndicatorView.stopAnimating()
         alertView.show()
     }
     
@@ -151,10 +179,10 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
         
         if (currentLocation != nil) {
 
-            println("nigga you live here: \(currentLocation)")
+            println("You live here: \(currentLocation)")
             var geoCoder = CLGeocoder()
             geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
-               
+               sleep(1)
                 if (error == nil) {
                     let pm: AnyObject = placemarks.last!
                     println(pm.locality)
@@ -165,11 +193,19 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
                     self.trash.addressLine1 = pm.name
                     self.trash.city = pm.locality
                     self.trash.postalCode = pm.postalCode
+                    
+                    if self.changeLocationButton.titleLabel?.text == "Add location" {
+                        self.changeLocationButton.setTitle("Change", forState: UIControlState.Normal)
+                    }
+                    
                     self.actvityIndicatorView.stopAnimating()
+                    
+                    
                 } else {
                     
                     
                     self.currentLocationLabel.text = "Cannot get your current location, please click on add location to find an address for pickup"
+                    self.changeLocationButton.setTitle("Add location", forState: UIControlState.Normal)
                     self.actvityIndicatorView.stopAnimating()
                 }
             })
@@ -180,7 +216,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
             
             
         } else {
-            println("nigga we didnt made it")
+            println("Something went wrong")
         }
 
     }
@@ -188,7 +224,6 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
     
     func getCurrentLocation() {
         var av = UIAlertView(title: "est", message: nil, delegate: self, cancelButtonTitle: "ok")
-
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.requestAlwaysAuthorization()
@@ -196,9 +231,74 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UINavigat
         locationManager.startUpdatingLocation()
     }
     
-    func trashTableViewDelegate(tableData: NSMutableArray) {
+    func trashTableViewDelegate(tableData: Array<Trash>) {
         delegate?.trashTableViewDelegate(trashArray)
     }
+    
+    //MARK: keyboard
+    
+    func registerForKeyboardNotifications() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    }
+        
+    
+    
+    func deregisterForKeyboardNotifications() {
+       NSNotificationCenter.defaultCenter().removeObserver(self);
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        var info = notification.userInfo!
+        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
+
+        let delay:NSTimeInterval = 0.0
+        let duration:NSTimeInterval = 1.0
+        let keybSize = keyboardFrame.size.height + 25 as CGFloat
+        
+        UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.TransitionCurlUp, animations: { () -> Void in
+            self.bottomConstraint.constant = keyboardFrame.size.height + 25
+            }, completion: { finished in println("animation done")})
+    }
+    
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        self.textTest.resignFirstResponder()
+//        self.view.endEditing(true)
+//        return true
+//    }
+    
+
+    
+//    func keyboardWillShow1(notification: NSNotification) {
+//        var info = notification.userInfo!
+//        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
+//        var btnOrigin = self.btnSave.frame.origin
+//        var btnHeight = self.btnSave.frame.height
+//        var visibleRect = self.scrollView.frame
+//        
+//        visibleRect.size.height -= keyboardFrame.height
+//        if (!CGRectContainsPoint(visibleRect, btnOrigin)) {
+//            var scrollPoint = CGPointMake(0.0, btnOrigin.y - visibleRect.size.height + btnHeight)
+//            self.scrollView.setContentOffset(scrollPoint, animated: true)
+//        }
+//    }
+//    
+    
+    
+    func keyboardWillHide(notification: NSNotification) {
+        var info = notification.userInfo!
+        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.bottomConstraint.constant -= keyboardFrame.size.height + 105
+        })
+
+    }
+    
+
+
    
     
    

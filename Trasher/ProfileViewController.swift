@@ -11,7 +11,7 @@ import UIKit
 
 
 class ProfileViewController: UIViewController, UITableViewDataSource,
-UITableViewDelegate, UIAlertViewDelegate, tableViewProtocol {
+UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol {
     @IBOutlet weak var notificationsSwitch: UISwitch!
     
     @IBOutlet weak var addCategory: UIButton!
@@ -28,6 +28,8 @@ UITableViewDelegate, UIAlertViewDelegate, tableViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.kmText.delegate = self
 
         self.categoriesTableView.delegate = self
         self.categoriesTableView.dataSource = self
@@ -62,19 +64,22 @@ UITableViewDelegate, UIAlertViewDelegate, tableViewProtocol {
         // Dispose of any resources that can be recreated.
     }
     
+    
    
  
-    @IBAction func textChanged(sender: AnyObject) {
-        var textDistance : NSString = self.kmText.text as NSString
-        
-        if (textDistance.intValue > 500) {
+    @IBAction func kmTextChanged(sender: AnyObject) {
+        if (self.kmText.text.toInt() > 500) {
             var alertView = UIAlertView(title: "Range to far", message: "The maximum distance is 500KM", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
+            println("testing 123")
+            self.distanceSlider.value = 500.00
             
         } else {
-            self.distanceSlider.value = (textDistance).floatValue
+            self.distanceSlider.value = (self.kmText.text as NSString).floatValue
+            println("testing 123 works")
         }
     }
+    
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
             self.kmText.text = "500"

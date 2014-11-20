@@ -9,21 +9,26 @@
 /* Begin PBXBuildFile section */
 		2A073E0819F5AD530067D132 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0719F5AD530067D132 /* MobileCoreServices.framework */; };
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
+		2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0A68F71A1419870070720B /* CoreDataStack.swift */; };
 		2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */; };
 		2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */; };
 		2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */; };
 		2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */; };
-		2A63165E1A116B35000EF5B7 /* Trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63165D1A116B35000EF5B7 /* Trash.swift */; };
-		2A6316601A116B36000EF5B7 /* UserCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63165F1A116B36000EF5B7 /* UserCategories.swift */; };
-		2A6316621A116B37000EF5B7 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6316611A116B37000EF5B7 /* Address.swift */; };
-		2A6316641A116B37000EF5B7 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6316631A116B37000EF5B7 /* Category.swift */; };
-		2A6316661A116B37000EF5B7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6316651A116B37000EF5B7 /* User.swift */; };
+		2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A68E3131A193660005A7529 /* TextViewHelper.swift */; };
 		2A6B31C219FED2D1002DB4BB /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C119FED2D1002DB4BB /* FilterViewController.swift */; };
 		2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */; };
 		2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C519FED327002DB4BB /* ProfileViewController.swift */; };
+		2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */; };
+		2A77FF881A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F11A142AFC00F76CEB /* Trash.swift */; };
+		2A8224F41A142B0D00F76CEB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F31A142B0D00F76CEB /* User.swift */; };
+		2A8224F61A142B1C00F76CEB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F51A142B1C00F76CEB /* Category.swift */; };
+		2A8224F81A142B3600F76CEB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F71A142B3600F76CEB /* Address.swift */; };
 		2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */; };
 		2A8A91C31A1151E70004D3E5 /* initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8A91C21A1151E70004D3E5 /* initializer.swift */; };
+		2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */; };
 		2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */; };
+		2AB5C5B71A1437E000615903 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AB5C5B61A1437E000615903 /* MainStoryboard.storyboard */; };
 		2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0550219F2E5190068B2E2 /* AppDelegate.swift */; };
 		2AC0550619F2E5190068B2E2 /* Trasher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0550419F2E5190068B2E2 /* Trasher.xcdatamodeld */; };
 		2AC0550D19F2E5190068B2E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC0550C19F2E5190068B2E2 /* Images.xcassets */; };
@@ -33,7 +38,6 @@
 		2AC0552C19F2E6110068B2E2 /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0552B19F2E6110068B2E2 /* MasterTableViewController.swift */; };
 		2AC0552E19F2E7610068B2E2 /* AddTrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0552D19F2E7610068B2E2 /* AddTrashViewController.swift */; };
 		2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */; };
-		2AC0553219F2E8090068B2E2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AC0553119F2E8090068B2E2 /* MainStoryboard.storyboard */; };
 		2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */; };
 		2AFF5AE719F42BCF002B8B57 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AFF5AE619F42BCF002B8B57 /* MapKit.framework */; };
 /* End PBXBuildFile section */
@@ -51,21 +55,29 @@
 /* Begin PBXFileReference section */
 		2A073E0719F5AD530067D132 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2A0A68F71A1419870070720B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../.Trash/CoreDataStack.swift; sourceTree = "<group>"; };
 		2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2A63165D1A116B35000EF5B7 /* Trash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trash.swift; path = ../Trash.swift; sourceTree = "<group>"; };
-		2A63165F1A116B36000EF5B7 /* UserCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCategories.swift; path = ../UserCategories.swift; sourceTree = "<group>"; };
-		2A6316611A116B37000EF5B7 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Address.swift; path = ../Address.swift; sourceTree = "<group>"; };
-		2A6316631A116B37000EF5B7 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = ../Category.swift; sourceTree = "<group>"; };
-		2A6316651A116B37000EF5B7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
+		2A68E3131A193660005A7529 /* TextViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewHelper.swift; sourceTree = "<group>"; };
 		2A6B31C119FED2D1002DB4BB /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopUsersViewController.swift; sourceTree = "<group>"; };
 		2A6B31C519FED327002DB4BB /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2A77FF7F1A16DE7700127F10 /* Trasher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trasher-Bridging-Header.h"; sourceTree = "<group>"; };
+		2A77FF801A16DE7800127F10 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		2A77FF861A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		2A8224F11A142AFC00F76CEB /* Trash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trash.swift; sourceTree = "<group>"; };
+		2A8224F31A142B0D00F76CEB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2A8224F51A142B1C00F76CEB /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		2A8224F71A142B3600F76CEB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2A8A91C21A1151E70004D3E5 /* initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = initializer.swift; sourceTree = "<group>"; };
+		2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FPTextView.swift; path = ../FPTextView.swift; sourceTree = "<group>"; };
 		2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		2AB5C5B61A1437E000615903 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		2AC054FD19F2E5190068B2E2 /* Trasher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trasher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AC0550119F2E5190068B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AC0550219F2E5190068B2E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +91,6 @@
 		2AC0552B19F2E6110068B2E2 /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		2AC0552D19F2E7610068B2E2 /* AddTrashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrashViewController.swift; sourceTree = "<group>"; };
 		2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		2AC0553119F2E8090068B2E2 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		2AFF5AE619F42BCF002B8B57 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -108,6 +119,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A68E3151A19366C005A7529 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2A68E3131A193660005A7529 /* TextViewHelper.swift */,
+			);
+			name = helpers;
+			sourceTree = "<group>";
+		};
+		2A77FF7E1A16DDAF00127F10 /* external_libs */ = {
+			isa = PBXGroup;
+			children = (
+				2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */,
+				2A77FF861A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+				2A77FF801A16DE7800127F10 /* TPKeyboardAvoidingScrollView.h */,
+				2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */,
+				2A77FF7F1A16DE7700127F10 /* Trasher-Bridging-Header.h */,
+			);
+			name = external_libs;
+			sourceTree = "<group>";
+		};
 		2A8A91C11A1151CB0004D3E5 /* initializers */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,11 +170,13 @@
 		2AC054FF19F2E5190068B2E2 /* Trasher */ = {
 			isa = PBXGroup;
 			children = (
+				2A68E3151A19366C005A7529 /* helpers */,
+				2A77FF7E1A16DDAF00127F10 /* external_libs */,
 				2A8A91C11A1151CB0004D3E5 /* initializers */,
 				2AC0553919F2F5F50068B2E2 /* models */,
 				2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */,
+				2A0A68F71A1419870070720B /* CoreDataStack.swift */,
 				2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */,
-				2AC0553119F2E8090068B2E2 /* MainStoryboard.storyboard */,
 				2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */,
 				2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */,
 				2A6B31C119FED2D1002DB4BB /* FilterViewController.swift */,
@@ -156,6 +190,7 @@
 				2AC0550C19F2E5190068B2E2 /* Images.xcassets */,
 				2AC0550E19F2E5190068B2E2 /* LaunchScreen.xib */,
 				2AC0550419F2E5190068B2E2 /* Trasher.xcdatamodeld */,
+				2AB5C5B61A1437E000615903 /* MainStoryboard.storyboard */,
 				2AC0550019F2E5190068B2E2 /* Supporting Files */,
 			);
 			path = Trasher;
@@ -189,11 +224,10 @@
 		2AC0553919F2F5F50068B2E2 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				2A6316651A116B37000EF5B7 /* User.swift */,
-				2A6316631A116B37000EF5B7 /* Category.swift */,
-				2A6316611A116B37000EF5B7 /* Address.swift */,
-				2A63165F1A116B36000EF5B7 /* UserCategories.swift */,
-				2A63165D1A116B35000EF5B7 /* Trash.swift */,
+				2A8224F11A142AFC00F76CEB /* Trash.swift */,
+				2A8224F31A142B0D00F76CEB /* User.swift */,
+				2A8224F51A142B1C00F76CEB /* Category.swift */,
+				2A8224F71A142B3600F76CEB /* Address.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -291,9 +325,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AC0553219F2E8090068B2E2 /* MainStoryboard.storyboard in Resources */,
 				2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */,
 				2AC0551019F2E5190068B2E2 /* LaunchScreen.xib in Resources */,
+				2AB5C5B71A1437E000615903 /* MainStoryboard.storyboard in Resources */,
 				2AC0550D19F2E5190068B2E2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,23 +346,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A63165E1A116B35000EF5B7 /* Trash.swift in Sources */,
+				2A8224F81A142B3600F76CEB /* Address.swift in Sources */,
 				2A8A91C31A1151E70004D3E5 /* initializer.swift in Sources */,
 				2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */,
+				2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */,
 				2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */,
+				2A8224F41A142B0D00F76CEB /* User.swift in Sources */,
 				2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */,
 				2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */,
+				2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */,
+				2A77FF881A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				2A6B31C219FED2D1002DB4BB /* FilterViewController.swift in Sources */,
-				2AC0552C19F2E6110068B2E2 /* MasterTableViewController.swift in Sources */,
-				2AC0552E19F2E7610068B2E2 /* AddTrashViewController.swift in Sources */,
-				2A6316601A116B36000EF5B7 /* UserCategories.swift in Sources */,
 				2AC0550619F2E5190068B2E2 /* Trasher.xcdatamodeld in Sources */,
-				2A6316641A116B37000EF5B7 /* Category.swift in Sources */,
+				2AC0552C19F2E6110068B2E2 /* MasterTableViewController.swift in Sources */,
+				2A8224F61A142B1C00F76CEB /* Category.swift in Sources */,
+				2AC0552E19F2E7610068B2E2 /* AddTrashViewController.swift in Sources */,
 				2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */,
+				2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */,
-				2A6316661A116B37000EF5B7 /* User.swift in Sources */,
+				2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */,
+				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
 				2AC0552819F2E57F0068B2E2 /* DetailViewController.swift in Sources */,
-				2A6316621A116B37000EF5B7 /* Address.swift in Sources */,
 				2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +486,7 @@
 				INFOPLIST_FILE = Trasher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Trasher/Trasher-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -460,6 +499,7 @@
 				INFOPLIST_FILE = Trasher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Trasher/Trasher-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -13,33 +13,46 @@ import QuartzCore
 
 
 class MasterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,
-CLLocationManagerDelegate, UITabBarControllerDelegate, UITabBarDelegate, TrashTableViewProtocol  {
+CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITabBarDelegate, TrashTableViewProtocol  {
     
-    @IBOutlet weak var textSearch: UISearchBar!
+
     
- 
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet weak var searchBar: UISearchBar!
     var locationManager = CLLocationManager()
 
-   
 
-    var trashArray: NSMutableArray = NSMutableArray()
+    var trashArray : [Trash] = Array<Trash>()
+    var filteredTrash = [Trash]()
+    
+    var searchState : Bool = false
+    
+    // Search controller to help us with filtering.
+//    var searchController: UISearchController!
+    
+    // Secondary search results table view.
 
     
     
     
      override func viewDidLoad() {
         super.viewDidLoad()
-    
-        
-        self.trashArray = InitializeTestData().trashArray
-        self.tableView.reloadData()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.tableView.delegate = self
+        self.searchBar.delegate = self
+        self.trashArray =  InitializeTestData().trashArray
+        
+//        var del = AddTrashViewController()
+//        del.delegate = self
+        
+        
+        self.tableView.reloadData()
+        navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
+
+//        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+
     }
  
     
@@ -71,9 +84,10 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UITabBarDelegate, TrashTa
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return self.trashArray.count
+
+            return self.trashArray.count
+
+        
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -81,31 +95,49 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UITabBarDelegate, TrashTa
     }
     
 
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filterTextForSearch(searchText)
+        self.tableView.reloadData()
+    }
+    
+    
+    
+    func filterTextForSearch(keyword: String!) -> Array<Trash> {
+        searchState = true
+        self.trashArray = InitializeTestData().trashArray
+        self.trashArray =  self.trashArray.filter({(trash:Trash) -> Bool in
+            let descriptionMatch = trash.title.rangeOfString(keyword, options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil, locale: nil)
+            return descriptionMatch != nil
+        })
+        
+        if keyword.isEmpty {
+            searchState = false
+            self.trashArray = InitializeTestData().trashArray
+        }
+        
+        return self.trashArray
+        
+    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-//        var trashItem  = trashArray.objectAtIndex(indexPath.row)
-        var trashItem: Trash = self.trashArray.objectAtIndex(indexPath.row) as Trash
-        cell.textLabel.text = trashItem.title
-        cell.detailTextLabel?.text = trashItem.fullAddress() 
-        
-        if (trashItem.image != nil) {
-            var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
-            imageView.layer.cornerRadius = 32.5
-            imageView.clipsToBounds = true
-            cell.addSubview(imageView)
-            cell.indentationLevel = 75
-            //set image
-            imageView.image = trashItem.image as UIImage
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
+        var trash : Trash
+        trash = trashArray[indexPath.row]
+        
+        cell.textLabel.text = trash.title
+        cell.detailTextLabel?.text = trash.fullAddress()
+        
+        var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
+        imageView.layer.cornerRadius = 30
+        imageView.clipsToBounds = true
+        cell.addSubview(imageView)
+        cell.indentationLevel = 70
+        
+        if (UIImage(data: trash.image) != nil) {
+            imageView.image = UIImage(data: trash.image)
         } else {
-            
-            var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
-            imageView.layer.cornerRadius = 32.5
-            imageView.clipsToBounds = true
-            cell.addSubview(imageView)
-            cell.indentationLevel = 75
-            //set image
             imageView.image = UIImage(named: "trash-can-icon")
 
         }
@@ -157,31 +189,18 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UITabBarDelegate, TrashTa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         // Get the new view controller using [segue destinationViewController].
         if (segue.identifier == "showDetailsSegue") {
-            var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
-            var path : NSIndexPath = self.tableView.indexPathForSelectedRow()!
-            var trash = trashArray[path.row] as Trash
-            detailSegue.currentTrash = trash
+          var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
+          var trash : Trash
+          let path  = self.tableView.indexPathForSelectedRow()!
+          trash = trashArray[path.row] as Trash
+          detailSegue.currentTrash = trash
         }
-//        
-//        if (segue.identifier == "addTrashSegue") {
-//            var addTrashController = segue.destinationViewController as? AddTrashViewController
-//            addTrashController?.delegate = self;
-//            addTrashController?.trashArray = trashArray
-//            println("hi")
-//        }
-        
-     
-        
-        
-    
     }
     
 
-
-    
      //MARK: -tab functionality
    
-    func trashTableViewDelegate(tableData: NSMutableArray) {
+    func trashTableViewDelegate(tableData: Array<Trash>) {
         self.trashArray = tableData
         println("hi this delegate is all good")
         self.tableView.reloadData()

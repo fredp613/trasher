@@ -19,6 +19,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailImageButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     
+    
+    
     var currentTrash = Trash()
     
     @IBAction func viewAddditionalDetailsButton(sender: AnyObject) {
@@ -35,20 +37,20 @@ class DetailViewController: UIViewController {
         self.navigationItem.hidesBackButton = false
         self.detailAddress.text = currentTrash.fullAddress()
         self.detailTitle.text = currentTrash.title
-
-        if currentTrash.image == nil {
+//
+        if UIImage(data: currentTrash.image) == nil {
             self.detailImageButton.setTitle("No Image Provided", forState: nil)
             self.detailImageButton.enabled = false
 
         } else {
-            self.detailImageButton.setImage(currentTrash.image as UIImage, forState: nil)
+            self.detailImageButton.setImage(UIImage(data: currentTrash.image), forState: nil)
             self.detailImageButton.enabled = true
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        let poiCoordinates = CLLocationCoordinate2D(latitude: currentTrash.latitude, longitude: currentTrash.longitude) as CLLocationCoordinate2D;
+        let poiCoordinates = CLLocationCoordinate2D(latitude: Double(currentTrash.latitude), longitude: Double(currentTrash.longitude)) as CLLocationCoordinate2D;
         
         var viewRegion = MKCoordinateRegionMakeWithDistance(poiCoordinates, 750, 750)
         self.mapView.setRegion(viewRegion, animated: true)

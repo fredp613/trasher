@@ -8,33 +8,21 @@
 
 import UIKit
 import LocalAuthentication
+import CoreData
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var textEmail: UITextField!
     @IBOutlet weak var buttonVerification: UIButton!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var textVerification: UITextField!
     @IBOutlet weak var buttonVerify: UIButton!
-    @IBOutlet weak var activityIndicatorViewVerrify: UIActivityIndicatorView!
     
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textVerification.hidden = true
         self.buttonVerify.hidden = true
-        
-//        self.navigationItem.setHidesBackButton(true, animated: false)
-//
-//        self.navigationController?.navigationBar.topItem?.title = " "
-
-        
-
-        
-
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,11 +105,6 @@ class SignUpViewController: UIViewController {
     }
     
     
-    
-
-    
-    
-    
 //    func canEvaluatePolicy(_ policy: LAPolicy,
 //        error error: NSErrorPointer) -> Bool
     
@@ -135,43 +118,54 @@ class SignUpViewController: UIViewController {
             sleep(1)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.buttonVerification.setTitle("Verification Code Sent", forState: UIControlState.Normal)
-                self.buttonVerification.backgroundColor = UIColor.greenColor()
-                self.buttonVerification.enabled = false
                 self.buttonVerification.hidden = false
+                self.buttonVerification.titleLabel?.text = "Verification code sent"
+                self.buttonVerification.backgroundColor = UIColor.blackColor()
+//                self.buttonVerification.enabled = false
+//                self.buttonVerification.setTitle("Verification Code Sent", forState: UIControlState.Normal)
+                self.activityIndicatorView.stopAnimating()
                 self.buttonVerify.hidden = false
                 self.textVerification.hidden = false
-                
-                self.activityIndicatorView.stopAnimating()
-                self.activityIndicatorView.hidden = true
+
             })
 
         })
         
+    
+    }
+        
+    @IBAction func verifyCode(sender: AnyObject) {
+//        NSEntityDescription.insertNewObjectForEntityForName("LogItem", inManagedObjectContext: self.managedObjectContext!) as LogItem
+        
+        if self.textVerification == "dpg613" {
+
+           self.performSegueWithIdentifier("showMaster", sender: self)
+            
+        } else {
+            var alertView = UIAlertView(title: "Code is invalid", message: "Please ensure you typed in the correct code, otherwise try again", delegate: self, cancelButtonTitle: "OK")
+            alertView.show()
+        
+        }
+        
        
-
-        
-
-
-        
-        
-
-        
     }
     
-    @IBAction func verifyCode(sender: AnyObject) {
-//        self.performSegueWithIdentifier("showMaster", sender: self)
-//        var sb = UIStoryboard(name: "MainStoryboard", bundle: nil)
-//        var vc : UIViewController = sb.instantiateViewControllerWithIdentifier("Master") as UIViewController
-//        
-//        self.presentViewController(vc, animated: true, completion: nil)
-        self.performSegueWithIdentifier("showMaster", sender: self)
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        self.textEmail.resignFirstResponder()
+//        self.view.endEditing(true)
+//        return true
+//    }
+
+    
+
+    
+
     
 
     
     /*
-    // MARK: - Navigation
+    // MARK: - Nav
+    navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
