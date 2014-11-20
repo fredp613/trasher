@@ -28,13 +28,6 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     var searchState : Bool = false
     
-    // Search controller to help us with filtering.
-//    var searchController: UISearchController!
-    
-    // Secondary search results table view.
-
-    
-    
     
      override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,25 +35,13 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         self.tableView.delegate = self
         self.searchBar.delegate = self
         self.trashArray =  InitializeTestData().trashArray
-        
-//        var del = AddTrashViewController()
-//        del.delegate = self
-        
-        
         self.tableView.reloadData()
         navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
-
-//        self.searchDisplayController?.searchResultsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-
     }
  
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         self.tableView.reloadData()
-
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,7 +81,11 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         self.tableView.reloadData()
     }
     
-    
+//    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+//        self.searchBar.showsScopeBar = true
+//        self.searchBar.sizeToFit()
+//    }
+//    
     
     func filterTextForSearch(keyword: String!) -> Array<Trash> {
         searchState = true
