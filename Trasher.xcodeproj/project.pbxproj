@@ -10,6 +10,8 @@
 		2A073E0819F5AD530067D132 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0719F5AD530067D132 /* MobileCoreServices.framework */; };
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
 		2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0A68F71A1419870070720B /* CoreDataStack.swift */; };
+		2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */; };
+		2A103EDD1A2294DE007857D1 /* TrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDC1A2294DE007857D1 /* TrashImage.swift */; };
 		2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */; };
 		2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */; };
 		2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */; };
@@ -45,23 +47,25 @@
 		2AE6DC491A1E738F00F5C397 /* CoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC481A1E738F00F5C397 /* CoreUser.swift */; };
 		2AE6DC4D1A1E738F00F5C397 /* CoreUserCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC4C1A1E738F00F5C397 /* CoreUserCategories.swift */; };
 		2AE6DC4F1A1E73D400F5C397 /* CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC4E1A1E73D400F5C397 /* CoreLocation.swift */; };
-		2AE6DC741A1E98FE00F5C397 /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC521A1E98FE00F5C397 /* ALAsset+accessibilityLabel.m */; };
-		2AE6DC751A1E98FE00F5C397 /* ALAsset+assetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC541A1E98FE00F5C397 /* ALAsset+assetType.m */; };
-		2AE6DC761A1E98FE00F5C397 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC561A1E98FE00F5C397 /* ALAsset+isEqual.m */; };
-		2AE6DC771A1E98FE00F5C397 /* ALAssetsGroup+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC581A1E98FE00F5C397 /* ALAssetsGroup+isEqual.m */; };
-		2AE6DC781A1E98FE00F5C397 /* CTAssetItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC5A1A1E98FE00F5C397 /* CTAssetItemViewController.m */; };
-		2AE6DC791A1E98FE00F5C397 /* CTAssetScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC5C1A1E98FE00F5C397 /* CTAssetScrollView.m */; };
-		2AE6DC7A1A1E98FE00F5C397 /* CTAssetsGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC5E1A1E98FE00F5C397 /* CTAssetsGroupViewCell.m */; };
-		2AE6DC7B1A1E98FE00F5C397 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC601A1E98FE00F5C397 /* CTAssetsGroupViewController.m */; };
-		2AE6DC7C1A1E98FE00F5C397 /* CTAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC621A1E98FE00F5C397 /* CTAssetsPageViewController.m */; };
-		2AE6DC7D1A1E98FE00F5C397 /* CTAssetsPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AE6DC631A1E98FE00F5C397 /* CTAssetsPicker.xcassets */; };
-		2AE6DC7E1A1E98FE00F5C397 /* CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC661A1E98FE00F5C397 /* CTAssetsPickerController.m */; };
-		2AE6DC7F1A1E98FE00F5C397 /* CTAssetsSupplementaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC681A1E98FE00F5C397 /* CTAssetsSupplementaryView.m */; };
-		2AE6DC801A1E98FE00F5C397 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC6A1A1E98FE00F5C397 /* CTAssetsViewCell.m */; };
-		2AE6DC811A1E98FE00F5C397 /* CTAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC6C1A1E98FE00F5C397 /* CTAssetsViewController.m */; };
-		2AE6DC821A1E98FE00F5C397 /* CTAssetsViewControllerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC6E1A1E98FE00F5C397 /* CTAssetsViewControllerTransition.m */; };
-		2AE6DC831A1E98FE00F5C397 /* CTAssetsPickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2AE6DC6F1A1E98FE00F5C397 /* CTAssetsPickerController.strings */; };
-		2AE6DC841A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC721A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.m */; };
+		2AE6DC861A1E998F00F5C397 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6DC851A1E998F00F5C397 /* MediaPlayer.framework */; };
+		2AE6DC881A1E999B00F5C397 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6DC871A1E999B00F5C397 /* AssetsLibrary.framework */; };
+		2AE6DCAD1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC8B1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m */; };
+		2AE6DCAE1A1E9AD200F5C397 /* ALAsset+assetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC8D1A1E9AD200F5C397 /* ALAsset+assetType.m */; };
+		2AE6DCAF1A1E9AD200F5C397 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC8F1A1E9AD200F5C397 /* ALAsset+isEqual.m */; };
+		2AE6DCB01A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC911A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m */; };
+		2AE6DCB11A1E9AD200F5C397 /* CTAssetItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC931A1E9AD200F5C397 /* CTAssetItemViewController.m */; };
+		2AE6DCB21A1E9AD200F5C397 /* CTAssetScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC951A1E9AD200F5C397 /* CTAssetScrollView.m */; };
+		2AE6DCB31A1E9AD200F5C397 /* CTAssetsGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC971A1E9AD200F5C397 /* CTAssetsGroupViewCell.m */; };
+		2AE6DCB41A1E9AD200F5C397 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC991A1E9AD200F5C397 /* CTAssetsGroupViewController.m */; };
+		2AE6DCB51A1E9AD200F5C397 /* CTAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC9B1A1E9AD200F5C397 /* CTAssetsPageViewController.m */; };
+		2AE6DCB61A1E9AD200F5C397 /* CTAssetsPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AE6DC9C1A1E9AD200F5C397 /* CTAssetsPicker.xcassets */; };
+		2AE6DCB71A1E9AD200F5C397 /* CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC9F1A1E9AD200F5C397 /* CTAssetsPickerController.m */; };
+		2AE6DCB81A1E9AD200F5C397 /* CTAssetsSupplementaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA11A1E9AD200F5C397 /* CTAssetsSupplementaryView.m */; };
+		2AE6DCB91A1E9AD200F5C397 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA31A1E9AD200F5C397 /* CTAssetsViewCell.m */; };
+		2AE6DCBA1A1E9AD200F5C397 /* CTAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA51A1E9AD200F5C397 /* CTAssetsViewController.m */; };
+		2AE6DCBB1A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA71A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m */; };
+		2AE6DCBC1A1E9AD200F5C397 /* CTAssetsPickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA81A1E9AD200F5C397 /* CTAssetsPickerController.strings */; };
+		2AE6DCBD1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCAB1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m */; };
 		2AFF5AE719F42BCF002B8B57 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AFF5AE619F42BCF002B8B57 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +83,8 @@
 		2A073E0719F5AD530067D132 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A0A68F71A1419870070720B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../.Trash/CoreDataStack.swift; sourceTree = "<group>"; };
+		2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTrashImage.swift; sourceTree = "<group>"; };
+		2A103EDC1A2294DE007857D1 /* TrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashImage.swift; sourceTree = "<group>"; };
 		2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -122,40 +128,42 @@
 		2AE6DC481A1E738F00F5C397 /* CoreUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreUser.swift; sourceTree = "<group>"; };
 		2AE6DC4C1A1E738F00F5C397 /* CoreUserCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreUserCategories.swift; sourceTree = "<group>"; };
 		2AE6DC4E1A1E73D400F5C397 /* CoreLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = "<group>"; };
-		2AE6DC511A1E98FE00F5C397 /* ALAsset+accessibilityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+accessibilityLabel.h"; sourceTree = "<group>"; };
-		2AE6DC521A1E98FE00F5C397 /* ALAsset+accessibilityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+accessibilityLabel.m"; sourceTree = "<group>"; };
-		2AE6DC531A1E98FE00F5C397 /* ALAsset+assetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+assetType.h"; sourceTree = "<group>"; };
-		2AE6DC541A1E98FE00F5C397 /* ALAsset+assetType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+assetType.m"; sourceTree = "<group>"; };
-		2AE6DC551A1E98FE00F5C397 /* ALAsset+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+isEqual.h"; sourceTree = "<group>"; };
-		2AE6DC561A1E98FE00F5C397 /* ALAsset+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+isEqual.m"; sourceTree = "<group>"; };
-		2AE6DC571A1E98FE00F5C397 /* ALAssetsGroup+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsGroup+isEqual.h"; sourceTree = "<group>"; };
-		2AE6DC581A1E98FE00F5C397 /* ALAssetsGroup+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsGroup+isEqual.m"; sourceTree = "<group>"; };
-		2AE6DC591A1E98FE00F5C397 /* CTAssetItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetItemViewController.h; sourceTree = "<group>"; };
-		2AE6DC5A1A1E98FE00F5C397 /* CTAssetItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetItemViewController.m; sourceTree = "<group>"; };
-		2AE6DC5B1A1E98FE00F5C397 /* CTAssetScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetScrollView.h; sourceTree = "<group>"; };
-		2AE6DC5C1A1E98FE00F5C397 /* CTAssetScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetScrollView.m; sourceTree = "<group>"; };
-		2AE6DC5D1A1E98FE00F5C397 /* CTAssetsGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewCell.h; sourceTree = "<group>"; };
-		2AE6DC5E1A1E98FE00F5C397 /* CTAssetsGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewCell.m; sourceTree = "<group>"; };
-		2AE6DC5F1A1E98FE00F5C397 /* CTAssetsGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewController.h; sourceTree = "<group>"; };
-		2AE6DC601A1E98FE00F5C397 /* CTAssetsGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewController.m; sourceTree = "<group>"; };
-		2AE6DC611A1E98FE00F5C397 /* CTAssetsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPageViewController.h; sourceTree = "<group>"; };
-		2AE6DC621A1E98FE00F5C397 /* CTAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPageViewController.m; sourceTree = "<group>"; };
-		2AE6DC631A1E98FE00F5C397 /* CTAssetsPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CTAssetsPicker.xcassets; sourceTree = "<group>"; };
-		2AE6DC641A1E98FE00F5C397 /* CTAssetsPickerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerCommon.h; sourceTree = "<group>"; };
-		2AE6DC651A1E98FE00F5C397 /* CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerController.h; sourceTree = "<group>"; };
-		2AE6DC661A1E98FE00F5C397 /* CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPickerController.m; sourceTree = "<group>"; };
-		2AE6DC671A1E98FE00F5C397 /* CTAssetsSupplementaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsSupplementaryView.h; sourceTree = "<group>"; };
-		2AE6DC681A1E98FE00F5C397 /* CTAssetsSupplementaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsSupplementaryView.m; sourceTree = "<group>"; };
-		2AE6DC691A1E98FE00F5C397 /* CTAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewCell.h; sourceTree = "<group>"; };
-		2AE6DC6A1A1E98FE00F5C397 /* CTAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewCell.m; sourceTree = "<group>"; };
-		2AE6DC6B1A1E98FE00F5C397 /* CTAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewController.h; sourceTree = "<group>"; };
-		2AE6DC6C1A1E98FE00F5C397 /* CTAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewController.m; sourceTree = "<group>"; };
-		2AE6DC6D1A1E98FE00F5C397 /* CTAssetsViewControllerTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewControllerTransition.h; sourceTree = "<group>"; };
-		2AE6DC6E1A1E98FE00F5C397 /* CTAssetsViewControllerTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewControllerTransition.m; sourceTree = "<group>"; };
-		2AE6DC701A1E98FE00F5C397 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CTAssetsPickerController.strings; sourceTree = "<group>"; };
-		2AE6DC711A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+timeIntervalFormatter.h"; sourceTree = "<group>"; };
-		2AE6DC721A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+timeIntervalFormatter.m"; sourceTree = "<group>"; };
-		2AE6DC731A1E98FE00F5C397 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/CTAssetsPickerController.strings"; sourceTree = "<group>"; };
+		2AE6DC851A1E998F00F5C397 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2AE6DC871A1E999B00F5C397 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		2AE6DC8A1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+accessibilityLabel.h"; sourceTree = "<group>"; };
+		2AE6DC8B1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+accessibilityLabel.m"; sourceTree = "<group>"; };
+		2AE6DC8C1A1E9AD200F5C397 /* ALAsset+assetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+assetType.h"; sourceTree = "<group>"; };
+		2AE6DC8D1A1E9AD200F5C397 /* ALAsset+assetType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+assetType.m"; sourceTree = "<group>"; };
+		2AE6DC8E1A1E9AD200F5C397 /* ALAsset+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+isEqual.h"; sourceTree = "<group>"; };
+		2AE6DC8F1A1E9AD200F5C397 /* ALAsset+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+isEqual.m"; sourceTree = "<group>"; };
+		2AE6DC901A1E9AD200F5C397 /* ALAssetsGroup+isEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsGroup+isEqual.h"; sourceTree = "<group>"; };
+		2AE6DC911A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsGroup+isEqual.m"; sourceTree = "<group>"; };
+		2AE6DC921A1E9AD200F5C397 /* CTAssetItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetItemViewController.h; sourceTree = "<group>"; };
+		2AE6DC931A1E9AD200F5C397 /* CTAssetItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetItemViewController.m; sourceTree = "<group>"; };
+		2AE6DC941A1E9AD200F5C397 /* CTAssetScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetScrollView.h; sourceTree = "<group>"; };
+		2AE6DC951A1E9AD200F5C397 /* CTAssetScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetScrollView.m; sourceTree = "<group>"; };
+		2AE6DC961A1E9AD200F5C397 /* CTAssetsGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewCell.h; sourceTree = "<group>"; };
+		2AE6DC971A1E9AD200F5C397 /* CTAssetsGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewCell.m; sourceTree = "<group>"; };
+		2AE6DC981A1E9AD200F5C397 /* CTAssetsGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsGroupViewController.h; sourceTree = "<group>"; };
+		2AE6DC991A1E9AD200F5C397 /* CTAssetsGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsGroupViewController.m; sourceTree = "<group>"; };
+		2AE6DC9A1A1E9AD200F5C397 /* CTAssetsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPageViewController.h; sourceTree = "<group>"; };
+		2AE6DC9B1A1E9AD200F5C397 /* CTAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPageViewController.m; sourceTree = "<group>"; };
+		2AE6DC9C1A1E9AD200F5C397 /* CTAssetsPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CTAssetsPicker.xcassets; sourceTree = "<group>"; };
+		2AE6DC9D1A1E9AD200F5C397 /* CTAssetsPickerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerCommon.h; sourceTree = "<group>"; };
+		2AE6DC9E1A1E9AD200F5C397 /* CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerController.h; sourceTree = "<group>"; };
+		2AE6DC9F1A1E9AD200F5C397 /* CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPickerController.m; sourceTree = "<group>"; };
+		2AE6DCA01A1E9AD200F5C397 /* CTAssetsSupplementaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsSupplementaryView.h; sourceTree = "<group>"; };
+		2AE6DCA11A1E9AD200F5C397 /* CTAssetsSupplementaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsSupplementaryView.m; sourceTree = "<group>"; };
+		2AE6DCA21A1E9AD200F5C397 /* CTAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewCell.h; sourceTree = "<group>"; };
+		2AE6DCA31A1E9AD200F5C397 /* CTAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewCell.m; sourceTree = "<group>"; };
+		2AE6DCA41A1E9AD200F5C397 /* CTAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewController.h; sourceTree = "<group>"; };
+		2AE6DCA51A1E9AD200F5C397 /* CTAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewController.m; sourceTree = "<group>"; };
+		2AE6DCA61A1E9AD200F5C397 /* CTAssetsViewControllerTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsViewControllerTransition.h; sourceTree = "<group>"; };
+		2AE6DCA71A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsViewControllerTransition.m; sourceTree = "<group>"; };
+		2AE6DCA91A1E9AD200F5C397 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CTAssetsPickerController.strings; sourceTree = "<group>"; };
+		2AE6DCAA1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+timeIntervalFormatter.h"; sourceTree = "<group>"; };
+		2AE6DCAB1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+timeIntervalFormatter.m"; sourceTree = "<group>"; };
+		2AE6DCAC1A1E9AD200F5C397 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/CTAssetsPickerController.strings"; sourceTree = "<group>"; };
 		2AFF5AE619F42BCF002B8B57 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -164,6 +172,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AE6DC881A1E999B00F5C397 /* AssetsLibrary.framework in Frameworks */,
+				2AE6DC861A1E998F00F5C397 /* MediaPlayer.framework in Frameworks */,
 				2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */,
 				2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */,
 				2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */,
@@ -194,7 +204,7 @@
 		2A77FF7E1A16DDAF00127F10 /* external_libs */ = {
 			isa = PBXGroup;
 			children = (
-				2AE6DC501A1E98FE00F5C397 /* CTAssetsPickerController */,
+				2AE6DC891A1E9AD200F5C397 /* CTAssetsPickerController */,
 				2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */,
 				2A77FF861A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
 				2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
@@ -294,6 +304,7 @@
 				2A8224F31A142B0D00F76CEB /* User.swift */,
 				2A8224F51A142B1C00F76CEB /* Category.swift */,
 				2A8224F71A142B3600F76CEB /* Address.swift */,
+				2A103EDC1A2294DE007857D1 /* TrashImage.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -301,6 +312,7 @@
 		2AE6DC291A1E711B00F5C397 /* CoreModels */ = {
 			isa = PBXGroup;
 			children = (
+				2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */,
 				2AE6DC4E1A1E73D400F5C397 /* CoreLocation.swift */,
 				2AE6DC4C1A1E738F00F5C397 /* CoreUserCategories.swift */,
 				2AE6DC481A1E738F00F5C397 /* CoreUser.swift */,
@@ -311,49 +323,52 @@
 			name = CoreModels;
 			sourceTree = "<group>";
 		};
-		2AE6DC501A1E98FE00F5C397 /* CTAssetsPickerController */ = {
+		2AE6DC891A1E9AD200F5C397 /* CTAssetsPickerController */ = {
 			isa = PBXGroup;
 			children = (
-				2AE6DC511A1E98FE00F5C397 /* ALAsset+accessibilityLabel.h */,
-				2AE6DC521A1E98FE00F5C397 /* ALAsset+accessibilityLabel.m */,
-				2AE6DC531A1E98FE00F5C397 /* ALAsset+assetType.h */,
-				2AE6DC541A1E98FE00F5C397 /* ALAsset+assetType.m */,
-				2AE6DC551A1E98FE00F5C397 /* ALAsset+isEqual.h */,
-				2AE6DC561A1E98FE00F5C397 /* ALAsset+isEqual.m */,
-				2AE6DC571A1E98FE00F5C397 /* ALAssetsGroup+isEqual.h */,
-				2AE6DC581A1E98FE00F5C397 /* ALAssetsGroup+isEqual.m */,
-				2AE6DC591A1E98FE00F5C397 /* CTAssetItemViewController.h */,
-				2AE6DC5A1A1E98FE00F5C397 /* CTAssetItemViewController.m */,
-				2AE6DC5B1A1E98FE00F5C397 /* CTAssetScrollView.h */,
-				2AE6DC5C1A1E98FE00F5C397 /* CTAssetScrollView.m */,
-				2AE6DC5D1A1E98FE00F5C397 /* CTAssetsGroupViewCell.h */,
-				2AE6DC5E1A1E98FE00F5C397 /* CTAssetsGroupViewCell.m */,
-				2AE6DC5F1A1E98FE00F5C397 /* CTAssetsGroupViewController.h */,
-				2AE6DC601A1E98FE00F5C397 /* CTAssetsGroupViewController.m */,
-				2AE6DC611A1E98FE00F5C397 /* CTAssetsPageViewController.h */,
-				2AE6DC621A1E98FE00F5C397 /* CTAssetsPageViewController.m */,
-				2AE6DC631A1E98FE00F5C397 /* CTAssetsPicker.xcassets */,
-				2AE6DC641A1E98FE00F5C397 /* CTAssetsPickerCommon.h */,
-				2AE6DC651A1E98FE00F5C397 /* CTAssetsPickerController.h */,
-				2AE6DC661A1E98FE00F5C397 /* CTAssetsPickerController.m */,
-				2AE6DC671A1E98FE00F5C397 /* CTAssetsSupplementaryView.h */,
-				2AE6DC681A1E98FE00F5C397 /* CTAssetsSupplementaryView.m */,
-				2AE6DC691A1E98FE00F5C397 /* CTAssetsViewCell.h */,
-				2AE6DC6A1A1E98FE00F5C397 /* CTAssetsViewCell.m */,
-				2AE6DC6B1A1E98FE00F5C397 /* CTAssetsViewController.h */,
-				2AE6DC6C1A1E98FE00F5C397 /* CTAssetsViewController.m */,
-				2AE6DC6D1A1E98FE00F5C397 /* CTAssetsViewControllerTransition.h */,
-				2AE6DC6E1A1E98FE00F5C397 /* CTAssetsViewControllerTransition.m */,
-				2AE6DC6F1A1E98FE00F5C397 /* CTAssetsPickerController.strings */,
-				2AE6DC711A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.h */,
-				2AE6DC721A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.m */,
+				2AE6DC8A1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.h */,
+				2AE6DC8B1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m */,
+				2AE6DC8C1A1E9AD200F5C397 /* ALAsset+assetType.h */,
+				2AE6DC8D1A1E9AD200F5C397 /* ALAsset+assetType.m */,
+				2AE6DC8E1A1E9AD200F5C397 /* ALAsset+isEqual.h */,
+				2AE6DC8F1A1E9AD200F5C397 /* ALAsset+isEqual.m */,
+				2AE6DC901A1E9AD200F5C397 /* ALAssetsGroup+isEqual.h */,
+				2AE6DC911A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m */,
+				2AE6DC921A1E9AD200F5C397 /* CTAssetItemViewController.h */,
+				2AE6DC931A1E9AD200F5C397 /* CTAssetItemViewController.m */,
+				2AE6DC941A1E9AD200F5C397 /* CTAssetScrollView.h */,
+				2AE6DC951A1E9AD200F5C397 /* CTAssetScrollView.m */,
+				2AE6DC961A1E9AD200F5C397 /* CTAssetsGroupViewCell.h */,
+				2AE6DC971A1E9AD200F5C397 /* CTAssetsGroupViewCell.m */,
+				2AE6DC981A1E9AD200F5C397 /* CTAssetsGroupViewController.h */,
+				2AE6DC991A1E9AD200F5C397 /* CTAssetsGroupViewController.m */,
+				2AE6DC9A1A1E9AD200F5C397 /* CTAssetsPageViewController.h */,
+				2AE6DC9B1A1E9AD200F5C397 /* CTAssetsPageViewController.m */,
+				2AE6DC9C1A1E9AD200F5C397 /* CTAssetsPicker.xcassets */,
+				2AE6DC9D1A1E9AD200F5C397 /* CTAssetsPickerCommon.h */,
+				2AE6DC9E1A1E9AD200F5C397 /* CTAssetsPickerController.h */,
+				2AE6DC9F1A1E9AD200F5C397 /* CTAssetsPickerController.m */,
+				2AE6DCA01A1E9AD200F5C397 /* CTAssetsSupplementaryView.h */,
+				2AE6DCA11A1E9AD200F5C397 /* CTAssetsSupplementaryView.m */,
+				2AE6DCA21A1E9AD200F5C397 /* CTAssetsViewCell.h */,
+				2AE6DCA31A1E9AD200F5C397 /* CTAssetsViewCell.m */,
+				2AE6DCA41A1E9AD200F5C397 /* CTAssetsViewController.h */,
+				2AE6DCA51A1E9AD200F5C397 /* CTAssetsViewController.m */,
+				2AE6DCA61A1E9AD200F5C397 /* CTAssetsViewControllerTransition.h */,
+				2AE6DCA71A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m */,
+				2AE6DCA81A1E9AD200F5C397 /* CTAssetsPickerController.strings */,
+				2AE6DCAA1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.h */,
+				2AE6DCAB1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m */,
 			);
-			path = CTAssetsPickerController;
+			name = CTAssetsPickerController;
+			path = "../../../Downloads/CTAssetsPickerController-master/CTAssetsPickerController";
 			sourceTree = "<group>";
 		};
 		2AFF5AE819F42C32002B8B57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AE6DC871A1E999B00F5C397 /* AssetsLibrary.framework */,
+				2AE6DC851A1E998F00F5C397 /* MediaPlayer.framework */,
 				2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */,
 				2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */,
 				2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */,
@@ -445,8 +460,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AE6DC831A1E98FE00F5C397 /* CTAssetsPickerController.strings in Resources */,
-				2AE6DC7D1A1E98FE00F5C397 /* CTAssetsPicker.xcassets in Resources */,
+				2AE6DCBC1A1E9AD200F5C397 /* CTAssetsPickerController.strings in Resources */,
+				2AE6DCB61A1E9AD200F5C397 /* CTAssetsPicker.xcassets in Resources */,
 				2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */,
 				2AC0551019F2E5190068B2E2 /* LaunchScreen.xib in Resources */,
 				2AB5C5B71A1437E000615903 /* MainStoryboard.storyboard in Resources */,
@@ -470,47 +485,49 @@
 			files = (
 				2A8224F81A142B3600F76CEB /* Address.swift in Sources */,
 				2A8A91C31A1151E70004D3E5 /* initializer.swift in Sources */,
-				2AE6DC7B1A1E98FE00F5C397 /* CTAssetsGroupViewController.m in Sources */,
-				2AE6DC751A1E98FE00F5C397 /* ALAsset+assetType.m in Sources */,
+				2AE6DCB41A1E9AD200F5C397 /* CTAssetsGroupViewController.m in Sources */,
+				2AE6DCAE1A1E9AD200F5C397 /* ALAsset+assetType.m in Sources */,
 				2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */,
-				2AE6DC7E1A1E98FE00F5C397 /* CTAssetsPickerController.m in Sources */,
+				2AE6DCB71A1E9AD200F5C397 /* CTAssetsPickerController.m in Sources */,
 				2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */,
-				2AE6DC7A1A1E98FE00F5C397 /* CTAssetsGroupViewCell.m in Sources */,
+				2AE6DCB31A1E9AD200F5C397 /* CTAssetsGroupViewCell.m in Sources */,
 				2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */,
 				2A8224F41A142B0D00F76CEB /* User.swift in Sources */,
 				2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */,
 				2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */,
-				2AE6DC741A1E98FE00F5C397 /* ALAsset+accessibilityLabel.m in Sources */,
-				2AE6DC7F1A1E98FE00F5C397 /* CTAssetsSupplementaryView.m in Sources */,
+				2AE6DCAD1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m in Sources */,
+				2AE6DCB81A1E9AD200F5C397 /* CTAssetsSupplementaryView.m in Sources */,
 				2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */,
 				2AE6DC4D1A1E738F00F5C397 /* CoreUserCategories.swift in Sources */,
 				2A77FF881A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				2A6B31C219FED2D1002DB4BB /* FilterViewController.swift in Sources */,
 				2AC0550619F2E5190068B2E2 /* Trasher.xcdatamodeld in Sources */,
 				2AC0552C19F2E6110068B2E2 /* MasterTableViewController.swift in Sources */,
-				2AE6DC7C1A1E98FE00F5C397 /* CTAssetsPageViewController.m in Sources */,
+				2AE6DCB51A1E9AD200F5C397 /* CTAssetsPageViewController.m in Sources */,
 				2A8224F61A142B1C00F76CEB /* Category.swift in Sources */,
 				2AC0552E19F2E7610068B2E2 /* AddTrashViewController.swift in Sources */,
 				2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */,
-				2AE6DC791A1E98FE00F5C397 /* CTAssetScrollView.m in Sources */,
+				2AE6DCB21A1E9AD200F5C397 /* CTAssetScrollView.m in Sources */,
 				2AE6DC471A1E738F00F5C397 /* CoreTrash.swift in Sources */,
-				2AE6DC801A1E98FE00F5C397 /* CTAssetsViewCell.m in Sources */,
+				2AE6DCB91A1E9AD200F5C397 /* CTAssetsViewCell.m in Sources */,
 				2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2AE6DC4F1A1E73D400F5C397 /* CoreLocation.swift in Sources */,
 				2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */,
-				2AE6DC781A1E98FE00F5C397 /* CTAssetItemViewController.m in Sources */,
-				2AE6DC841A1E98FE00F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
+				2AE6DCB11A1E9AD200F5C397 /* CTAssetItemViewController.m in Sources */,
+				2AE6DCBD1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */,
 				2AE6DC431A1E738E00F5C397 /* CoreUserLocations.swift in Sources */,
-				2AE6DC811A1E98FE00F5C397 /* CTAssetsViewController.m in Sources */,
-				2AE6DC761A1E98FE00F5C397 /* ALAsset+isEqual.m in Sources */,
+				2AE6DCBA1A1E9AD200F5C397 /* CTAssetsViewController.m in Sources */,
+				2AE6DCAF1A1E9AD200F5C397 /* ALAsset+isEqual.m in Sources */,
 				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
+				2A103EDD1A2294DE007857D1 /* TrashImage.swift in Sources */,
 				2AC0552819F2E57F0068B2E2 /* DetailViewController.swift in Sources */,
 				2AE6DC491A1E738F00F5C397 /* CoreUser.swift in Sources */,
 				2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */,
-				2AE6DC771A1E98FE00F5C397 /* ALAssetsGroup+isEqual.m in Sources */,
+				2AE6DCB01A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m in Sources */,
+				2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */,
 				2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */,
-				2AE6DC821A1E98FE00F5C397 /* CTAssetsViewControllerTransition.m in Sources */,
+				2AE6DCBB1A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,11 +558,11 @@
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
-		2AE6DC6F1A1E98FE00F5C397 /* CTAssetsPickerController.strings */ = {
+		2AE6DCA81A1E9AD200F5C397 /* CTAssetsPickerController.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2AE6DC701A1E98FE00F5C397 /* en */,
-				2AE6DC731A1E98FE00F5C397 /* zh-Hant */,
+				2AE6DCA91A1E9AD200F5C397 /* en */,
+				2AE6DCAC1A1E9AD200F5C397 /* zh-Hant */,
 			);
 			name = CTAssetsPickerController.strings;
 			sourceTree = "<group>";

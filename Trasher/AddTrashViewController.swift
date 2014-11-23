@@ -10,14 +10,18 @@ import UIKit
 import MobileCoreServices
 import CoreLocation
 import SystemConfiguration
+import AssetsLibrary
 
 
 protocol TrashTableViewProtocol {
     func trashTableViewDelegate(tableData: Array<Trash>)
 }
 
-class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol {
+class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol,
+UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
 
+   
+   
     @IBOutlet weak var textTitle: UITextView!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -34,8 +38,13 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var trash = Trash()
+    
+    //picker
+    var ctPicker = CTAssetsPickerController()
+    var assets = NSArray()
 
-
+    
+    
     var delegate:TrashTableViewProtocol? = nil
     
     @IBOutlet weak var currentLocationLabel: UILabel!
@@ -50,11 +59,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
     override func viewDidLoad() {
         super.viewDidLoad()
         //dont forget to remove the sleep
-        
-      
-        
-        
-        
+
         self.textTitle.becomeFirstResponder()
         self.actvityIndicatorView.startAnimating()
         self.getCurrentLocation()
@@ -94,8 +99,6 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
         }
         
     }
-
-
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -103,11 +106,22 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
     
     @IBAction func imageButtonWasPressed(sender: AnyObject) {
         
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            self.promptForSource()
-        } else {
-            self.promptForPhotoRoll()
-        }
+//        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+//            self.promptForSource()
+//        } else {
+//            self.promptForPhotoRoll()
+//        }
+        
+
+      //new code
+        self.assets = NSMutableArray()
+        self.ctPicker.assetsFilter = ALAssetsFilter.allAssets()
+        self.ctPicker.showsCancelButton = true
+        self.ctPicker.delegate = self
+        self.ctPicker.selectedAssets = self.assets as NSMutableArray
+
+        self.presentViewController(ctPicker, animated: true, completion: nil)
+
         
     }
     
@@ -123,6 +137,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
         controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
         controller.delegate = self;
         self.presentViewController(controller, animated: true, completion: nil)
+//        self.presentViewController(self.ctPicker, animated: true, completion:nil)
 
     }
     
@@ -145,7 +160,50 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
         }
     }
     
-  
+    // MARK: CTPickerControllerDelegate
+
+    
+    
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, isDefaultAssetsGroup group: ALAssetsGroup!) -> Bool {
+//        return [group.valueForProperty(ALAssetsGroupPropertyType).integerValue == ALAssetsGroupSavedPhotos
+        return true
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+//        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        println("dismissedd")
+        
+        //TODO - update scroll view with new images and save to core data
+
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, shouldEnableAsset asset: ALAsset!) -> Bool {
+        if asset.valueForProperty(ALAssetPropertyType).isEqual(ALAssetTypeVideo) {
+            var duration : NSTimeInterval = asset.valueForProperty(ALAssetPropertyDuration).doubleValue
+            return lround(duration) >= 5
+        } else {
+            return true
+        }
+    }
+
+    func assetsPickerController(picker: CTAssetsPickerController!, shouldSelectAsset asset: ALAsset!) -> Bool {
+        if ctPicker.selectedAssets.count >= 10 {
+          var alertView = UIAlertView(title: "Attention", message: "Please select no more than 10", delegate: nil, cancelButtonTitle: "OK")
+          alertView.show()
+        }
+        
+        if !(asset.defaultRepresentation() != nil) {
+            var alertView = UIAlertView(title: "Attention", message: "Please select no more than 10", delegate: nil, cancelButtonTitle: "OK")
+            alertView.show()
+            
+        }
+        
+        return ctPicker.selectedAssets.count < 10 && asset.defaultRepresentation() != nil
+    }
+    
+
     // MARK: - Navigation
 
 
@@ -263,28 +321,7 @@ class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFie
             }, completion: { finished in println("animation done")})
     }
     
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        self.textTest.resignFirstResponder()
-//        self.view.endEditing(true)
-//        return true
-//    }
-    
 
-    
-//    func keyboardWillShow1(notification: NSNotification) {
-//        var info = notification.userInfo!
-//        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
-//        var btnOrigin = self.btnSave.frame.origin
-//        var btnHeight = self.btnSave.frame.height
-//        var visibleRect = self.scrollView.frame
-//        
-//        visibleRect.size.height -= keyboardFrame.height
-//        if (!CGRectContainsPoint(visibleRect, btnOrigin)) {
-//            var scrollPoint = CGPointMake(0.0, btnOrigin.y - visibleRect.size.height + btnHeight)
-//            self.scrollView.setContentOffset(scrollPoint, animated: true)
-//        }
-//    }
-//    
     
     
     func keyboardWillHide(notification: NSNotification) {
