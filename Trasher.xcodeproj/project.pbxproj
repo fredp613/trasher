@@ -11,15 +11,17 @@
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
 		2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0A68F71A1419870070720B /* CoreDataStack.swift */; };
 		2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */; };
-		2A103EDD1A2294DE007857D1 /* TrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDC1A2294DE007857D1 /* TrashImage.swift */; };
 		2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */; };
 		2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */; };
+		2A1877061A2436C80021F9AD /* TrashAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1877051A2436C80021F9AD /* TrashAssets.swift */; };
 		2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */; };
 		2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */; };
+		2A515C5D1A2C24A600EC4988 /* FPGoogleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */; };
 		2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A68E3131A193660005A7529 /* TextViewHelper.swift */; };
 		2A6B31C219FED2D1002DB4BB /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C119FED2D1002DB4BB /* FilterViewController.swift */; };
 		2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */; };
 		2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C519FED327002DB4BB /* ProfileViewController.swift */; };
+		2A727C401A2524FB001C13BB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A727C3F1A2524FB001C13BB /* MapViewController.swift */; };
 		2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */; };
 		2A77FF881A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F11A142AFC00F76CEB /* Trash.swift */; };
@@ -84,15 +86,17 @@
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A0A68F71A1419870070720B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../.Trash/CoreDataStack.swift; sourceTree = "<group>"; };
 		2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTrashImage.swift; sourceTree = "<group>"; };
-		2A103EDC1A2294DE007857D1 /* TrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashImage.swift; sourceTree = "<group>"; };
 		2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoriesTableViewController.swift; sourceTree = "<group>"; };
+		2A1877051A2436C80021F9AD /* TrashAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashAssets.swift; sourceTree = "<group>"; };
 		2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPGoogleButton.swift; sourceTree = "<group>"; };
 		2A68E3131A193660005A7529 /* TextViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewHelper.swift; sourceTree = "<group>"; };
 		2A6B31C119FED2D1002DB4BB /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopUsersViewController.swift; sourceTree = "<group>"; };
 		2A6B31C519FED327002DB4BB /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2A727C3F1A2524FB001C13BB /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		2A77FF7F1A16DE7700127F10 /* Trasher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trasher-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A77FF801A16DE7800127F10 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 		2A68E3151A19366C005A7529 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */,
 				2A68E3131A193660005A7529 /* TextViewHelper.swift */,
 			);
 			name = helpers;
@@ -251,6 +256,7 @@
 				2A8A91C11A1151CB0004D3E5 /* initializers */,
 				2AC0553919F2F5F50068B2E2 /* models */,
 				2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */,
+				2A727C3F1A2524FB001C13BB /* MapViewController.swift */,
 				2A0A68F71A1419870070720B /* CoreDataStack.swift */,
 				2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */,
 				2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */,
@@ -304,7 +310,7 @@
 				2A8224F31A142B0D00F76CEB /* User.swift */,
 				2A8224F51A142B1C00F76CEB /* Category.swift */,
 				2A8224F71A142B3600F76CEB /* Address.swift */,
-				2A103EDC1A2294DE007857D1 /* TrashImage.swift */,
+				2A1877051A2436C80021F9AD /* TrashAssets.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -492,8 +498,11 @@
 				2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */,
 				2AE6DCB31A1E9AD200F5C397 /* CTAssetsGroupViewCell.m in Sources */,
 				2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */,
+				2A727C401A2524FB001C13BB /* MapViewController.swift in Sources */,
+				2A1877061A2436C80021F9AD /* TrashAssets.swift in Sources */,
 				2A8224F41A142B0D00F76CEB /* User.swift in Sources */,
 				2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */,
+				2A515C5D1A2C24A600EC4988 /* FPGoogleButton.swift in Sources */,
 				2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */,
 				2AE6DCAD1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m in Sources */,
 				2AE6DCB81A1E9AD200F5C397 /* CTAssetsSupplementaryView.m in Sources */,
@@ -520,7 +529,6 @@
 				2AE6DCBA1A1E9AD200F5C397 /* CTAssetsViewController.m in Sources */,
 				2AE6DCAF1A1E9AD200F5C397 /* ALAsset+isEqual.m in Sources */,
 				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
-				2A103EDD1A2294DE007857D1 /* TrashImage.swift in Sources */,
 				2AC0552819F2E57F0068B2E2 /* DetailViewController.swift in Sources */,
 				2AE6DC491A1E738F00F5C397 /* CoreUser.swift in Sources */,
 				2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */,

@@ -17,8 +17,8 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var textVerification: UITextField!
     @IBOutlet weak var buttonVerify: UIButton!
-    
-
+    var trashArray = [Trash]()
+    var trashAssetsArray = [TrashAssets]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textVerification.hidden = true
@@ -28,6 +28,11 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func closePressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func touchID(sender: AnyObject) {
@@ -137,9 +142,9 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     @IBAction func verifyCode(sender: AnyObject) {
 //        NSEntityDescription.insertNewObjectForEntityForName("LogItem", inManagedObjectContext: self.managedObjectContext!) as LogItem
         
-        if self.textVerification == "dpg613" {
+        if self.textVerification != "dpg613" {
 
-           self.performSegueWithIdentifier("showMaster", sender: self)
+           self.performSegueWithIdentifier("addTrashFromSignUpSegue", sender: self)
             
         } else {
             var alertView = UIAlertView(title: "Code is invalid", message: "Please ensure you typed in the correct code, otherwise try again", delegate: self, cancelButtonTitle: "OK")
@@ -158,20 +163,21 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
 
     
 
-    
 
-    
-
-    
-    /*
     // MARK: - Nav
-    navigation
+    
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "addTrashFromSignUpSegue" {
+            var master : MasterTableViewController = MasterTableViewController()
+            var addTrashController = segue.destinationViewController as? AddTrashViewController
+            addTrashController?.trashArray = trashArray
+            addTrashController?.trashAssetsArray = trashAssetsArray
+//            addTrashController?.delegate = master
+        }
     }
-    */
+    
 
 }

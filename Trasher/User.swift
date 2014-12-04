@@ -11,16 +11,16 @@ import UIKit
 
 class User {
     
-    var authType: String!
-    var distance: NSNumber!
-    var email: String!
-    var tutorial_completed: NSNumber!
-    var userId: NSNumber!
-    var userName: String!
-    var verified: NSNumber!
-    var notifications: NSNumber!
-    var user_addresses: NSSet!
-    var user_categories: NSSet!
+    var authType = String()
+    var distance = NSNumber()
+    var email = String()
+    var tutorial_completed = NSNumber()
+    var userId = NSNumber()
+    var userName = String()
+    var verified = NSNumber()
+    var notifications = NSNumber()
+    var user_addresses = NSSet()
+    var user_categories = NSSet()
     
     init() {
       authType = "Twitter"
@@ -31,9 +31,19 @@ class User {
       userName = "fredp613"
       verified = 0
       notifications = 1
-      
-      
         
+    }
+    
+    class func registeredUser() -> Bool {
+        //check core data for user data also validate this with web
+        var userIsRegistered : Bool = true
+        
+        if userIsRegistered {
+            return true
+        }
+        
+        //check if empty
+        return false
     }
        
 }

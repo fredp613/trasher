@@ -11,6 +11,7 @@ import UIKit
 
 class Trash : Address {
     
+    var trashId: String!
     var desc: String!
     var image: NSData!
     var title: String!
@@ -18,8 +19,9 @@ class Trash : Address {
     var trashArray = [Trash]()
     
     override init() {
+        trashId = NSUUID().UUIDString
         desc = "First description"
-        image = UIImageJPEGRepresentation(UIImage(named: "used-bbq"), 0.75)
+        image = UIImageJPEGRepresentation(UIImage(named: "trash-can-icon"), 0.75)
         title = "First title"
         super.init()
     }

@@ -14,16 +14,17 @@ import AssetsLibrary
 
 
 protocol TrashTableViewProtocol {
-    func trashTableViewDelegate(tableData: Array<Trash>)
+    func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>)
 }
 
 class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol,
-UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
+UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDelegate {
 
    
    
     @IBOutlet weak var textTitle: UITextView!
     
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnSave: UIButton!
 
@@ -32,18 +33,23 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
     @IBOutlet weak var changeLocationButton: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var actvityIndicatorView: UIActivityIndicatorView!
+    
+
     var pickedImage = UIImage()
     var trashArray  = [Trash]()
+    var trashAssetsArray = [TrashAssets]()
     var currentLocation = NSString()
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var trash = Trash()
     
+    
     //picker
     var ctPicker = CTAssetsPickerController()
-    var assets = NSArray()
-
-    
+    var assets = []
+    var pickedAssets = [UIImage]()
+    var containerView : UIView!
+    var pageViews: [UIImageView?] = []
     
     var delegate:TrashTableViewProtocol? = nil
     
@@ -58,12 +64,35 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.textTitle.delegate = self
         //dont forget to remove the sleep
 
-        self.textTitle.becomeFirstResponder()
+        
+        self.navigationItem.hidesBackButton = true
+
+       
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<Back", style: UIBarButtonItemStyle.Plain, target: self, action: "customBtnAction:")
+        
+
+//        self.textTitle.becomeFirstResponder()
         self.actvityIndicatorView.startAnimating()
         self.getCurrentLocation()
         
+    }
+    
+    @IBAction func closeWasPressed(sender: AnyObject) {
+        
+     self.dismissViewControllerAnimated(true, completion: nil)
+    
+    }
+    
+    
+    func customBtnAction(sender: UIBarButtonItem) {
+//        self.navigationController?.popToViewController(MasterTableViewController(), animated: true)
+        self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
+//        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -81,24 +110,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        let img = info[UIImagePickerControllerOriginalImage] as UIImage?
-        if (img != nil) {
-//                self.imageButton.layer.cornerRadius = CGRectGetWidth(self.imageButton.frame) / 2.0f;
-            
-            self.imageButton.setImage(img, forState: UIControlState.Normal)
-            self.trash.image = UIImageJPEGRepresentation(img, 0.75)
-            
-
-        } else {
-            self.imageButton.setTitle("Add Image", forState: UIControlState.Normal)
-        }
-        
-    }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -106,14 +118,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
     
     @IBAction func imageButtonWasPressed(sender: AnyObject) {
         
-//        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-//            self.promptForSource()
-//        } else {
-//            self.promptForPhotoRoll()
-//        }
-        
 
-      //new code
         self.assets = NSMutableArray()
         self.ctPicker.assetsFilter = ALAssetsFilter.allAssets()
         self.ctPicker.showsCancelButton = true
@@ -137,7 +142,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
         controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
         controller.delegate = self;
         self.presentViewController(controller, animated: true, completion: nil)
-//        self.presentViewController(self.ctPicker, animated: true, completion:nil)
+
 
     }
     
@@ -150,7 +155,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
     
     @IBAction func capture(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            println("button capture")
+
             
             var img = UIImagePickerController()
             img.delegate = self
@@ -173,11 +178,120 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
     func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
 //        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-        println("dismissedd")
+
         
         //TODO - update scroll view with new images and save to core data
+        
+        for selectedImg in assets {
+//                cell.imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+            let pickedAsset : ALAsset = selectedImg as ALAsset
+            var img = UIImage(CGImage: pickedAsset.thumbnail().takeUnretainedValue())
+            self.pickedAssets.append(img!)
+            
+            
+        }
+      
+        let pageCount = pickedAssets.count
+        
+        // Set up the page control
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = pageCount
+        
+        // Set up the array to hold the views for each page
+        for _ in 0..<pageCount {
+            pageViews.append(nil)
+        }
+        
+        // Set up the content size of the scroll view
+        let pagesScrollViewSize = scrollView.frame.size
+        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(pickedAssets.count), pagesScrollViewSize.height)
+        
+        // Load the initial set of pages that are on screen
+        loadVisiblePages()
+        
 
+       
     }
+    
+    func loadPage(page: Int) {
+        
+        if page < 0 || page >= pickedAssets.count {
+            // If it's outside the range of what you have to display, then do nothing
+            return
+        }
+        
+        // Load an individual page, first checking if you've already loaded it
+        if let pageView = pageViews[page] {
+            // Do nothing. The view is already loaded.
+        } else {
+            var frame = scrollView.bounds
+            frame.origin.x = frame.size.width * CGFloat(page)
+            frame.origin.y = 0.0
+            frame = CGRectInset(frame, 10.0, 0.0)
+            
+            let newPageView = UIImageView(image: pickedAssets[page])
+            newPageView.contentMode = .ScaleAspectFit
+            newPageView.frame = frame
+            scrollView.addSubview(newPageView)
+            pageViews[page] = newPageView
+        }
+    }
+    
+    func purgePage(page: Int) {
+        
+        
+        if page < 0 || page >= pickedAssets.count {
+            // If it's outside the range of what you have to display, then do nothing
+            return
+        }
+        
+        // Remove a page from the scroll view and reset the container array
+        if let pageView = pageViews[page] {
+            pageView.removeFromSuperview()
+            pageViews[page] = nil
+        }
+        
+    }
+    
+    func loadVisiblePages() {
+        
+        // First, determine which page is currently visible
+        let pageWidth = scrollView.frame.size.width
+        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        
+        // Update the page control
+        pageControl.currentPage = page
+        
+        // Work out which pages you want to load
+        let firstPage = page - 1
+        let lastPage = page + 1
+        
+        
+        // Purge anything before the first page
+        for var index = 0; index < firstPage; ++index {
+            purgePage(index)
+        }
+        
+        // Load pages in our range
+        for var index = firstPage; index <= lastPage; ++index {
+            loadPage(index)
+        }
+        
+        // Purge anything after the last page
+        for var index = lastPage+1; index < self.pickedAssets.count; ++index {
+            purgePage(index)
+        }
+    }
+    
+    
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        // Load the pages that are now on screen
+        loadVisiblePages()
+    }
+    
+   
+    
+  
     
     func assetsPickerController(picker: CTAssetsPickerController!, shouldEnableAsset asset: ALAsset!) -> Bool {
         if asset.valueForProperty(ALAssetPropertyType).isEqual(ALAssetTypeVideo) {
@@ -212,15 +326,34 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
         if !self.textTitle.text.isEmpty {
             self.trash.title = self.textTitle.text
         }
+        self.trash.trashId = NSUUID().UUIDString
 
         trashArray.append(self.trash)
-        println("\(trashArray.count)")
+
         
-        if (delegate != nil) {
-            trashTableViewDelegate(trashArray)
+        
+        var trashAsset = TrashAssets()
+        
+        for pa in pickedAssets {
+            if pa == pickedAssets[0] {
+              trashAsset = TrashAssets(img: UIImageJPEGRepresentation(pa, 0.75), trashId: self.trash.trashId, defaultImg: true)
+              trashAssetsArray.append(trashAsset)
+
+            } else {
+              trashAsset = TrashAssets(img: UIImageJPEGRepresentation(pa, 0.75), trashId: self.trash.trashId, defaultImg: false)
+              trashAssetsArray.append(trashAsset)
+            }
         }
+        if (delegate != nil) {
+            trashTableViewDelegate(trashArray, trashAssetData: trashAssetsArray)
+        }
+
+//        self.dismissViewControllerAnimated(true, completion: nil)
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
+        
+
+
 
     }
 
@@ -236,14 +369,11 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
         var currentLocation = newLocation as CLLocation!
         
         if (currentLocation != nil) {
-
-            println("You live here: \(currentLocation)")
             var geoCoder = CLGeocoder()
             geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
                sleep(1)
                 if (error == nil) {
                     let pm: AnyObject = placemarks.last!
-                    println(pm.locality)
                     var currentAddress =  pm.name + " " + pm.locality + " " + pm.postalCode
                     self.currentLocationLabel.text = currentAddress
                     self.trash.latitude = currentLocation.coordinate.latitude
@@ -289,8 +419,8 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func trashTableViewDelegate(tableData: Array<Trash>) {
-        delegate?.trashTableViewDelegate(trashArray)
+    func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>) {
+        delegate?.trashTableViewDelegate(trashArray, trashAssetData: trashAssetsArray)
     }
     
     //MARK: keyboard
@@ -332,6 +462,23 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate {
             self.bottomConstraint.constant -= keyboardFrame.size.height + 105
         })
 
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
+    // MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showMasterFromAddTrash" {
+            var mainTabBarVC = segue.destinationViewController as? MainTabBarViewController
+            mainTabBarVC?.trashAssets = trashAssetsArray
+            mainTabBarVC?.trashArray = trashArray
+
+        }
     }
     
 

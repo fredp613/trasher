@@ -9,9 +9,8 @@
 import UIKit
 
 
-
 class ProfileViewController: UIViewController, UITableViewDataSource,
-UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol {
+UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol  {
     @IBOutlet weak var notificationsSwitch: UISwitch!
     
     @IBOutlet weak var addCategory: UIButton!
@@ -23,7 +22,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     var addCatsController: AddCategoriesTableViewController?
     var tableData: [Int:String]! = [Int:String]()
-
+    var menuButtons = FPGoogleButton()
     
     
     override func viewDidLoad() {
@@ -37,18 +36,36 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         if self.tableData.isEmpty {
             tableData = InitializeTestData().initialCategories
 //            Category().currentCategories = Category().initialCategories
-            println("table data is empty")
+
         } else {
-            println("table data is not empty")
+
         }
+                
+         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
+            (UIColor.redColor(), "addTrashButtonTouch", "", nil),
+            (UIColor.blueColor(), "requestTrashButtonTouch", "", nil),
+        ]
+        
+        menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
+        
+        
+    }
+    
+    func addTrashButtonTouch(sender: UIButton) {
+        
+        self.performSegueWithIdentifier("addTrashFromProfileSegue", sender: self)
+//        menuButtons.toggleMenuButtons()
+    }
+    
+    func requestTrashButtonTouch(sender: UIButton) {
+        println("event fired")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
 
-        println("\(self.tableData)")
-
         self.categoriesTableView.reloadData()
+        
 
         
     }
@@ -57,26 +74,25 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         super.viewDidAppear(true)
 
 
+
     }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-   
- 
     @IBAction func kmTextChanged(sender: AnyObject) {
         if (self.kmText.text.toInt() > 500) {
             var alertView = UIAlertView(title: "Range to far", message: "The maximum distance is 500KM", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
-            println("testing 123")
+
             self.distanceSlider.value = 500.00
             
         } else {
             self.distanceSlider.value = (self.kmText.text as NSString).floatValue
-            println("testing 123 works")
+
         }
     }
     
@@ -85,11 +101,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
             self.kmText.text = "500"
     }
     
-
-    
     //MARK: ACTIONS
-    
-
     
     @IBAction func changeDistance(sender: AnyObject) {
 //        self.kmLabel.text = NSString(format: "%.2f" , self.distanceSlider.value)
@@ -155,12 +167,15 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
+        
         addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
         addCatsController?.delegate = self
         addCatsController?.currentData = tableData
         
     }
-        
+    
+
+    
         
 
       
