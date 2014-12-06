@@ -8,54 +8,96 @@
 
 import Foundation
 import UIKit
+import QuartzCore
 
-class FPTextView : UITextView, UITextViewDelegate {
+class FPTextView : NSObject, UITextViewDelegate, UIGestureRecognizerDelegate {
     
-    var placeHolder:String!
+    var placeHolder = String()
     var border: Bool = true
-        
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init()
-        self.delegate = self
-        self.textColor = UIColor.lightGrayColor()
-        self.text = "Enter text"
-        self.layer.borderWidth = 1.0
-        self.layer.cornerRadius = 12
-        self.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.selectedRange = NSMakeRange(0, 0)
+    var tap = UIGestureRecognizer()
+//    var textView = UITextView()
 
+    override init() {
         
     }
     
-    required init(coder decoder: NSCoder) {
-        super.init(coder: decoder)
-        self.delegate = self
-        self.textColor = UIColor.lightGrayColor()
-        self.text = "Enter text"
-        self.layer.borderWidth = 1.0
-        self.layer.cornerRadius = 12
-        self.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.selectedRange = NSMakeRange(0, 0)
+    
+    init(textView: UITextView, placeholder: String) {
+        super.init()
+        tap.delegate = self
+        println("\(placeholder)")
+        textView.delegate = self
         
+        if placeholder.isEmpty {
+            placeHolder = "Enter text"
+        } else {
+            placeHolder = placeholder
+        }
+        
+        if textView.text.isEmpty {
+            textView.text = placeHolder
+        }
+        
+        
+        self.tap.delegate = self
+        textView.textColor = UIColor.lightGrayColor()
+        textView.layer.borderWidth = 1.0
+        textView.layer.cornerRadius = 12
+        textView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        customTextView(textView)
+
+    }
+
+
+
+    
+    func customTextView(textview: UITextView) -> UITextView {
+        return textview
+    }
+    
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if  textView.text.rangeOfString(placeHolder, options: NSStringCompareOptions.LiteralSearch, range: nil, locale: nil) != nil {
+                    textView.text = ""
+
+        }
+
     }
     
     
     func textViewDidChange(textView: UITextView) {
-        if (self.text.rangeOfString("Enter text", options: NSStringCompareOptions.LiteralSearch, range: nil, locale: nil) != nil) {
-            self.text = self.text.stringByReplacingOccurrencesOfString("Enter text", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+
+        if (        textView.text.rangeOfString(placeHolder, options: NSStringCompareOptions.LiteralSearch, range: nil, locale: nil) != nil) {
+                    textView.text =         textView.text.stringByReplacingOccurrencesOfString(placeHolder, withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         }
         
-        if self.text.isEmpty {
-            self.text = "Enter text"
-            self.selectedRange = NSMakeRange(0, 0)
+        if         textView.text.isEmpty {
+                    textView.text = placeHolder
+            textView.selectedRange = NSMakeRange(0, 0)
         }
     }
-
-
-
-    override func textViewDidBeginEditing(textView: UITextView) {
-        self.selectedRange = NSMakeRange(0, 0)
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = placeHolder
+            textView.selectedRange = NSMakeRange(0, 0)
+        }
     }
+    
+    
+   
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if textView.text == "\n" {
+          println("hi")
+          textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+
+
+
     
 
     

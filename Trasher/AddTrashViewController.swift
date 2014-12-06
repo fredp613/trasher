@@ -42,8 +42,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var trash = Trash()
-    
-    
     //picker
     var ctPicker = CTAssetsPickerController()
     var assets = []
@@ -52,6 +50,8 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     var pageViews: [UIImageView?] = []
     
     var delegate:TrashTableViewProtocol? = nil
+    var fpTextView = FPTextView()
+
     
     @IBOutlet weak var currentLocationLabel: UILabel!
 
@@ -65,34 +65,28 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.textTitle.delegate = self
+
         //dont forget to remove the sleep
-
-        
-        self.navigationItem.hidesBackButton = true
-
-       
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<Back", style: UIBarButtonItemStyle.Plain, target: self, action: "customBtnAction:")
-        
-
-//        self.textTitle.becomeFirstResponder()
         self.actvityIndicatorView.startAnimating()
         self.getCurrentLocation()
+        fpTextView = FPTextView(textView: self.textTitle, placeholder: "Enter description")
+
         
     }
+    
+    
     
     @IBAction func closeWasPressed(sender: AnyObject) {
         
      self.dismissViewControllerAnimated(true, completion: nil)
-    
+        
     }
     
     
     func customBtnAction(sender: UIBarButtonItem) {
-//        self.navigationController?.popToViewController(MasterTableViewController(), animated: true)
+
         self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
-//        self.dismissViewControllerAnimated(true, completion: nil)
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -289,7 +283,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         loadVisiblePages()
     }
     
-   
+  
     
   
     
@@ -348,9 +342,13 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             trashTableViewDelegate(trashArray, trashAssetData: trashAssetsArray)
         }
 
-//        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+       
+
         
-        self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
+        
+//        self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
+        
         
 
 
@@ -464,12 +462,8 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
 
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-        }
-        return true
-    }
+    
+    
     
     // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

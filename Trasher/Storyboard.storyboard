@@ -82,7 +82,7 @@ or log in with TouchID</string>
                         <outlet property="buttonVerify" destination="7Kn-6Q-MaV" id="ugq-rF-1Fp"/>
                         <outlet property="textEmail" destination="ehR-X2-LjY" id="MY6-rE-l8D"/>
                         <outlet property="textVerification" destination="l7x-4m-xpA" id="OsS-0B-mI0"/>
-                        <segue destination="1m3-kK-HGN" kind="show" identifier="addTrashFromSignUpSegue" id="biH-QN-DeA"/>
+                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromSignUpSegue" modalPresentationStyle="fullScreen" id="biH-QN-DeA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2LG-aj-PhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -174,7 +174,7 @@ or log in with TouchID</string>
                     <connections>
                         <outlet property="searchBar" destination="137-TT-Anf" id="LEH-5c-xG1"/>
                         <outlet property="tableView" destination="ZHm-uG-EUf" id="zHg-ha-lYc"/>
-                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromMasterSegue" id="5jj-oe-tJg"/>
+                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromMasterSegue" modalPresentationStyle="fullScreen" id="5jj-oe-tJg"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromMasterSegue" id="qEL-pg-66I"/>
                     </connections>
                 </viewController>
@@ -255,13 +255,13 @@ or log in with TouchID</string>
                         <outlet property="detailTitle" destination="SR5-4K-OJM" id="rX2-6Q-taM"/>
                         <outlet property="pageControl" destination="tE7-ut-6HG" id="qfY-8I-x0a"/>
                         <outlet property="scrollView" destination="R6h-vm-eJr" id="5rd-TR-F6y"/>
-                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromDetailSegue" id="ITQ-ly-PSn"/>
-                        <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromDetailSegue" id="mSu-WB-pSA"/>
+                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromDetailSegue" modalPresentationStyle="fullScreen" id="ITQ-ly-PSn"/>
+                        <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromDetailSegue" modalPresentationStyle="currentContext" id="mSu-WB-pSA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juD-3Z-ZGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3309.5" y="432.5"/>
+            <point key="canvasLocation" x="3911.5" y="885.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Koe-Sl-KPy">
@@ -422,7 +422,7 @@ or log in with TouchID</string>
                         <outlet property="distanceSlider" destination="VOT-Jh-DI2" id="BlO-pp-Vap"/>
                         <outlet property="kmText" destination="byn-ud-Yah" id="jkP-hj-bQH"/>
                         <outlet property="notificationsSwitch" destination="V7y-iQ-Q3Z" id="SmB-BS-aPy"/>
-                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromProfileSegue" id="HMs-WP-Km4"/>
+                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromProfileSegue" modalPresentationStyle="fullScreen" id="HMs-WP-Km4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ceh-tN-bd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -485,7 +485,7 @@ or log in with TouchID</string>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="Ddz-Ht-IAO" id="Sc5-9C-PQz"/>
-                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromSearch" id="1gA-bq-Tg0"/>
+                        <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromSearch" modalPresentationStyle="fullScreen" id="1gA-bq-Tg0"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromSearchSegue" id="XxZ-Ua-nQl"/>
                     </connections>
                 </viewController>
@@ -551,7 +551,7 @@ or log in with TouchID</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0S-nu-zCc">
-                                        <rect key="frame" x="144" y="19" width="54" height="30"/>
+                                        <rect key="frame" x="144" y="19" width="89" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="Change">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -581,11 +581,6 @@ or log in with TouchID</string>
                                             <action selector="capture:" destination="1m3-kK-HGN" eventType="touchUpInside" id="ZuS-pC-dON"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eh5-JP-AQf" customClass="FPTextView" customModule="Trasher" customModuleProvider="target">
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <attributedString key="attributedText"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iiZ-RM-FsH">
                                         <rect key="frame" x="28" y="497" width="83" height="30"/>
                                         <state key="normal" title="Add Images">
@@ -602,7 +597,6 @@ or log in with TouchID</string>
                                                 <rect key="frame" x="28" y="221" width="312" height="37"/>
                                             </pageControl>
                                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnh-VD-ai9">
-                                                <rect key="frame" x="70" y="51" width="240" height="128"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="1m3-kK-HGN" id="4IW-Og-D29"/>
                                                 </connections>
@@ -616,7 +610,7 @@ or log in with TouchID</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdr-vn-7he">
-                                        <rect key="frame" x="326" y="0.0" width="37" height="30"/>
+                                        <rect key="frame" x="326" y="17" width="37" height="30"/>
                                         <state key="normal" title="close">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -624,8 +618,8 @@ or log in with TouchID</string>
                                             <action selector="closeWasPressed:" destination="1m3-kK-HGN" eventType="touchUpInside" id="mDP-Wb-SX2"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Qw-UT-daA">
-                                        <rect key="frame" x="20" y="124" width="343" height="104"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgW-33-uWY">
+                                        <rect key="frame" x="20" y="124" width="343" height="106"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -644,13 +638,12 @@ or log in with TouchID</string>
                         <outlet property="imageButton" destination="iiZ-RM-FsH" id="T8Q-J9-N4V"/>
                         <outlet property="pageControl" destination="hjL-We-mAB" id="gxf-W8-dFe"/>
                         <outlet property="scrollView" destination="fnh-VD-ai9" id="ttK-tE-7Wu"/>
-                        <outlet property="textTitle" destination="3Qw-UT-daA" id="cZ2-dC-gQC"/>
-                        <segue destination="YEM-sn-klX" kind="show" identifier="showMasterFromAddTrash" id="FfR-fx-o2M"/>
+                        <outlet property="textTitle" destination="lgW-33-uWY" id="KpZ-vo-KwQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQZ-4r-bnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3501.5" y="129.5"/>
+            <point key="canvasLocation" x="3862.5" y="-131.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="468-0e-IeX">
@@ -674,8 +667,7 @@ or log in with TouchID</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dqu-iU-4SN"/>
-        <segue reference="5jj-oe-tJg"/>
-        <segue reference="qEL-pg-66I"/>
+        <segue reference="biH-QN-DeA"/>
+        <segue reference="mSu-WB-pSA"/>
     </inferredMetricsTieBreakers>
 </document>

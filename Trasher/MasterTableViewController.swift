@@ -13,7 +13,7 @@ import QuartzCore
 
 
 class MasterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,
-CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITabBarDelegate  {
+CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITabBarDelegate, TrashTableViewProtocol  {
     
 
     
@@ -52,7 +52,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
 
 
         self.tableView.reloadData()
-        navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
+        self.navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
         
         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
             (UIColor.redColor(), "addTrashButtonTouch", "", nil),
@@ -62,6 +62,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
         
     }
+    
+
     
     func addTrashButtonTouch(sender: UIButton) {
         if User.registeredUser() {
@@ -255,9 +257,21 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
                 addTrashController.trashArray = filteredTrash
             }
             
+
+            
+
+            
             addTrashController.trashAssetsArray = trashAssets
+            addTrashController.delegate = self
             
         }
+    }
+    
+    func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>) {
+        println("delegate called")
+        self.trashArray = tableData
+        self.trashAssets = trashAssetData
+        self.tableView.reloadData()
     }
 
 

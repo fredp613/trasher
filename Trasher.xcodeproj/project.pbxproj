@@ -124,6 +124,7 @@
 		2AC0552B19F2E6110068B2E2 /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		2AC0552D19F2E7610068B2E2 /* AddTrashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrashViewController.swift; sourceTree = "<group>"; };
 		2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2ACB077F1A32353500FC3E3E /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		2AE6DC281A1E6AE000F5C397 /* Trasher v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Trasher v1.1.xcdatamodel"; sourceTree = "<group>"; };
 		2AE6DC421A1E738E00F5C397 /* CoreUserLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreUserLocations.swift; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 		2AC054F419F2E5190068B2E2 = {
 			isa = PBXGroup;
 			children = (
+				2ACB077F1A32353500FC3E3E /* Playground.playground */,
 				2AC054FF19F2E5190068B2E2 /* Trasher */,
 				2AC0551819F2E51A0068B2E2 /* TrasherTests */,
 				2AC054FE19F2E5190068B2E2 /* Products */,
