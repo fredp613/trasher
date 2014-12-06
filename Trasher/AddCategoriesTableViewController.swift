@@ -52,18 +52,18 @@ class AddCategoriesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return InitializeTestData().defaulCategories.count
+        return InitializeTestData().generateDefaultCategories().count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        var categoryItem : String! = InitializeTestData().defaulCategories[indexPath.row + 1]
+        var categoryItem : String! = InitializeTestData().generateDefaultCategories()[indexPath.row + 1]
         
         
         var catId = indexPath.row + 1
         
-        cell?.textLabel.text = categoryItem
+        cell?.textLabel?.text = categoryItem
         
         
         if !self.existingCategory(categoryItem!) {
@@ -93,8 +93,8 @@ class AddCategoriesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-        var categoryItem = InitializeTestData().defaulCategories[indexPath.row + 1]
-        cell.textLabel.text = categoryItem
+        var categoryItem = InitializeTestData().generateDefaultCategories()[indexPath.row + 1]
+        cell.textLabel?.text = categoryItem
         
         
         

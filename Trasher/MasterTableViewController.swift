@@ -29,7 +29,9 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     var maskView = UIView()
     var searchState : Bool = false
     var menuButtons = FPGoogleButton()
-
+    var testData = InitializeTestData()
+    var requestedTrash = [Trash]()
+    var wantedTrash = [Trash]()
     
      override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +43,15 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         maskView.backgroundColor = UIColor(white: 0.98, alpha: 0.8)
         
         
-        var testData = InitializeTestData()
+        
         
         
         if (self.trashArray.isEmpty) {
-            self.trashArray =  testData.trashArray
-            self.trashAssets = testData.trashAssets
+            self.trashArray =  testData.generateTestData()
+            self.trashAssets = testData.generateFilteredTrashAssets()
         }
+        
+        performTrashTypeFilter(self.trashArray)
         
 
 
@@ -63,6 +67,24 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
     }
     
+    func performTrashTypeFilter(arrayOfTrash: [Trash]) -> [Trash] {
+        
+        if searchBar.selectedScopeButtonIndex == 0 {
+            self.filteredTrash = testData.filterRequestedTrash(arrayOfTrash)
+        } else {
+            self.filteredTrash = testData.filterWantedTrash(arrayOfTrash)
+        }
+        
+        return arrayOfTrash
+    }
+    
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        searchBar.text = ""
+        performTrashTypeFilter(self.trashArray)
+        
+        tableView.reloadData()
+    }
+    
 
     
     func addTrashButtonTouch(sender: UIButton) {
@@ -75,7 +97,11 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
-        println("event fired")
+        if User.registeredUser() {
+            self.performSegueWithIdentifier("requestTrashFromMasterSegue", sender: self)
+        } else {
+            self.performSegueWithIdentifier("signUpFromMasterSegue", sender: self)
+        }
     }
     
     func drawRoundButton(btn: UIButton) {
@@ -111,13 +137,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if (filteredTrash.isEmpty) {
-            return self.trashArray.count
-        } else {
             return self.filteredTrash.count
-        }
-
-        
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -126,7 +146,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filterTextForSearch(searchText)
+        self.filteredTrash = filterTextForSearch(searchText)
+        performTrashTypeFilter(self.filteredTrash)
         self.tableView.reloadData()
     }
     
@@ -138,25 +159,26 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     func clearSearch() {
         self.searchBar.text = ""
-        self.filteredTrash = self.trashArray
+        performTrashTypeFilter(self.trashArray)
         self.tableView.reloadData()
     }
     
     func filterTextForSearch(keyword: String!) -> Array<Trash> {
         searchState = true
-
-        filteredTrash =  self.trashArray.filter({(trash:Trash) -> Bool in
+        
+        self.filteredTrash = self.filteredTrash.filter({(trash:Trash) -> Bool in
             let descriptionMatch = trash.title.rangeOfString(keyword, options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil, locale: nil)
             return descriptionMatch != nil
         })
         
         if keyword.isEmpty {
             searchState = false
+            self.filteredTrash = performTrashTypeFilter(self.trashArray)
 //            self.trashArray = self.trashArray
         }
         
 //        return self.trashArray
-        return filteredTrash
+        return self.filteredTrash
         
     }
     
@@ -165,16 +187,10 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
         var trash : Trash
-        
-        if filteredTrash.isEmpty {
+        trash = filteredTrash[indexPath.row]
 
-            trash = trashArray[indexPath.row]
-        } else {
-
-            trash = filteredTrash[indexPath.row]
-        }
         
-        cell.textLabel.text = trash.title
+        cell.textLabel?.text = trash.title
         cell.detailTextLabel?.text = trash.fullAddress()
         
         var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
@@ -240,6 +256,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         // Get the new view controller using [segue destinationViewController].
         if (segue.identifier == "showDetailsSegue") {
+          
           var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
           var trash : Trash
           let path  = self.tableView.indexPathForSelectedRow()!
@@ -251,18 +268,23 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
         if segue.identifier == "addTrashFromMasterSegue" {
             var addTrashController = segue.destinationViewController as AddTrashViewController
-            if filteredTrash.isEmpty {
-                addTrashController.trashArray = trashArray
-            } else {
-                addTrashController.trashArray = filteredTrash
-            }
             
-
+            addTrashController.trashArray = trashArray
             
-
             
             addTrashController.trashAssetsArray = trashAssets
             addTrashController.delegate = self
+            
+        }
+        
+        if segue.identifier == "requestTrashFromMasterSegue" {
+            var requestTrashController = segue.destinationViewController as RequestTrashViewController
+            
+//            requestTrashController.trashArray = trashArray
+//            
+//            
+//            requestTrashController.trashAssetsArray = trashAssets
+//            requestTrashController.delegate = self
             
         }
     }
@@ -271,6 +293,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         println("delegate called")
         self.trashArray = tableData
         self.trashAssets = trashAssetData
+        
+        performTrashTypeFilter(self.trashArray)
         self.tableView.reloadData()
     }
 

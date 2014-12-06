@@ -34,7 +34,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         self.categoriesTableView.dataSource = self
         self.kmText.text = "\(User().distance)"
         if self.tableData.isEmpty {
-            tableData = InitializeTestData().initialCategories
+            tableData = InitializeTestData().generateInitialCategories()
 //            Category().currentCategories = Category().initialCategories
 
         } else {
@@ -147,7 +147,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
             }
            categoryItem = indexedCategories[indexPath.row]
         
-        cell.textLabel.text = categoryItem
+        cell.textLabel?.text = categoryItem
         return cell
     }
    

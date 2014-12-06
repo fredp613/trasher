@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A06B1BC1A3395100087E167 /* RequestTrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */; };
 		2A073E0819F5AD530067D132 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0719F5AD530067D132 /* MobileCoreServices.framework */; };
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
 		2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0A68F71A1419870070720B /* CoreDataStack.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTrashViewController.swift; sourceTree = "<group>"; };
 		2A073E0719F5AD530067D132 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A0A68F71A1419870070720B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../.Trash/CoreDataStack.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		2AC054FF19F2E5190068B2E2 /* Trasher */ = {
 			isa = PBXGroup;
 			children = (
+				2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */,
 				2AE6DC291A1E711B00F5C397 /* CoreModels */,
 				2A68E3151A19366C005A7529 /* helpers */,
 				2A77FF7E1A16DDAF00127F10 /* external_libs */,
@@ -501,6 +504,7 @@
 				2AE6DCB31A1E9AD200F5C397 /* CTAssetsGroupViewCell.m in Sources */,
 				2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */,
 				2A727C401A2524FB001C13BB /* MapViewController.swift in Sources */,
+				2A06B1BC1A3395100087E167 /* RequestTrashViewController.swift in Sources */,
 				2A1877061A2436C80021F9AD /* TrashAssets.swift in Sources */,
 				2A8224F41A142B0D00F76CEB /* User.swift in Sources */,
 				2AC0550319F2E5190068B2E2 /* AppDelegate.swift in Sources */,

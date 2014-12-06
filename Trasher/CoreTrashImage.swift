@@ -15,3 +15,4 @@ class CoreTrashImage: NSManagedObject {
     @NSManaged var trash_image: NSData
 
 }
+

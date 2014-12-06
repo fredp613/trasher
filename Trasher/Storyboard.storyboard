@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cDx-Qd-e5k">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cDx-Qd-e5k">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Sign Up View Controller-->
@@ -176,6 +176,7 @@ or log in with TouchID</string>
                         <outlet property="tableView" destination="ZHm-uG-EUf" id="zHg-ha-lYc"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromMasterSegue" modalPresentationStyle="fullScreen" id="5jj-oe-tJg"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromMasterSegue" id="qEL-pg-66I"/>
+                        <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromMasterSegue" id="ndf-bQ-G53"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4UX-Gd-zLP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -206,7 +207,6 @@ or log in with TouchID</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="inq-aL-ZBU"/>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJw-iR-7ro">
                                 <rect key="frame" x="16" y="554" width="262" height="74"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="0.38" colorSpace="calibratedRGB"/>
@@ -257,11 +257,42 @@ or log in with TouchID</string>
                         <outlet property="scrollView" destination="R6h-vm-eJr" id="5rd-TR-F6y"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromDetailSegue" modalPresentationStyle="fullScreen" id="ITQ-ly-PSn"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromDetailSegue" modalPresentationStyle="currentContext" id="mSu-WB-pSA"/>
+                        <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromDetailSegue" id="X2o-TD-aTx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juD-3Z-ZGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3911.5" y="885.5"/>
+            <point key="canvasLocation" x="3402.5" y="269.5"/>
+        </scene>
+        <!--Request Trash View Controller-->
+        <scene sceneID="s9r-mL-mev">
+            <objects>
+                <viewController id="2f1-x8-Nqm" customClass="RequestTrashViewController" customModule="Trasher" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MPi-Oe-MRK"/>
+                        <viewControllerLayoutGuide type="bottom" id="7RK-H3-KMr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qr9-6b-Yk4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJR-8D-ugV">
+                                <rect key="frame" x="298" y="28" width="37" height="30"/>
+                                <state key="normal" title="close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonWasPressed:" destination="2f1-x8-Nqm" eventType="touchUpInside" id="VHH-5U-Yzr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VYi-pM-oYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3383.5" y="1226.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Koe-Sl-KPy">
@@ -303,7 +334,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dla-6V-HFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2752.5" y="2184.5"/>
+            <point key="canvasLocation" x="2381.5" y="2169.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Nxw-EZ-g6x">
@@ -423,11 +454,12 @@ or log in with TouchID</string>
                         <outlet property="kmText" destination="byn-ud-Yah" id="jkP-hj-bQH"/>
                         <outlet property="notificationsSwitch" destination="V7y-iQ-Q3Z" id="SmB-BS-aPy"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromProfileSegue" modalPresentationStyle="fullScreen" id="HMs-WP-Km4"/>
+                        <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromProfileSegue" id="l7A-rA-V1A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ceh-tN-bd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3115.5" y="1170.5"/>
+            <point key="canvasLocation" x="2775.5" y="1200.5"/>
         </scene>
         <!--Categories-->
         <scene sceneID="z1Z-on-s5F">
@@ -466,7 +498,7 @@ or log in with TouchID</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZj-fU-cBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3719.5" y="1200.5"/>
+            <point key="canvasLocation" x="2775.5" y="1957.5"/>
         </scene>
         <!--Advanced Search-->
         <scene sceneID="qBC-4L-pBg">
@@ -597,6 +629,7 @@ or log in with TouchID</string>
                                                 <rect key="frame" x="28" y="221" width="312" height="37"/>
                                             </pageControl>
                                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnh-VD-ai9">
+                                                <rect key="frame" x="40" y="25" width="300" height="200"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="1m3-kK-HGN" id="4IW-Og-D29"/>
                                                 </connections>
@@ -643,7 +676,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQZ-4r-bnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3862.5" y="-131.5"/>
+            <point key="canvasLocation" x="3402.5" y="-458.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="468-0e-IeX">
@@ -663,11 +696,12 @@ or log in with TouchID</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ChH-QW-FOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2653.5" y="1460.5"/>
+            <point key="canvasLocation" x="2323.5" y="1464.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="biH-QN-DeA"/>
-        <segue reference="mSu-WB-pSA"/>
+        <segue reference="ndf-bQ-G53"/>
+        <segue reference="5jj-oe-tJg"/>
+        <segue reference="qEL-pg-66I"/>
     </inferredMetricsTieBreakers>
 </document>
