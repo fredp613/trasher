@@ -18,7 +18,7 @@ protocol TrashTableViewProtocol {
 }
 
 class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol,
-UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDelegate {
+UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
    
    
@@ -51,12 +51,16 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     
     var delegate:TrashTableViewProtocol? = nil
     var fpTextView = FPTextView()
-
+    var categoryPickerView = UIView()
+    var categories = InitializeTestData().generateDefaultCategories()
     
     @IBOutlet weak var currentLocationLabel: UILabel!
 
+    @IBOutlet weak var categoryLabel: UILabel!
     
     @IBOutlet weak var imageButton: UIButton!
+    
+    @IBOutlet weak var chooseCategoryButton: UIButton!
     
     @IBAction func changeLocationButton(sender: AnyObject) {
 
@@ -81,6 +85,70 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
      self.dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    @IBAction func chooseCategoryWasPressed(sender: AnyObject) {
+        if (self.categoryLabel.text? != nil) {
+            self.chooseCategoryButton.setTitle("change", forState: UIControlState.Normal)
+        } else {
+            self.chooseCategoryButton.setTitle("choose category", forState: UIControlState.Normal)
+        }
+        
+        
+        var categoryPickerContainerFrame = CGRectMake(60, 200, 250, 220)
+        categoryPickerView = UIView(frame: categoryPickerContainerFrame)
+        categoryPickerView.backgroundColor = UIColor.whiteColor()
+        categoryPickerView.layer.borderWidth = 1.0
+        categoryPickerView.layer.cornerRadius = 12
+        categoryPickerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        
+        
+        
+        var categoryPicker = UIPickerView()
+        categoryPicker.frame.size.height = 300
+        categoryPicker.frame.size.width = 250
+        categoryPicker.delegate = self
+
+        categoryPickerView.addSubview(categoryPicker)
+        self.view.addSubview(categoryPickerView)
+
+        
+        
+    }
+    
+//MARK:PickerView
+    
+
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        println("selected")
+        self.categoryLabel.text = categories[row]
+        trash.trash_category = row
+        categoryPickerView.removeFromSuperview()
+        
+        
+    }
+    
+//    func doneSelectingCategory(sender: UIButton) {
+//        categoryPickerView.removeFromSuperview()
+//    }
+    
+    
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        var categories = InitializeTestData().generateDefaultCategories()
+        return categories.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        
+        return categories[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        //to do
+        return 1
+    }
+    
     
     
     func customBtnAction(sender: UIBarButtonItem) {

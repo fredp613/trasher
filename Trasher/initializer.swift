@@ -71,7 +71,7 @@ class InitializeTestData {
         trash.postalCode = "K1B5H5"
         trash.latitude = 45.434363
         trash.longitude = -75.560305
-        
+        trash.trash_category = 1
         
         var imageData = NSData(contentsOfFile: "used-tv")
         trash.image = UIImageJPEGRepresentation(UIImage(named: "used-tv"), 0.75)
@@ -88,6 +88,7 @@ class InitializeTestData {
         trash.image = UIImageJPEGRepresentation(UIImage(named: "used-tv"), 0.75)
         trash.latitude = 45.438186
         trash.longitude = -75.595628
+        trash.trash_category = 4
         
         trashArray.append(trash)
         
@@ -101,6 +102,7 @@ class InitializeTestData {
         trash.latitude = 45.415416
         trash.image = UIImageJPEGRepresentation(UIImage(named: "used-bbq"), 0.75)
         trash.longitude = -75.606957
+        trash.trash_category = 5
         
         trashArray.append(trash)
         
@@ -115,7 +117,7 @@ class InitializeTestData {
         trash.latitude = 45.430959
         trash.longitude = -75.557347
         trashArray.append(trash)
-        
+        trash.trash_category = 2
         
         
         trash = Trash()
@@ -128,6 +130,7 @@ class InitializeTestData {
         trash.latitude = 45.415416
         trash.longitude = -75.606957
         trash.trashType = TrashType.wanted.rawValue
+        trash.trash_category = 7
         trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
         trashArray.append(trash)
         
@@ -141,6 +144,7 @@ class InitializeTestData {
         trash.latitude = 45.415416
         trash.longitude = -75.606957
         trash.trashType = TrashType.wanted.rawValue
+        trash.trash_category = 3
         trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
         trashArray.append(trash)
         

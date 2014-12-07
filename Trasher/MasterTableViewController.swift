@@ -190,7 +190,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         trash = filteredTrash[indexPath.row]
 
         
-        cell.textLabel?.text = trash.title
+        cell.textLabel?.text = trash.title + " " + String(trash.categoryName(trash.trash_category))
         cell.detailTextLabel?.text = trash.fullAddress()
         
         var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))

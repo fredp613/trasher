@@ -208,7 +208,7 @@ or log in with TouchID</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJw-iR-7ro">
-                                <rect key="frame" x="16" y="554" width="262" height="74"/>
+                                <rect key="frame" x="16" y="554" width="262" height="64"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="0.38" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -577,13 +577,13 @@ or log in with TouchID</string>
                                 <rect key="frame" x="-4" y="46" width="380" height="621"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pick up address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53G-AT-V67">
-                                        <rect key="frame" x="20" y="22" width="124" height="21"/>
+                                        <rect key="frame" x="20" y="3" width="124" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0S-nu-zCc">
-                                        <rect key="frame" x="144" y="19" width="89" height="30"/>
+                                        <rect key="frame" x="144" y="0.0" width="89" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="Change">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -593,7 +593,7 @@ or log in with TouchID</string>
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AbW-n3-t62">
-                                        <rect key="frame" x="191" y="74" width="20" height="20"/>
+                                        <rect key="frame" x="191" y="57" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xi8-9h-yVF">
                                         <rect key="frame" x="205" y="521" width="34" height="30"/>
@@ -637,13 +637,8 @@ or log in with TouchID</string>
                                         </subviews>
                                         <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Finding current location" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrD-sl-VqJ">
-                                        <rect key="frame" x="20" y="51" width="343" height="65"/>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdr-vn-7he">
-                                        <rect key="frame" x="326" y="17" width="37" height="30"/>
+                                        <rect key="frame" x="326" y="0.0" width="37" height="30"/>
                                         <state key="normal" title="close">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -652,11 +647,31 @@ or log in with TouchID</string>
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgW-33-uWY">
-                                        <rect key="frame" x="20" y="124" width="343" height="106"/>
+                                        <rect key="frame" x="20" y="101" width="343" height="86"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bnr-Sy-Azx">
+                                        <rect key="frame" x="20" y="195" width="114" height="30"/>
+                                        <state key="normal" title="choose categroy">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="chooseCategoryWasPressed:" destination="1m3-kK-HGN" eventType="touchUpInside" id="JAZ-ek-bMm"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIa-7T-MpB">
+                                        <rect key="frame" x="144" y="201" width="149" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Finding current location" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrD-sl-VqJ">
+                                        <rect key="frame" x="20" y="32" width="343" height="65"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -666,7 +681,9 @@ or log in with TouchID</string>
                     <connections>
                         <outlet property="actvityIndicatorView" destination="AbW-n3-t62" id="5hQ-BX-UDG"/>
                         <outlet property="btnSave" destination="Xi8-9h-yVF" id="Oeq-Fo-gIo"/>
+                        <outlet property="categoryLabel" destination="tIa-7T-MpB" id="Y65-ty-sbQ"/>
                         <outlet property="changeLocationButton" destination="n0S-nu-zCc" id="Jfi-9k-ot3"/>
+                        <outlet property="chooseCategoryButton" destination="Bnr-Sy-Azx" id="Fhz-84-2oP"/>
                         <outlet property="currentLocationLabel" destination="OrD-sl-VqJ" id="WB1-hb-ZtJ"/>
                         <outlet property="imageButton" destination="iiZ-RM-FsH" id="T8Q-J9-N4V"/>
                         <outlet property="pageControl" destination="hjL-We-mAB" id="gxf-W8-dFe"/>
@@ -700,8 +717,8 @@ or log in with TouchID</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ndf-bQ-G53"/>
-        <segue reference="5jj-oe-tJg"/>
-        <segue reference="qEL-pg-66I"/>
+        <segue reference="ITQ-ly-PSn"/>
+        <segue reference="mSu-WB-pSA"/>
+        <segue reference="X2o-TD-aTx"/>
     </inferredMetricsTieBreakers>
 </document>

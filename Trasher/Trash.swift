@@ -22,7 +22,7 @@ class Trash : Address {
     var desc: String!
     var image: NSData!
     var title: String!
-    var trash_category: Category!
+    var trash_category: Int!
     var trashArray = [Trash]()
     var trashType : Int!
     
@@ -33,6 +33,13 @@ class Trash : Address {
         title = "First title"
         trashType = TrashType.requested.rawValue
         super.init()
+    }
+    
+    func categoryName(trash_category: Int!) -> String {
+        
+        var cname = Category().getCategoryName(trash_category)
+        
+        return cname
     }
     
     

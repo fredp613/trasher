@@ -20,4 +20,22 @@ class Category {
         
     }
     
+    func getCategoryName(categoryId: Int!) -> String {
+        var defaulCategories = [
+            1 : "Clothes",
+            2 : "Indoor Furniture",
+            3 : "Outdoor Furniture",
+            4 : "Cooking Supplies",
+            5 : "Tools",
+            6 : "Alcohol Bottles",
+            7 : "Electronics",
+            8 : "Wood",
+            9 : "Toys",
+            10 : "Vehicle"
+        ]
+        
+        return defaulCategories[categoryId]!
+
+    }
+    
 }
