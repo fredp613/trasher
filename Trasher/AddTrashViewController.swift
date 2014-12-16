@@ -13,23 +13,16 @@ import SystemConfiguration
 import AssetsLibrary
 
 
-protocol TrashTableViewProtocol {
-    func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>)
-}
 
-class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, TrashTableViewProtocol,
+class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, PopulateMasterTableViewDelegate,
 UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
    
    
     @IBOutlet weak var textTitle: UITextView!
-    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnSave: UIButton!
-
-  
-   
     @IBOutlet weak var changeLocationButton: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var actvityIndicatorView: UIActivityIndicatorView!
@@ -49,10 +42,11 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     var containerView : UIView!
     var pageViews: [UIImageView?] = []
     
-    var delegate:TrashTableViewProtocol? = nil
+    var delegate:PopulateMasterTableViewDelegate? = nil
     var fpTextView = FPTextView()
     var categoryPickerView = UIView()
     var categories = InitializeTestData().generateDefaultCategories()
+    var placeholder = String()
     
     @IBOutlet weak var currentLocationLabel: UILabel!
 
@@ -69,11 +63,12 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        placeholder = "Enter description"
 
         //dont forget to remove the sleep
         self.actvityIndicatorView.startAnimating()
         self.getCurrentLocation()
-        fpTextView = FPTextView(textView: self.textTitle, placeholder: "Enter description")
+        fpTextView = FPTextView(textView: self.textTitle, placeholder: placeholder)
 
         
     }
@@ -93,15 +88,12 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             self.chooseCategoryButton.setTitle("choose category", forState: UIControlState.Normal)
         }
         
-        
         var categoryPickerContainerFrame = CGRectMake(60, 200, 250, 220)
         categoryPickerView = UIView(frame: categoryPickerContainerFrame)
         categoryPickerView.backgroundColor = UIColor.whiteColor()
         categoryPickerView.layer.borderWidth = 1.0
         categoryPickerView.layer.cornerRadius = 12
         categoryPickerView.layer.borderColor = UIColor.lightGrayColor().CGColor
-        
-        
         
         var categoryPicker = UIPickerView()
         categoryPicker.frame.size.height = 300
@@ -351,9 +343,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         loadVisiblePages()
     }
     
-  
-    
-  
     
     func assetsPickerController(picker: CTAssetsPickerController!, shouldEnableAsset asset: ALAsset!) -> Bool {
         if asset.valueForProperty(ALAssetPropertyType).isEqual(ALAssetTypeVideo) {
@@ -385,14 +374,12 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
 
     @IBAction func saveTrash(sender: AnyObject) {
         
-        if !self.textTitle.text.isEmpty {
+        if !(self.textTitle.text.isEmpty || self.textTitle.text == placeholder) {
             self.trash.title = self.textTitle.text
         }
         self.trash.trashId = NSUUID().UUIDString
 
         trashArray.append(self.trash)
-
-        
         
         var trashAsset = TrashAssets()
         
@@ -406,9 +393,10 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
               trashAssetsArray.append(trashAsset)
             }
         }
-        if (delegate != nil) {
-            trashTableViewDelegate(trashArray, trashAssetData: trashAssetsArray)
+        if delegate != nil {
+            refreshRequestedData(trashArray, tableDataAssets: trashAssetsArray)
         }
+
 
         self.dismissViewControllerAnimated(true, completion: nil)
        
@@ -464,10 +452,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                 }
             })
             
-         
-            manager.stopUpdatingLocation()
-           
-            
+            manager.stopUpdatingLocation()            
             
         } else {
             println("Something went wrong")
@@ -485,8 +470,10 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         locationManager.startUpdatingLocation()
     }
     
-    func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>) {
-        delegate?.trashTableViewDelegate(trashArray, trashAssetData: trashAssetsArray)
+
+    
+    func refreshRequestedData(tableData: [Trash], tableDataAssets: [TrashAssets]) {
+        delegate?.refreshRequestedData!(tableData, tableDataAssets: tableDataAssets)
     }
     
     //MARK: keyboard
@@ -517,9 +504,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             }, completion: { finished in println("animation done")})
     }
     
-
-    
-    
     func keyboardWillHide(notification: NSNotification) {
         var info = notification.userInfo!
         var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
@@ -529,9 +513,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         })
 
     }
-    
-    
-    
     
     // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

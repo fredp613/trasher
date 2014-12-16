@@ -38,7 +38,11 @@ class SearchViewController: UIViewController {
     }
     
     func requestTrashButtonTouch(sender: UIButton!) {
-        println("event fired")
+        if User.registeredUser() {
+            performSegueWithIdentifier("requestTrashFromSearchSegue", sender: self)
+        } else {
+            performSegueWithIdentifier("signUpFromSearchSegue", sender: self)
+        }
         
     }
     

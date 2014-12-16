@@ -86,7 +86,11 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
-        println("event fired")
+        if User.registeredUser() {
+            self.performSegueWithIdentifier("requestTrashFromDetailSegue", sender: self)
+        } else {
+            self.performSegueWithIdentifier("signUpFromDetailSegue", sender: self)
+        }
     }
 
     

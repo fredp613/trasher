@@ -17,8 +17,18 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var textVerification: UITextField!
     @IBOutlet weak var buttonVerify: UIButton!
+    
+    @IBOutlet weak var textPwd: UITextField!
+    @IBOutlet weak var textConfirmPwd: UITextField!
+    
+    
     var trashArray = [Trash]()
     var trashAssetsArray = [TrashAssets]()
+    
+    var managedContext = CoreDataStack().managedObjectContext!
+    var fetchedResultsController = NSFetchedResultsController()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textVerification.hidden = true
@@ -143,8 +153,18 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
 //        NSEntityDescription.insertNewObjectForEntityForName("LogItem", inManagedObjectContext: self.managedObjectContext!) as LogItem
         
         if self.textVerification != "dpg613" {
-
-           self.performSegueWithIdentifier("addTrashFromSignUpSegue", sender: self)
+            
+            if textPwd.text == textConfirmPwd.text {
+            
+                let cu = CoreUser()
+                cu.email = "fredp613@gmail.com"
+                cu.username = "fredp613"
+                CoreUser.createInManagedObjectContext(managedContext, coreUser: cu)
+                self.dismissViewControllerAnimated(true, completion: nil) }
+            else {
+                var alertView = UIAlertView(title: "Passwords do not match", message: "Please ensure you typed in the same password in both password fields, try again", delegate: self, cancelButtonTitle: "OK")
+                 alertView.show()
+            }
             
         } else {
             var alertView = UIAlertView(title: "Code is invalid", message: "Please ensure you typed in the correct code, otherwise try again", delegate: self, cancelButtonTitle: "OK")
@@ -153,6 +173,14 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
         }
         
        
+    }
+    
+
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == alertView.cancelButtonIndex {
+            println("delete")
+        }
     }
     
 //    func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -178,6 +206,26 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
 //            addTrashController?.delegate = master
         }
     }
+    
+    // MARK: Core Data
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 }

@@ -4,6 +4,62 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="YTG-BK-07b">
+            <objects>
+                <viewController id="6cc-Tu-fYL" customClass="LoginViewController" customModule="Trasher" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gQx-vv-Xor"/>
+                        <viewControllerLayoutGuide type="bottom" id="UVH-Sw-zHR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="arK-D6-UtH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOGIN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sv0-1x-i7x">
+                                <rect key="frame" x="16" y="78" width="343" height="73"/>
+                                <color key="backgroundColor" red="0.49824534581827579" green="0.62339386342571068" blue="0.78364748677248675" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xg0-fQ-K4m" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="-4" y="189" width="383" height="133"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zeB-CC-ryB">
+                                        <rect key="frame" x="20" y="20" width="343" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbG-c3-oyE">
+                                        <rect key="frame" x="20" y="83" width="343" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNZ-6U-Y88">
+                                <rect key="frame" x="322" y="29" width="37" height="30"/>
+                                <state key="normal" title="close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonWasPressed:" destination="6cc-Tu-fYL" eventType="touchUpInside" id="G3r-MI-dQZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="textEmail" destination="zeB-CC-ryB" id="gYe-HN-tf0"/>
+                        <outlet property="textPwd" destination="UbG-c3-oyE" id="MDM-yf-bbj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oJE-6G-NR2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2717.5" y="-388.5"/>
+        </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="F0a-PJ-inx">
             <objects>
@@ -27,11 +83,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l7x-4m-xpA">
-                                        <rect key="frame" x="20" y="328" width="343" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="go"/>
-                                    </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soU-8d-1zZ">
                                         <rect key="frame" x="25" y="91" width="333" height="65"/>
                                         <string key="text">To get started, register with your email 
@@ -41,7 +92,7 @@ or log in with TouchID</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcd-J4-3hh">
-                                        <rect key="frame" x="97" y="216" width="188" height="85"/>
+                                        <rect key="frame" x="97" y="202" width="188" height="85"/>
                                         <color key="backgroundColor" red="0.0" green="0.16504629630000001" blue="0.45983796300000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="send verification code">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -50,19 +101,8 @@ or log in with TouchID</string>
                                             <action selector="sendVerification:" destination="1E2-cX-ufm" eventType="touchUpInside" id="3uH-dZ-piT"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Kn-6Q-MaV">
-                                        <rect key="frame" x="155" y="379" width="72" height="47"/>
-                                        <color key="backgroundColor" red="0.4941176471" green="0.60392156860000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Verify">
-                                            <color key="titleColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="verifyCode:" destination="1E2-cX-ufm" eventType="touchUpInside" id="RLf-Zo-zhp"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVB-X0-Und">
-                                        <rect key="frame" x="329" y="18" width="37" height="30"/>
+                                        <rect key="frame" x="329" y="30" width="37" height="30"/>
                                         <state key="normal" title="close">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -70,6 +110,42 @@ or log in with TouchID</string>
                                             <action selector="closePressed:" destination="1E2-cX-ufm" eventType="touchUpInside" id="Ylt-Hw-Sua"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Kn-6Q-MaV">
+                                        <rect key="frame" x="155" y="475" width="72" height="47"/>
+                                        <color key="backgroundColor" red="0.4941176471" green="0.60392156860000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Go">
+                                            <color key="titleColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="verifyCode:" destination="1E2-cX-ufm" eventType="touchUpInside" id="RLf-Zo-zhp"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DhE-Ug-Dai">
+                                        <rect key="frame" x="0.0" y="308" width="383" height="70"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l7x-4m-xpA">
+                                                <rect key="frame" x="20" y="20" width="343" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
+                                            </textField>
+                                        </subviews>
+                                    </scrollView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vs-Dd-vIY">
+                                        <rect key="frame" x="0.0" y="355" width="383" height="116"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4YN-Hi-IXM">
+                                                <rect key="frame" x="20" y="66" width="343" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X3T-03-Adv">
+                                                <rect key="frame" x="20" y="20" width="343" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </scrollView>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -80,14 +156,16 @@ or log in with TouchID</string>
                         <outlet property="activityIndicatorView" destination="aJ1-QA-MXJ" id="s4u-s2-L3e"/>
                         <outlet property="buttonVerification" destination="Tcd-J4-3hh" id="hXZ-Kx-xrP"/>
                         <outlet property="buttonVerify" destination="7Kn-6Q-MaV" id="ugq-rF-1Fp"/>
+                        <outlet property="textConfirmPwd" destination="4YN-Hi-IXM" id="1cE-wV-XC8"/>
                         <outlet property="textEmail" destination="ehR-X2-LjY" id="MY6-rE-l8D"/>
+                        <outlet property="textPwd" destination="X3T-03-Adv" id="WeC-Kg-jci"/>
                         <outlet property="textVerification" destination="l7x-4m-xpA" id="OsS-0B-mI0"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromSignUpSegue" modalPresentationStyle="fullScreen" id="biH-QN-DeA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2LG-aj-PhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2908.5" y="-397.5"/>
+            <point key="canvasLocation" x="3149.5" y="-447.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7OR-ls-ICQ">
@@ -124,7 +202,7 @@ or log in with TouchID</string>
                                 <searchBar key="tableHeaderView" contentMode="redraw" showsCancelButton="YES" showsScopeBar="YES" id="137-TT-Anf">
                                     <rect key="frame" x="0.0" y="64" width="375" height="88"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     <scopeButtonTitles>
                                         <string>Getting rid of</string>
                                         <string>Wanted</string>
@@ -167,7 +245,7 @@ or log in with TouchID</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Trash" id="aDM-ET-hsm"/>
+                    <tabBarItem key="tabBarItem" title="Trash" image="trash-can-tab-icon" id="aDM-ET-hsm"/>
                     <navigationItem key="navigationItem" title="Trash" id="JdW-cj-2yh"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -177,11 +255,12 @@ or log in with TouchID</string>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromMasterSegue" modalPresentationStyle="fullScreen" id="5jj-oe-tJg"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromMasterSegue" id="qEL-pg-66I"/>
                         <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromMasterSegue" id="ndf-bQ-G53"/>
+                        <segue destination="6cc-Tu-fYL" kind="presentation" identifier="showLoginFromMasterSegue" id="iab-S1-FWu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4UX-Gd-zLP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2889.5" y="438.5"/>
+            <point key="canvasLocation" x="2927.5" y="535.5"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="G0p-P4-tyF">
@@ -262,7 +341,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juD-3Z-ZGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3402.5" y="269.5"/>
+            <point key="canvasLocation" x="3449.5" y="507.5"/>
         </scene>
         <!--Request Trash View Controller-->
         <scene sceneID="s9r-mL-mev">
@@ -285,14 +364,73 @@ or log in with TouchID</string>
                                     <action selector="closeButtonWasPressed:" destination="2f1-x8-Nqm" eventType="touchUpInside" id="VHH-5U-Yzr"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8F-Nl-VYa">
+                                <rect key="frame" x="16" y="170" width="343" height="180"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7jB-dc-fWQ">
+                                <rect key="frame" x="44" y="396" width="149" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EI6-zp-A52">
+                                <rect key="frame" x="24" y="401" width="15" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="esA-ib-z1P">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Willing to pay (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kf8-ZN-X8X">
+                                <rect key="frame" x="20" y="367" width="170" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ftP-n3-8g2">
+                                <rect key="frame" x="125" y="473" width="124" height="91"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Post Request">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveButtonWasPressed:" destination="2f1-x8-Nqm" eventType="touchUpInside" id="m5B-RZ-Qc2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NH6-Zw-SPC">
+                                <rect key="frame" x="24" y="90" width="115" height="30"/>
+                                <state key="normal" title="choose category">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="chooseCategoryWasPressed:" destination="2f1-x8-Nqm" eventType="touchUpInside" id="mEX-LS-SzZ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yok-PD-VQd">
+                                <rect key="frame" x="147" y="94" width="133" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="categoryLabel" destination="Yok-PD-VQd" id="qN8-dW-gbK"/>
+                        <outlet property="chooseCategoryButton" destination="NH6-Zw-SPC" id="hXm-xI-Op9"/>
+                        <outlet property="textView" destination="e8F-Nl-VYa" id="U0v-db-Tvi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYi-pM-oYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3383.5" y="1226.5"/>
+            <point key="canvasLocation" x="4500.5" y="1246.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Koe-Sl-KPy">
@@ -380,7 +518,7 @@ or log in with TouchID</string>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="byn-ud-Yah">
                                 <rect key="frame" x="189" y="133" width="53" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="kmTextChanged:" destination="BCA-0i-oeZ" eventType="editingChanged" id="SGx-2o-qV5"/>
                                     <outlet property="delegate" destination="BCA-0i-oeZ" id="ylS-yc-Xo3"/>
@@ -423,6 +561,9 @@ or log in with TouchID</string>
                                 <state key="normal" title="km">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="kmMiWasPressed:" destination="BCA-0i-oeZ" eventType="touchUpInside" id="Oof-65-x45"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="G49-c5-GTG">
                                 <rect key="frame" x="35" y="277" width="312" height="200"/>
@@ -441,9 +582,20 @@ or log in with TouchID</string>
                                     <outlet property="delegate" destination="BCA-0i-oeZ" id="vOT-H8-ldz"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gad-j3-v9s">
+                                <rect key="frame" x="16" y="89" width="63" height="30"/>
+                                <state key="normal" title="My Trash">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myTrashWasPressed:" destination="BCA-0i-oeZ" eventType="touchUpInside" id="Snv-QK-3oj"/>
+                                    <segue destination="02K-IJ-Bk8" kind="presentation" identifier="showMyTrashSegue" id="oWL-Ux-l9T"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile-icon" id="Ky5-B2-Ypw"/>
                     <navigationItem key="navigationItem" id="9NU-Nb-g0B"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -451,6 +603,7 @@ or log in with TouchID</string>
                         <outlet property="categoriesTableView" destination="G49-c5-GTG" id="TWZ-NL-ZQV"/>
                         <outlet property="defaultAddressLabel" destination="ibF-ja-AsI" id="jaD-dx-qve"/>
                         <outlet property="distanceSlider" destination="VOT-Jh-DI2" id="BlO-pp-Vap"/>
+                        <outlet property="kmMiButton" destination="f0s-hi-C1h" id="VCb-ps-fwj"/>
                         <outlet property="kmText" destination="byn-ud-Yah" id="jkP-hj-bQH"/>
                         <outlet property="notificationsSwitch" destination="V7y-iQ-Q3Z" id="SmB-BS-aPy"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromProfileSegue" modalPresentationStyle="fullScreen" id="HMs-WP-Km4"/>
@@ -459,7 +612,71 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ceh-tN-bd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2775.5" y="1200.5"/>
+            <point key="canvasLocation" x="2775.5" y="1027.5"/>
+        </scene>
+        <!--My Trash Table Table View Controller-->
+        <scene sceneID="QFY-CF-IUC">
+            <objects>
+                <tableViewController id="hNm-Tc-cKN" customClass="MyTrashTableTableViewController" customModule="Trasher" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Suk-qY-GYM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="G0G-7A-Iyc">
+                            <rect key="frame" x="-61" y="-14" width="375" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Requested"/>
+                                <segment title="Wanted"/>
+                            </segments>
+                        </segmentedControl>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="TVR-bV-LUs">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TVR-bV-LUs" id="QuA-yM-IxM">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="lzG-Q2-dhK" kind="show" identifier="myTrashEditSegue" id="rAs-hN-BY2"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hNm-Tc-cKN" id="QtT-as-blx"/>
+                            <outlet property="delegate" destination="hNm-Tc-cKN" id="szq-V7-7LZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="5Be-DO-W4e">
+                        <barButtonItem key="rightBarButtonItem" title="back to profile" id="nam-Jd-nGJ">
+                            <connections>
+                                <action selector="backToProfileWasPressed:" destination="hNm-Tc-cKN" id="bQ6-e6-sPQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6G-rh-lp7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3709.5" y="1738.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KPm-50-dzw">
+            <objects>
+                <viewController id="lzG-Q2-dhK" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OGo-Hv-NdK"/>
+                        <viewControllerLayoutGuide type="bottom" id="hMr-4p-1yy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lFd-PY-hER">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LOH-fb-dIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4293.5" y="1972.5"/>
         </scene>
         <!--Categories-->
         <scene sceneID="z1Z-on-s5F">
@@ -519,6 +736,7 @@ or log in with TouchID</string>
                         <outlet property="searchDisplayController" destination="Ddz-Ht-IAO" id="Sc5-9C-PQz"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromSearch" modalPresentationStyle="fullScreen" id="1gA-bq-Tg0"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromSearchSegue" id="XxZ-Ua-nQl"/>
+                        <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromSearchSegue" id="uaG-2g-Mc1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="95y-b1-cbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -531,7 +749,7 @@ or log in with TouchID</string>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2252.5" y="-373.5"/>
+            <point key="canvasLocation" x="2348.5" y="-168.5"/>
         </scene>
         <!--Main Tab Bar View Controller-->
         <scene sceneID="CAk-7M-LtZ">
@@ -543,6 +761,18 @@ or log in with TouchID</string>
                                 <segue destination="Mfg-TU-ve6" kind="show" id="2wk-by-2wj"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Xb6-VA-T99">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Aer-bj-DJR">
+                                <rect key="frame" x="-23" y="-15" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="logout">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutWasPressed:" destination="YEM-sn-klX" eventType="touchUpInside" id="5HG-9R-dZS"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -552,14 +782,16 @@ or log in with TouchID</string>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="logoutButton" destination="Aer-bj-DJR" id="3TO-JC-pZd"/>
                         <segue destination="gjY-lN-UN9" kind="relationship" relationship="viewControllers" id="Py3-jn-YfW"/>
                         <segue destination="iAV-gO-fGR" kind="relationship" relationship="viewControllers" id="Dbb-0s-dpl"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpSegue" id="M1i-iy-PHf"/>
+                        <segue destination="6cc-Tu-fYL" kind="presentation" identifier="showLoginFromMainSegue" id="VjE-DM-eRH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bi4-tw-I1z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2323.5" y="681.5"/>
+            <point key="canvasLocation" x="2381.5" y="547.5"/>
         </scene>
         <!--Add Trash-->
         <scene sceneID="fyZ-EI-aZr">
@@ -693,13 +925,13 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQZ-4r-bnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3402.5" y="-458.5"/>
+            <point key="canvasLocation" x="3654.5" y="-425.5"/>
         </scene>
         <!--Profile-->
         <scene sceneID="468-0e-IeX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iAV-gO-fGR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="0sn-Sy-rcm"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile-icon" id="0sn-Sy-rcm"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vPd-QA-aCT">
@@ -713,12 +945,38 @@ or log in with TouchID</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ChH-QW-FOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2323.5" y="1464.5"/>
+            <point key="canvasLocation" x="2228.5" y="1602.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xMR-Gr-Ohk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="02K-IJ-Bk8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="guB-jU-k6c">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="y5j-ck-BWp">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="hNm-Tc-cKN" kind="relationship" relationship="rootViewController" id="Q75-ZY-Fri"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AL2-mW-EAC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3261.5" y="1738.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="profile-icon" width="20" height="20"/>
+        <image name="trash-can-tab-icon" width="20" height="20"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ITQ-ly-PSn"/>
-        <segue reference="mSu-WB-pSA"/>
-        <segue reference="X2o-TD-aTx"/>
+        <segue reference="M1i-iy-PHf"/>
+        <segue reference="VjE-DM-eRH"/>
+        <segue reference="ndf-bQ-G53"/>
+        <segue reference="biH-QN-DeA"/>
     </inferredMetricsTieBreakers>
 </document>

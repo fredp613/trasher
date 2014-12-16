@@ -36,7 +36,7 @@ class User {
     
     class func registeredUser() -> Bool {
         //check core data for user data also validate this with web
-        var userIsRegistered : Bool = true
+        var userIsRegistered : Bool = false
         
         if userIsRegistered {
             return true

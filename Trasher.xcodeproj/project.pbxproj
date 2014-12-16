@@ -10,7 +10,6 @@
 		2A06B1BC1A3395100087E167 /* RequestTrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */; };
 		2A073E0819F5AD530067D132 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0719F5AD530067D132 /* MobileCoreServices.framework */; };
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
-		2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0A68F71A1419870070720B /* CoreDataStack.swift */; };
 		2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */; };
 		2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */; };
 		2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */; };
@@ -31,6 +30,8 @@
 		2A8224F81A142B3600F76CEB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F71A142B3600F76CEB /* Address.swift */; };
 		2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */; };
 		2A8A91C31A1151E70004D3E5 /* initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8A91C21A1151E70004D3E5 /* initializer.swift */; };
+		2A8DE0FB1A3CC3190003CE3D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8DE0FA1A3CC3190003CE3D /* CoreDataStack.swift */; };
+		2AA5E4501A35482200BABCA8 /* MyTrashTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */; };
 		2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */; };
 		2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */; };
 		2AB5C5B71A1437E000615903 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AB5C5B61A1437E000615903 /* MainStoryboard.storyboard */; };
@@ -69,6 +70,7 @@
 		2AE6DCBB1A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA71A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m */; };
 		2AE6DCBC1A1E9AD200F5C397 /* CTAssetsPickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2AE6DCA81A1E9AD200F5C397 /* CTAssetsPickerController.strings */; };
 		2AE6DCBD1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DCAB1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m */; };
+		2AFDE2A11A3FC967006D3E72 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE2A01A3FC967006D3E72 /* LoginViewController.swift */; };
 		2AFF5AE719F42BCF002B8B57 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AFF5AE619F42BCF002B8B57 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +88,6 @@
 		2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTrashViewController.swift; sourceTree = "<group>"; };
 		2A073E0719F5AD530067D132 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		2A0A68F71A1419870070720B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../.Trash/CoreDataStack.swift; sourceTree = "<group>"; };
 		2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTrashImage.swift; sourceTree = "<group>"; };
 		2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoriesTableViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +111,8 @@
 		2A8224F71A142B3600F76CEB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		2A86BFC219F96B4800B67E7D /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2A8A91C21A1151E70004D3E5 /* initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = initializer.swift; sourceTree = "<group>"; };
+		2A8DE0FA1A3CC3190003CE3D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTrashTableTableViewController.swift; sourceTree = "<group>"; };
 		2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FPTextView.swift; path = ../FPTextView.swift; sourceTree = "<group>"; };
 		2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		2AB5C5B61A1437E000615903 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 		2AE6DCAA1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+timeIntervalFormatter.h"; sourceTree = "<group>"; };
 		2AE6DCAB1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+timeIntervalFormatter.m"; sourceTree = "<group>"; };
 		2AE6DCAC1A1E9AD200F5C397 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/CTAssetsPickerController.strings"; sourceTree = "<group>"; };
+		2AFDE2A01A3FC967006D3E72 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2AFF5AE619F42BCF002B8B57 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -254,6 +258,8 @@
 		2AC054FF19F2E5190068B2E2 /* Trasher */ = {
 			isa = PBXGroup;
 			children = (
+				2AFDE2A01A3FC967006D3E72 /* LoginViewController.swift */,
+				2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */,
 				2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */,
 				2AE6DC291A1E711B00F5C397 /* CoreModels */,
 				2A68E3151A19366C005A7529 /* helpers */,
@@ -262,7 +268,7 @@
 				2AC0553919F2F5F50068B2E2 /* models */,
 				2AC0552F19F2E7970068B2E2 /* SearchViewController.swift */,
 				2A727C3F1A2524FB001C13BB /* MapViewController.swift */,
-				2A0A68F71A1419870070720B /* CoreDataStack.swift */,
+				2A8DE0FA1A3CC3190003CE3D /* CoreDataStack.swift */,
 				2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */,
 				2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */,
 				2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */,
@@ -500,7 +506,6 @@
 				2AE6DCAE1A1E9AD200F5C397 /* ALAsset+assetType.m in Sources */,
 				2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */,
 				2AE6DCB71A1E9AD200F5C397 /* CTAssetsPickerController.m in Sources */,
-				2A0A68F81A1419870070720B /* CoreDataStack.swift in Sources */,
 				2AE6DCB31A1E9AD200F5C397 /* CTAssetsGroupViewCell.m in Sources */,
 				2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */,
 				2A727C401A2524FB001C13BB /* MapViewController.swift in Sources */,
@@ -529,15 +534,18 @@
 				2AE6DC4F1A1E73D400F5C397 /* CoreLocation.swift in Sources */,
 				2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */,
 				2AE6DCB11A1E9AD200F5C397 /* CTAssetItemViewController.m in Sources */,
+				2AA5E4501A35482200BABCA8 /* MyTrashTableTableViewController.swift in Sources */,
 				2AE6DCBD1A1E9AD200F5C397 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */,
 				2AE6DC431A1E738E00F5C397 /* CoreUserLocations.swift in Sources */,
+				2AFDE2A11A3FC967006D3E72 /* LoginViewController.swift in Sources */,
 				2AE6DCBA1A1E9AD200F5C397 /* CTAssetsViewController.m in Sources */,
 				2AE6DCAF1A1E9AD200F5C397 /* ALAsset+isEqual.m in Sources */,
 				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
 				2AC0552819F2E57F0068B2E2 /* DetailViewController.swift in Sources */,
 				2AE6DC491A1E738F00F5C397 /* CoreUser.swift in Sources */,
 				2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */,
+				2A8DE0FB1A3CC3190003CE3D /* CoreDataStack.swift in Sources */,
 				2AE6DCB01A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m in Sources */,
 				2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */,
 				2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */,

@@ -19,6 +19,8 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     @IBOutlet weak var defaultAddressLabel: UILabel!
     @IBOutlet weak var kmText: UITextField!
     @IBOutlet weak var distanceSlider: UISlider!
+    @IBOutlet weak var kmMiButton: UIButton!
+
     
     var addCatsController: AddCategoriesTableViewController?
     var tableData: [Int:String]! = [Int:String]()
@@ -51,6 +53,8 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         
     }
     
+ 
+    
     func addTrashButtonTouch(sender: UIButton) {
         
         self.performSegueWithIdentifier("addTrashFromProfileSegue", sender: self)
@@ -58,15 +62,13 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
-        println("event fired")
+        self.performSegueWithIdentifier("requestTrashFromProfileSegue", sender: self)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
 
         self.categoriesTableView.reloadData()
-        
-
         
     }
     
@@ -174,8 +176,32 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         
     }
     
-
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.kmText.resignFirstResponder()
+    }
     
+    
+    //MARK: Text Field Delegate Methods
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @IBAction func myTrashWasPressed(sender: AnyObject)
+    {
+//        self.performSegueWithIdentifier("showMyTrashSegue", sender: self)
+        
+    }
+    
+
+    @IBAction func kmMiWasPressed(sender: AnyObject) {
+        if kmMiButton.titleLabel?.text == "km" {
+        kmMiButton.setTitle("mi", forState: UIControlState.Normal)
+        } else {
+            kmMiButton.setTitle("km", forState: UIControlState.Normal)
+        }
+    }
+
         
 
       

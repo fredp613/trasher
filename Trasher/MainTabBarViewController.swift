@@ -10,12 +10,14 @@ import UIKit
 
 
 
-class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, TrashTableViewProtocol {
+class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, PopulateMasterTableViewDelegate {
 
    
     var trashArray = [Trash]()
     var trashAssets = [TrashAssets]()
 
+    @IBOutlet weak var logoutButton: UIButton!
+    var managedObjectContext = CoreDataStack().managedObjectContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +27,17 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         // self.clearsSelectionOnViewWillAppear = false
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        var master = self.viewControllers?[0] as MasterTableViewController;
+        let master = self.viewControllers?[0] as MasterTableViewController
         master.trashArray = trashArray
         master.trashAssets = trashAssets
+        logoutButton.alpha = 0
         
+        let cu = CoreUser.currentUser(managedObjectContext!)
+
         
     }
+    
+
     
     func trashTableViewDelegate(tableData: Array<Trash>, trashAssetData: Array<TrashAssets>) {
         trashArray = tableData
@@ -38,26 +45,39 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
     }
     
     
-    
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         
-        
         if viewController == self.viewControllers?[1] as UIViewController {
-
-            if User.registeredUser() {
-                navigationController?.navigationBar.topItem?.title = "Profile"
+            if CoreUser.userIsRegistered() {
+                if CoreUser.userIsLoggedIn(managedObjectContext!) {
+                    navigationController?.navigationBar.topItem?.title = "Profile"
+                } else {
+                    //login segue to change
+                    performSegueWithIdentifier("showLoginFromMainSegue", sender: self)
+                    tabBarController.selectedIndex = 0
+                }
             } else {
                 performSegueWithIdentifier("signUpSegue", sender: self)
                 tabBarController.selectedIndex = 0
             }
+            logoutButton.alpha = 1
         } else {
             navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) KM from you"
+            logoutButton.alpha = 0
         }
     }
+    
 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        
+        if self.selectedIndex == 1 {
+            logoutButton.alpha = 1
+        } else {
+            logoutButton.alpha = 0
+        }
+        
 //        var master = self.viewControllers?[0] as MasterTableViewController;
 //        master.tableView.reloadData()
 
@@ -73,6 +93,15 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func logoutWasPressed(sender: AnyObject) {
+        
+        let user = CoreUser.currentUser(managedObjectContext!)
+        user.remember = false
+        CoreUser.updateUser(managedObjectContext!, coreUser: user)
+        self.selectedIndex = 0
+        logoutButton.alpha = 0
+    }
+
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -92,6 +121,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
             signUpController?.trashAssetsArray = master!.trashAssets
         }
         
+     
 
         
     

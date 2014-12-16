@@ -220,7 +220,7 @@ class InitializeTestData {
         filterRequestedTrash = arrayOfTrash.filter({ (trash: Trash) -> Bool in
             return trash.trashType == 1
         })
-        println(filterRequestedTrash)
+        
         return filterRequestedTrash
    
     }
@@ -230,7 +230,7 @@ class InitializeTestData {
         filterWantedTrash = arrayOfTrash.filter({ (trash: Trash) -> Bool in
             return trash.trashType == 2
         })
-        println(filterWantedTrash)
+        
         return filterWantedTrash
     }
     

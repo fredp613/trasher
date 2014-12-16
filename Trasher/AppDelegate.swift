@@ -7,10 +7,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var managedContext = CoreDataStack().managedObjectContext!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
       
         InitializeTestData()
+
+        
+        //convenience method for testing
+//        CoreUser.deleteAllUserData(managedContext)
         
         return true
     }

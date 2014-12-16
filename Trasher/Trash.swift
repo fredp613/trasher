@@ -16,7 +16,6 @@ enum TrashType: Int {
 
 class Trash : Address {
     
-   
     
     var trashId: String!
     var desc: String!
@@ -28,9 +27,9 @@ class Trash : Address {
     
     override init() {
         trashId = NSUUID().UUIDString
-        desc = "First description"
+        desc = "No description provided"
         image = UIImageJPEGRepresentation(UIImage(named: "trash-can-icon"), 0.75)
-        title = "First title"
+        title = "No description provided"
         trashType = TrashType.requested.rawValue
         super.init()
     }
