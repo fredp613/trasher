@@ -15,6 +15,7 @@ class CoreTrash: NSManagedObject {
     @NSManaged var id: NSNumber
     @NSManaged var title: String
     @NSManaged var trash_image: NSData
+    @NSManaged var user: CoreUser
     @NSManaged var location: CoreLocation
     @NSManaged var category: CoreCategories
 

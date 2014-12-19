@@ -25,7 +25,7 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     var trashArray = [Trash]()
     var trashAssetsArray = [TrashAssets]()
     
-    var managedContext = CoreDataStack().managedObjectContext!
+    var managedContext = CoreDataStack().managedObjectContext?
     var fetchedResultsController = NSFetchedResultsController()
     
     
@@ -150,16 +150,20 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     }
         
     @IBAction func verifyCode(sender: AnyObject) {
-//        NSEntityDescription.insertNewObjectForEntityForName("LogItem", inManagedObjectContext: self.managedObjectContext!) as LogItem
         
         if self.textVerification != "dpg613" {
             
             if textPwd.text == textConfirmPwd.text {
             
-                let cu = CoreUser()
-                cu.email = "fredp613@gmail.com"
-                cu.username = "fredp613"
-                CoreUser.createInManagedObjectContext(managedContext, coreUser: cu)
+//                NSEntityDescription *entity = [NSEntityDescription entityForName:@"Challenges" inManagedObjectContext:self.managedObjectContext]
+                
+
+//                var entity  = NSEntityDescription.entityForName("CoreUser", inManagedObjectContext: managedContext!)
+//                let cu : CoreUser = CoreUser()
+//                
+//                cu.email = "fredp613@gmail.com"
+//                cu.username = "fredp613"
+                CoreUser.createInManagedObjectContext(managedContext!, email: "fredp613@gmail.com", pwd: "xxx")
                 self.dismissViewControllerAnimated(true, completion: nil) }
             else {
                 var alertView = UIAlertView(title: "Passwords do not match", message: "Please ensure you typed in the same password in both password fields, try again", delegate: self, cancelButtonTitle: "OK")

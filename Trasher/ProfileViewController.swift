@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class ProfileViewController: UIViewController, UITableViewDataSource,
@@ -23,37 +24,29 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
 
     
     var addCatsController: AddCategoriesTableViewController?
-    var tableData: [Int:String]! = [Int:String]()
+    var tableData: [CoreUserCategories] = [CoreUserCategories]()
     var menuButtons = FPGoogleButton()
-    
+    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.kmText.delegate = self
 
         self.categoriesTableView.delegate = self
         self.categoriesTableView.dataSource = self
         self.kmText.text = "\(User().distance)"
-        if self.tableData.isEmpty {
-            tableData = InitializeTestData().generateInitialCategories()
-//            Category().currentCategories = Category().initialCategories
+        self.tableData = CoreUserCategories.retrieveUserCategories(moc)
 
-        } else {
-
-        }
-                
-         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
+        let btnAttr : [(UIColor, String, String?, UIImage?)] = [
             (UIColor.redColor(), "addTrashButtonTouch", "", nil),
             (UIColor.blueColor(), "requestTrashButtonTouch", "", nil),
         ]
         
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
-        
-        
+        println("\(self.tableData.count)")
     }
     
- 
     
     func addTrashButtonTouch(sender: UIButton) {
         
@@ -67,7 +60,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-
+        println("\(CoreUserCategories.retrieveUserCategories(moc).count)")
         self.categoriesTableView.reloadData()
         
     }
@@ -110,8 +103,6 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         self.kmText.text = "\(NSInteger(self.distanceSlider.value))"
     }
     
-
-    
     
     //MARK: tableView
     
@@ -133,7 +124,9 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
 //        return 40.00
 //    }
     
-    func tableViewDelegate(tableData: [Int : String]) {
+    
+    //MARK: Delegate table view method
+    func tableViewDelegate(tableData: [CoreUserCategories]) {
         self.tableData = tableData
         self.categoriesTableView.reloadData()
     }
@@ -141,15 +134,11 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-        var categoryItem = String()
+        var catId = self.tableData[indexPath.row].category_id
+        var categoryName = CoreCategories.findCategoryById(moc, id: catId).category_name
 
-           var indexedCategories = Array<String>()
-            for (key, value) in self.tableData {
-                indexedCategories.append(value)
-            }
-           categoryItem = indexedCategories[indexPath.row]
         
-        cell.textLabel?.text = categoryItem
+        cell.textLabel?.text = "\(catId) - \(categoryName)"
         return cell
     }
    
@@ -169,10 +158,11 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
-        
+        println("\(tableData.count)")
         addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
         addCatsController?.delegate = self
         addCatsController?.currentData = tableData
+        
         
     }
     

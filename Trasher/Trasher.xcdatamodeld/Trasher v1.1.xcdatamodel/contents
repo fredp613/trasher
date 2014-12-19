@@ -22,20 +22,22 @@
         <attribute name="trash_image" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreCategories" inverseName="trashers" inverseEntity="CoreCategories" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreLocation" inverseName="trashers" inverseEntity="CoreLocation" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="trashes" inverseEntity="CoreUser" syncable="YES"/>
     </entity>
     <entity name="CoreUser" representedClassName="Trasher.CoreUser" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remember" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="tutorial_complete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="verified" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreUserCategories" inverseName="users" inverseEntity="CoreUserCategories" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreUserLocations" inverseName="user" inverseEntity="CoreUserLocations" syncable="YES"/>
+        <relationship name="trashes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="user" inverseEntity="CoreTrash" syncable="YES"/>
     </entity>
     <entity name="CoreUserCategories" representedClassName="Trasher.CoreUserCategories" syncable="YES">
         <attribute name="category_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="categories" inverseEntity="CoreUser" syncable="YES"/>
+        <attribute name="uc_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CoreUserLocations" representedClassName="Trasher.CoreUserLocations" syncable="YES">
         <attribute name="defaultLocation" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -43,11 +45,11 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="locations" inverseEntity="CoreUser" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CoreCategories" positionX="-54" positionY="27" width="128" height="90"/>
+        <element name="CoreCategories" positionX="-54" positionY="27" width="128" height="88"/>
         <element name="CoreLocation" positionX="-18" positionY="81" width="128" height="163"/>
-        <element name="CoreTrash" positionX="-36" positionY="63" width="128" height="135"/>
-        <element name="CoreUser" positionX="-63" positionY="-18" width="128" height="165"/>
-        <element name="CoreUserCategories" positionX="0" positionY="126" width="128" height="75"/>
+        <element name="CoreTrash" positionX="-36" positionY="63" width="128" height="148"/>
+        <element name="CoreUser" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="CoreUserCategories" positionX="0" positionY="126" width="128" height="88"/>
         <element name="CoreUserLocations" positionX="-27" positionY="90" width="128" height="90"/>
     </elements>
 </model>

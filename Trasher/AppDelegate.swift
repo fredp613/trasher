@@ -12,10 +12,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
       
         InitializeTestData()
-
-        
-        //convenience method for testing
+        InitializeCoreData()
+        //convenience methods for testing
+        //        let totalUsers = CoreUser.fetchUser(CoreDataStack().managedObjectContext!)
+        //        println(totalUsers)
 //        CoreUser.deleteAllUserData(managedContext)
+        
         
         return true
     }

@@ -7,27 +7,42 @@
 //
 
 import UIKit
+import CoreData
 
 protocol tableViewProtocol {
-    func tableViewDelegate(tableData: [Int:String])
+    func tableViewDelegate(tableData: [CoreUserCategories])
 }
 
 class AddCategoriesTableViewController: UITableViewController {
 
     var delegate: tableViewProtocol?
-    var currentData: [Int:String]! = [Int: String]()
-    var category: Category! = Category()
+    var currentData = [CoreUserCategories]()
+    var categories : [CoreCategories]! = [CoreCategories]()
     var pvc: ProfileViewController! = ProfileViewController()
+    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        categories = CoreCategories.retrieveCategories(moc)
+        
+        println("\(currentData.count)")
 //                currentData = category.initialCategories
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.tableView.reloadData()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        categories = CoreCategories.retrieveCategories(moc)
+        currentData = CoreUserCategories.retrieveUserCategories(moc)
+                            println("\(currentData.count)")
+        self.tableView.reloadData()
+    }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -52,39 +67,36 @@ class AddCategoriesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return InitializeTestData().generateDefaultCategories().count
+        return categories.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        var categoryItem : String! = InitializeTestData().generateDefaultCategories()[indexPath.row + 1]
+
+        var categoryItem : String! = categories[indexPath.row].category_name
         
         
-        var catId = indexPath.row + 1
+        var catId = categories[indexPath.row].id
         
         cell?.textLabel?.text = categoryItem
-        
-        
-        if !self.existingCategory(categoryItem!) {
+
+        if !self.existingCategory(catId) {
             cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
-            currentData.updateValue(categoryItem!, forKey: catId)
-            println("Current data categories are: \(currentData)")
+            //this is where you update coreusercategories
+            CoreUserCategories.insertUserCategory(moc, category_id: catId)
+            currentData = CoreUserCategories.retrieveUserCategories(moc)
+            println("\(currentData.count)")
+            delegate?.tableViewDelegate(self.currentData)
         } else {
+                        //this is where you update coreusercategories
             cell?.accessoryType = UITableViewCellAccessoryType.None
+            CoreUserCategories.deleteUserCategory(moc, category_id: catId)
+            currentData = CoreUserCategories.retrieveUserCategories(moc)
+            println("\(currentData.count)")
+            delegate?.tableViewDelegate(self.currentData)
             
-            if currentData.count != 0 {
-                currentData.removeValueForKey(catId)
-                
-            } else {
-                println("some error msg")
-            }
-            
-            println("Current data categories are: \(currentData)")
         }
-        
-       
-        
         
     }
     
@@ -93,12 +105,12 @@ class AddCategoriesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-        var categoryItem = InitializeTestData().generateDefaultCategories()[indexPath.row + 1]
+        var categoryItem = categories[indexPath.row].category_name
         cell.textLabel?.text = categoryItem
         
+        var catId = categories[indexPath.row].id
         
-        
-        if self.existingCategory(categoryItem!) {
+        if self.existingCategory(catId) {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
 
         } else {
@@ -161,22 +173,22 @@ class AddCategoriesTableViewController: UITableViewController {
     
     
     // MARK: - Custom Methods
-    func existingCategory(var category : String) -> Bool {
+    func existingCategory(category_id: NSNumber) -> Bool {
         
-     
-        for (key, value) in currentData {
-            
-            
-            if category == value {
+        currentData = CoreUserCategories.retrieveUserCategories(moc)
+        
+        for c in currentData {
+            if c.category_id == category_id {
                 return true
             }
         }
+
         return false
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        delegate?.tableViewDelegate(currentData)
-        
-    }
+//    override func viewDidDisappear(animated: Bool) {
+//        delegate?.tableViewDelegate(self.currentData)
+//        
+//    }
 
 }

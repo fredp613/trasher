@@ -238,3 +238,50 @@ class InitializeTestData {
     
     
 }
+
+class InitializeCoreData {
+    
+    var moc : NSManagedObjectContext
+    
+    init() {
+        
+        moc = CoreDataStack().managedObjectContext!
+        CoreCategories.generateCategories(moc)
+        let cats = CoreCategories.retrieveCategories(moc)
+        println(cats.count)
+        
+        
+    }
+    
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

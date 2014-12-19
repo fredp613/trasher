@@ -13,29 +13,45 @@ import CoreData
 class CoreUser: NSManagedObject {
 
     @NSManaged var email: String
-    @NSManaged var id: NSNumber
+    @NSManaged var id: String
     @NSManaged var tutorial_complete: NSNumber
     @NSManaged var username: String
     @NSManaged var verified: NSNumber
     @NSManaged var remember: NSNumber
     @NSManaged var categories: NSSet
     @NSManaged var locations: NSSet
+    @NSManaged var trashes: NSSet
     
     
-    class func createInManagedObjectContext(managedObjectContext: NSManagedObjectContext, coreUser: CoreUser) -> CoreUser {
+    class func createInManagedObjectContext(managedObjectContext: NSManagedObjectContext, email: String, pwd: String) -> Bool {
         
+
+        let coreUser : CoreUser = NSEntityDescription.insertNewObjectForEntityForName("CoreUser", inManagedObjectContext: managedObjectContext) as CoreUser
         
-        let coreUser = NSEntityDescription.insertNewObjectForEntityForName("CoreUser", inManagedObjectContext: managedObjectContext) as CoreUser
-        
+        coreUser.id = NSUUID().UUIDString
+        coreUser.email = email
         coreUser.verified = true
         coreUser.remember = true
-        
+
         println("core user saved")
-        managedObjectContext.save(nil)
+        if managedObjectContext.save(nil) {
+          let saveSuccessful: Bool = KeyChainHelper.createORupdatePasswordForKey(pwd, keyName: email)
+           
+            if saveSuccessful {
+                println("successful")
+//                CoreCategories.generateCategories(managedObjectContext)
+                CoreUserCategories.generateDefaultCategoriesForNewUser(managedObjectContext, currentUser: coreUser)
+                return true
+            } else {
+                managedObjectContext.rollback()
+                println("unsuccessful")
+                return false
+            }
 
+        } else {
+          return false
+        }
 
-        
-        return coreUser
     }
     
     class func updateUser(managedObjectContext: NSManagedObjectContext, coreUser: CoreUser) {
@@ -70,10 +86,13 @@ class CoreUser: NSManagedObject {
         let managedObjectContext = CoreDataStack().managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "CoreUser")
         var coreUser = [CoreUser]()
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser] {
+        let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser]
+        if fetchResults?.count > 0 {
             return true
+        } else {
+            return false
         }
-        return false
+
 
     }
     
@@ -112,22 +131,51 @@ class CoreUser: NSManagedObject {
         var coreUser = [CoreUser]()
         if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser] {
             coreUser = fetchResults
-            
         }
-        return coreUser[0]
+       return coreUser[0]
     }
+    
+    class func userExists(managedObjectContext: NSManagedObjectContext) -> Bool {
+        let fetchRequest = NSFetchRequest(entityName: "CoreUser")
+        var coreUser = [CoreUser]()
+        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser] {
+            coreUser = fetchResults
+        }
+        if coreUser.count > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
     
     class func authenticated(email: String, password: String) -> Bool {
         let managedObjectContext = CoreDataStack().managedObjectContext!
         let cu = CoreUser.currentUser(managedObjectContext)
         
-        if cu.email == email && password == "test" {
+        
+        let retrievePwdFromKeychain: String = KeyChainHelper.retrievePasswordForKey("fredp613@gmail.com")
+        
+        if cu.email == email && (password == retrievePwdFromKeychain) {
             cu.remember = true
             managedObjectContext.save(nil)
             return true
         }
         
         return false
+    }
+    
+    class func fetchUser(managedObjectContext: NSManagedObjectContext) -> Int {
+        let moc : NSManagedObjectContext = managedObjectContext
+        let fetchRequest : NSFetchRequest = NSFetchRequest(entityName: "CoreUser")
+        var coreUser = [CoreUser]()
+        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser] {
+            coreUser = fetchResults
+        }
+        
+        return coreUser.count
+        
     }
     
     

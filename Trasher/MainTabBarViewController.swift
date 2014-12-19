@@ -32,7 +32,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         master.trashAssets = trashAssets
         logoutButton.alpha = 0
         
-        let cu = CoreUser.currentUser(managedObjectContext!)
+//        let cu = CoreUser.currentUser(managedObjectContext!)
 
         
     }

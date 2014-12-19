@@ -11,6 +11,8 @@
 		2A073E0819F5AD530067D132 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0719F5AD530067D132 /* MobileCoreServices.framework */; };
 		2A073E0A19F5ADBE0067D132 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A073E0919F5ADBE0067D132 /* CoreLocation.framework */; };
 		2A103EDB1A2294A0007857D1 /* CoreTrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */; };
+		2A1078471A4114FB00637A7C /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1078461A4114FB00637A7C /* KeyChainHelper.swift */; };
+		2A1078491A41161300637A7C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1078481A41161300637A7C /* Security.framework */; };
 		2A12DB7A1A0EAE9300CE7175 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */; };
 		2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */; };
 		2A1877061A2436C80021F9AD /* TrashAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1877051A2436C80021F9AD /* TrashAssets.swift */; };
@@ -89,6 +91,8 @@
 		2A073E0719F5AD530067D132 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2A073E0919F5ADBE0067D132 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2A103EDA1A2294A0007857D1 /* CoreTrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTrashImage.swift; sourceTree = "<group>"; };
+		2A1078461A4114FB00637A7C /* KeyChainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
+		2A1078481A41161300637A7C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2A12DB791A0EAE9300CE7175 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		2A12DB7D1A0EC01300CE7175 /* AddCategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		2A1877051A2436C80021F9AD /* TrashAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashAssets.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1078491A41161300637A7C /* Security.framework in Frameworks */,
 				2AE6DC881A1E999B00F5C397 /* AssetsLibrary.framework in Frameworks */,
 				2AE6DC861A1E998F00F5C397 /* MediaPlayer.framework in Frameworks */,
 				2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */,
@@ -207,6 +212,7 @@
 		2A68E3151A19366C005A7529 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2A1078461A4114FB00637A7C /* KeyChainHelper.swift */,
 				2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */,
 				2A68E3131A193660005A7529 /* TextViewHelper.swift */,
 			);
@@ -384,6 +390,7 @@
 		2AFF5AE819F42C32002B8B57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A1078481A41161300637A7C /* Security.framework */,
 				2AE6DC871A1E999B00F5C397 /* AssetsLibrary.framework */,
 				2AE6DC851A1E998F00F5C397 /* MediaPlayer.framework */,
 				2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */,
@@ -539,6 +546,7 @@
 				2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */,
 				2AE6DC431A1E738E00F5C397 /* CoreUserLocations.swift in Sources */,
 				2AFDE2A11A3FC967006D3E72 /* LoginViewController.swift in Sources */,
+				2A1078471A4114FB00637A7C /* KeyChainHelper.swift in Sources */,
 				2AE6DCBA1A1E9AD200F5C397 /* CTAssetsViewController.m in Sources */,
 				2AE6DCAF1A1E9AD200F5C397 /* ALAsset+isEqual.m in Sources */,
 				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
