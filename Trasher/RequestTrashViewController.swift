@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,PopulateMasterTableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -48,12 +49,24 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
 
     @IBAction func saveButtonWasPressed(sender: AnyObject) {
         
+        trash.trashId = NSUUID().UUIDString
         trash.title = self.textView.text
         trashArray.append(trash)
         
         if delegate != nil {
             refreshWantedData(trashArray)
         }
+        
+        //save to core data
+        let moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as CoreTrash
+        cTrash.title = self.trash.title
+        cTrash.id = self.trash.trashId
+        cTrash.type = true
+        cTrash.user = CoreUser.currentUser(moc)
+        let category : CoreCategories = CoreCategories.findCategoryById(moc, id: self.trash.trash_category) as CoreCategories
+        cTrash.category = category
+        CoreTrash.saveTrash(cTrash, moc: moc)
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

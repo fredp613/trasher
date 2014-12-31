@@ -6,14 +6,33 @@
 //  Copyright (c) 2014 Frederick Pearson. All rights reserved.
 //
 
+//email: String
+//id: String
+//tutorial_complete: NSNumber
+//username: String
+//verified: NSNumber
+//remember: NSNumber
+//categories: NSSet
+//locations: NSSet
+//trashes: NSSet
+//created_on: NSDate
+//updated_on: NSDate
+//preferred_distance:NSNumber
+//notifications:NSNumber (bool)
+//
+
+
+
 import UIKit
 import CoreData
-
+import MobileCoreServices
+import CoreLocation
+import SystemConfiguration
 
 class ProfileViewController: UIViewController, UITableViewDataSource,
-UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol  {
-    @IBOutlet weak var notificationsSwitch: UISwitch!
+UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol,CLLocationManagerDelegate, UINavigationControllerDelegate  {
     
+    @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var addCategory: UIButton!
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var changeDefaultAddress: UIButton!
@@ -22,6 +41,9 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     @IBOutlet weak var distanceSlider: UISlider!
     @IBOutlet weak var kmMiButton: UIButton!
 
+    var currentLocation = NSString()
+    var locationManager = CLLocationManager()
+    var currentLoc = CLLocation()
     
     var addCatsController: AddCategoriesTableViewController?
     var tableData: [CoreUserCategories] = [CoreUserCategories]()
@@ -32,19 +54,31 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         super.viewDidLoad()
 
         self.kmText.delegate = self
-
         self.categoriesTableView.delegate = self
         self.categoriesTableView.dataSource = self
-        self.kmText.text = "\(User().distance)"
+        //setup
+        var currentUser = CoreUser.currentUser(moc)
+        self.kmText.text = "\(currentUser.preferred_distance)"
+        self.distanceSlider.value = currentUser.preferred_distance.floatValue
         self.tableData = CoreUserCategories.retrieveUserCategories(moc)
 
+        toggleNotificationState()
+        
+        
+        
         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
             (UIColor.redColor(), "addTrashButtonTouch", "", nil),
             (UIColor.blueColor(), "requestTrashButtonTouch", "", nil),
         ]
-        
+            
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
-        println("\(self.tableData.count)")
+       
+        if let cl : CoreLocation = CoreLocation.getDefaultLocationByUser(moc) {
+            defaultAddressLabel.text = cl.city
+        } else {
+            getCurrentLocation()
+        }
+        
     }
     
     
@@ -60,15 +94,14 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        println("\(CoreUserCategories.retrieveUserCategories(moc).count)")
-        self.categoriesTableView.reloadData()
-        
+
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-
-
+        
+        LocationHelper(managedObjectCtx: moc)
+//        defaultAddressLabel.text = CoreLocation.getDefaultLocationByUser(moc).city
 
     }
 
@@ -79,14 +112,18 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     }
     
     @IBAction func kmTextChanged(sender: AnyObject) {
+        var currentUser = CoreUser.currentUser(moc)
         if (self.kmText.text.toInt() > 500) {
             var alertView = UIAlertView(title: "Range to far", message: "The maximum distance is 500KM", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
-
             self.distanceSlider.value = 500.00
             
         } else {
             self.distanceSlider.value = (self.kmText.text as NSString).floatValue
+            if !self.kmText.text.isEmpty {
+                currentUser.preferred_distance = self.kmText.text.toInt()!
+            }
+            CoreUser.updateUser(moc, coreUser: currentUser)
 
         }
     }
@@ -100,7 +137,11 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     @IBAction func changeDistance(sender: AnyObject) {
 //        self.kmLabel.text = NSString(format: "%.2f" , self.distanceSlider.value)
-        self.kmText.text = "\(NSInteger(self.distanceSlider.value))"
+        var currentUser = CoreUser.currentUser(moc)
+        var sliderValue = self.distanceSlider.value
+        currentUser.preferred_distance = sliderValue
+        self.kmText.text = "\(Int(sliderValue))"
+        CoreUser.updateUser(moc, coreUser: currentUser)
     }
     
     
@@ -133,11 +174,9 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-        
+//        var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
         var catId = self.tableData[indexPath.row].category_id
         var categoryName = CoreCategories.findCategoryById(moc, id: catId).category_name
-
-        
         cell.textLabel?.text = "\(catId) - \(categoryName)"
         return cell
     }
@@ -150,15 +189,9 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
 //
 //        
 //    }
-    
-
-    
-    
-    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
-        println("\(tableData.count)")
         addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
         addCatsController?.delegate = self
         addCatsController?.currentData = tableData
@@ -183,7 +216,6 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         
     }
     
-
     @IBAction func kmMiWasPressed(sender: AnyObject) {
         if kmMiButton.titleLabel?.text == "km" {
         kmMiButton.setTitle("mi", forState: UIControlState.Normal)
@@ -191,10 +223,92 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
             kmMiButton.setTitle("km", forState: UIControlState.Normal)
         }
     }
-
+    
+    @IBAction func notificationSwitched(sender: AnyObject) {
+        var currentUser = CoreUser.currentUser(moc)
+        if self.notificationsSwitch.on {
+            currentUser.notifications_on = true
+            CoreUser.updateUser(moc, coreUser: currentUser)
+        } else {
+            currentUser.notifications_on = false
+            CoreUser.updateUser(moc, coreUser: currentUser)
+        }
+    }
+    
+    func toggleNotificationState() -> Bool {
+        var currentUser = CoreUser.currentUser(moc)
+        if currentUser.notifications_on.boolValue {
+            self.notificationsSwitch.setOn(true, animated: true)
+            return true
+        } else {
+            self.notificationsSwitch.setOn(false, animated: true)
+            return false
+        }
+    }
+    
+    // MARK: CLLocation
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        var alertView = UIAlertView(title: "Location error", message: "You are not connected to either wifi or your mobile network", delegate: self, cancelButtonTitle: "OK")
+        alertView.show()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        var currentLocation = newLocation as CLLocation!
         
+        if (currentLocation != nil) {
+            var geoCoder = CLGeocoder()
+            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
+                
+                if (error == nil) {
+                    let pm: AnyObject = placemarks.last!
+                    let coreUser = CoreUser.currentUser(self.moc)
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc) as CoreLocation
+                    let loc : CLLocation = pm.location
+                    let coord : CLLocationCoordinate2D = loc.coordinate
+                    
+                    coreLocation.latitude = coord.latitude
+                    coreLocation.longitude = coord.longitude
+                    coreLocation.addressline1 = pm.name
+                    coreLocation.city = pm.locality
+                    coreLocation.zip = pm.postalCode
+                    coreLocation.country = pm.country
+                    coreLocation.default_location = true
+                    coreLocation.user = coreUser
+                    
+                    var error : NSError? = nil
+                    if self.moc.save(&error) {
+                        self.defaultAddressLabel.text = pm.name + " " + pm.locality
+                    } else {
+                        println(error?.userInfo)
+                    }
+                    
+                    
+                } else {
+                    
+                    
+                }
+            })
+            
+            manager.stopUpdatingLocation()
+            
+        } else {
+            println("Something went wrong")
+        }
+        
+    }
+    
+    
+    func getCurrentLocation() {
+        var av = UIAlertView(title: "est", message: nil, delegate: self, cancelButtonTitle: "ok")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        //        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
 
-      
+
 }
 
 

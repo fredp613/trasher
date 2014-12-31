@@ -25,7 +25,6 @@ class AddCategoriesTableViewController: UITableViewController {
         super.viewDidLoad()
         categories = CoreCategories.retrieveCategories(moc)
         
-        println("\(currentData.count)")
 //                currentData = category.initialCategories
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -38,7 +37,6 @@ class AddCategoriesTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         categories = CoreCategories.retrieveCategories(moc)
         currentData = CoreUserCategories.retrieveUserCategories(moc)
-                            println("\(currentData.count)")
         self.tableView.reloadData()
     }
     
@@ -86,14 +84,12 @@ class AddCategoriesTableViewController: UITableViewController {
             //this is where you update coreusercategories
             CoreUserCategories.insertUserCategory(moc, category_id: catId)
             currentData = CoreUserCategories.retrieveUserCategories(moc)
-            println("\(currentData.count)")
             delegate?.tableViewDelegate(self.currentData)
         } else {
                         //this is where you update coreusercategories
             cell?.accessoryType = UITableViewCellAccessoryType.None
             CoreUserCategories.deleteUserCategory(moc, category_id: catId)
             currentData = CoreUserCategories.retrieveUserCategories(moc)
-            println("\(currentData.count)")
             delegate?.tableViewDelegate(self.currentData)
             
         }

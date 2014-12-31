@@ -14,6 +14,9 @@ class CoreCategories: NSManagedObject {
     @NSManaged var category_name: String
     @NSManaged var id: NSNumber
     @NSManaged var trashers: NSSet
+    @NSManaged var users: NSSet
+    @NSManaged var created_on: NSDate
+    @NSManaged var updated_on: NSDate
     
     //to do save default categories in core data - here you may want to reconcile with web server every load (in gcd)
     class func generateCategories(managedObjectContext: NSManagedObjectContext) -> [CoreCategories] {
@@ -43,6 +46,8 @@ class CoreCategories: NSManagedObject {
                 
                  coreCat.id = cat.0
                  coreCat.category_name = cat.1
+                 coreCat.created_on = NSDate()
+                 coreCat.updated_on = coreCat.created_on
                  categoriesArray.append(coreCat)
             }
             
@@ -58,12 +63,17 @@ class CoreCategories: NSManagedObject {
     
         let moc : NSManagedObjectContext = managedObjectContext
         let fetchRequest : NSFetchRequest = NSFetchRequest(entityName: "CoreCategories")
-        var coreCategories = [CoreCategories]()
+        let sortDescriptor = NSSortDescriptor(key: "category_name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        var coreCategories : [CoreCategories] = []
         
-        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreCategories] {
+        if var fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreCategories] {
             coreCategories = fetchResults
         }
         
+       
+        
+       // coreCategories.sort({$0})
         return coreCategories
     
     }
@@ -92,6 +102,8 @@ class CoreCategories: NSManagedObject {
     class func findCategoryById(moc: NSManagedObjectContext, id: NSNumber) -> CoreCategories {
         
         let fetchRequest : NSFetchRequest = NSFetchRequest(entityName: "CoreCategories")
+        let sortDescriptor = NSSortDescriptor(key: "category_name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         var coreCategories = [CoreCategories]()
         if let fetchResults = moc.executeFetchRequest(fetchRequest, error: nil) as? [CoreCategories] {
             

@@ -52,7 +52,6 @@ extension UITextView: UITextViewDelegate, UIGestureRecognizerDelegate  {
     }
     
     override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        println("test")
         if self.isFirstResponder() {
             if self.text.rangeOfString("Enter text", options: NSStringCompareOptions.LiteralSearch, range: nil, locale: nil) != nil {
                 self.text = ""

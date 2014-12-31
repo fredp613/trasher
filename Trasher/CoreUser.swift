@@ -21,6 +21,11 @@ class CoreUser: NSManagedObject {
     @NSManaged var categories: NSSet
     @NSManaged var locations: NSSet
     @NSManaged var trashes: NSSet
+    @NSManaged var preferred_distance: NSNumber
+    @NSManaged var notifications_on: NSNumber
+    @NSManaged var metric: NSNumber
+    @NSManaged var created_on: NSDate
+    @NSManaged var updated_on: NSDate
     
     
     class func createInManagedObjectContext(managedObjectContext: NSManagedObjectContext, email: String, pwd: String) -> Bool {
@@ -32,6 +37,10 @@ class CoreUser: NSManagedObject {
         coreUser.email = email
         coreUser.verified = true
         coreUser.remember = true
+        coreUser.preferred_distance = 50
+        coreUser.notifications_on = true
+        coreUser.created_on = NSDate()
+        coreUser.updated_on = coreUser.created_on
 
         println("core user saved")
         if managedObjectContext.save(nil) {
@@ -55,6 +64,7 @@ class CoreUser: NSManagedObject {
     }
     
     class func updateUser(managedObjectContext: NSManagedObjectContext, coreUser: CoreUser) {
+        coreUser.updated_on = NSDate()
         managedObjectContext.save(nil)
     }
     
@@ -68,25 +78,22 @@ class CoreUser: NSManagedObject {
                 let verified = coreUser.verified.boolValue
                 if rememberable && verified {
                     return true
-
                 }
             }
         }
-        
         return false
-
     }
     
-    class func userIsRegistered() -> Bool {
+    class func userIsRegistered(moc: NSManagedObjectContext) -> Bool {
 //        if self.fetchUserData(CoreDataStack().managedObjectContext!) {
 //            return true
 //        }
 //            
 //        return false
-        let managedObjectContext = CoreDataStack().managedObjectContext
+//        let managedObjectContext = CoreDataStack().managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "CoreUser")
         var coreUser = [CoreUser]()
-        let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser]
+        let fetchResults = moc.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser]
         if fetchResults?.count > 0 {
             return true
         } else {
@@ -129,12 +136,16 @@ class CoreUser: NSManagedObject {
 //        let moc = CoreDataStack().managedObjectContext!
         let fetchRequest = NSFetchRequest(entityName: "CoreUser")
         var coreUser = [CoreUser]()
-        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [CoreUser] {
+        var error : NSError? = nil
+        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [CoreUser] {
             coreUser = fetchResults
+        } else {
+            println("\(error?.userInfo)")
         }
        return coreUser[0]
     }
     
+ 
     class func userExists(managedObjectContext: NSManagedObjectContext) -> Bool {
         let fetchRequest = NSFetchRequest(entityName: "CoreUser")
         var coreUser = [CoreUser]()

@@ -17,6 +17,8 @@ class CoreUserCategories: NSManagedObject {
     @NSManaged var user_id: String
     @NSManaged var category_id: NSNumber
     @NSManaged var uc_id: String
+    @NSManaged var created_on: NSDate
+    @NSManaged var updated_on: NSDate
     
     class func generateDefaultCategoriesForNewUser(moc: NSManagedObjectContext, currentUser: CoreUser) -> Bool {
         
@@ -31,6 +33,8 @@ class CoreUserCategories: NSManagedObject {
                 ccUserCat.uc_id = NSUUID().UUIDString
                 ccUserCat.category_id = CoreCategories.findCategoryById(moc, id: cat.id).id
                 ccUserCat.user_id = currentUser.id
+                ccUserCat.created_on = NSDate()
+                ccUserCat.updated_on = ccUserCat.created_on
             }
             
             if moc.save(nil) {
@@ -67,6 +71,8 @@ class CoreUserCategories: NSManagedObject {
         ccUserCat.uc_id = NSUUID().UUIDString
         ccUserCat.category_id = CoreCategories.findCategoryById(moc, id: category_id).id
         ccUserCat.user_id = currentUser.id
+        ccUserCat.created_on = NSDate()
+        ccUserCat.updated_on = ccUserCat.created_on
         
         if moc.save(nil) {
              println("\(CoreUserCategories.retrieveUserCategories(moc).count)")

@@ -11,6 +11,7 @@ import MobileCoreServices
 import CoreLocation
 import SystemConfiguration
 import AssetsLibrary
+import CoreData
 
 
 
@@ -47,6 +48,8 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     var categoryPickerView = UIView()
     var categories = InitializeTestData().generateDefaultCategories()
     var placeholder = String()
+    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+    
     
     @IBOutlet weak var currentLocationLabel: UILabel!
 
@@ -66,9 +69,15 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         placeholder = "Enter description"
 
         //dont forget to remove the sleep
-        self.actvityIndicatorView.startAnimating()
-        self.getCurrentLocation()
+
         fpTextView = FPTextView(textView: self.textTitle, placeholder: placeholder)
+        
+        if let cl = CoreLocation.getDefaultLocationByUser(moc) {
+            currentLocationLabel.text = cl.city
+        } else {
+            actvityIndicatorView.startAnimating()
+            getCurrentLocation()
+        }
 
         
     }
@@ -112,19 +121,13 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
 
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        println("selected")
         self.categoryLabel.text = categories[row]
         trash.trash_category = row
         categoryPickerView.removeFromSuperview()
         
         
     }
-    
-//    func doneSelectingCategory(sender: UIButton) {
-//        categoryPickerView.removeFromSuperview()
-//    }
-    
-    
+
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var categories = InitializeTestData().generateDefaultCategories()
@@ -397,17 +400,25 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             refreshRequestedData(trashArray, tableDataAssets: trashAssetsArray)
         }
 
+        //save to core data
+        let moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as CoreTrash
+        cTrash.title = self.trash.title
+        cTrash.id = self.trash.trashId
+        cTrash.type = false
+        cTrash.user = CoreUser.currentUser(moc)
+        let category : CoreCategories = CoreCategories.findCategoryById(moc, id: self.trash.trash_category) as CoreCategories
+        cTrash.category = category
+        CoreTrash.saveTrash(cTrash, moc: moc)
+        
+        for ta in pickedAssets {
+            let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as CoreTrashImage
+            trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75)
+            trashAsset.trash = cTrash
+            CoreTrashImage.saveTrashImage(trashAsset, moc: moc)
+        }
 
         self.dismissViewControllerAnimated(true, completion: nil)
-       
-
-        
-        
-//        self.performSegueWithIdentifier("showMasterFromAddTrash", sender: self)
-        
-        
-
-
 
     }
 
@@ -427,14 +438,40 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
                sleep(1)
                 if (error == nil) {
+//                    let pm: AnyObject = placemarks.last!
+//                    var currentAddress =  pm.name + " " + pm.locality + " " + pm.postalCode
+//                    self.currentLocationLabel.text = currentAddress
+//                    self.trash.latitude = currentLocation.coordinate.latitude
+//                    self.trash.longitude = currentLocation.coordinate.longitude
+//                    self.trash.addressLine1 = pm.name
+//                    self.trash.city = pm.locality
+//                    self.trash.postalCode = pm.postalCode
+                    
+                    let moc = CoreDataStack().managedObjectContext!
                     let pm: AnyObject = placemarks.last!
-                    var currentAddress =  pm.name + " " + pm.locality + " " + pm.postalCode
-                    self.currentLocationLabel.text = currentAddress
-                    self.trash.latitude = currentLocation.coordinate.latitude
-                    self.trash.longitude = currentLocation.coordinate.longitude
-                    self.trash.addressLine1 = pm.name
-                    self.trash.city = pm.locality
-                    self.trash.postalCode = pm.postalCode
+                    let coreUser = CoreUser.currentUser(moc)
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as CoreLocation
+                    let loc : CLLocation = pm.location
+                    let coord : CLLocationCoordinate2D = loc.coordinate
+                    
+                    coreLocation.latitude = coord.latitude
+                    coreLocation.longitude = coord.longitude
+                    coreLocation.addressline1 = pm.name
+                    coreLocation.city = pm.locality
+                    coreLocation.zip = pm.postalCode
+                    coreLocation.country = pm.country
+                    coreLocation.default_location = true
+                    coreLocation.user = coreUser
+                    
+                    var error : NSError? = nil
+                    if moc.save(&error) {
+                        self.actvityIndicatorView.stopAnimating()
+                        self.currentLocationLabel.text = pm.name + " " + pm.locality
+                    } else {
+                        println(error?.userInfo)
+                    }
+                    
+                    
                     
                     if self.changeLocationButton.titleLabel?.text == "Add location" {
                         self.changeLocationButton.setTitle("Change", forState: UIControlState.Normal)

@@ -13,12 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
         InitializeTestData()
         InitializeCoreData()
-        //convenience methods for testing
-        //        let totalUsers = CoreUser.fetchUser(CoreDataStack().managedObjectContext!)
-        //        println(totalUsers)
-//        CoreUser.deleteAllUserData(managedContext)
-        
-        
+
         return true
     }
     

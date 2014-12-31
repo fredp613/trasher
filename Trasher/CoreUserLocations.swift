@@ -14,5 +14,7 @@ class CoreUserLocations: NSManagedObject {
     @NSManaged var defaultLocation: NSNumber
     @NSManaged var location_id: NSNumber
     @NSManaged var user: CoreUser
+    @NSManaged var created_on: NSDate
+    @NSManaged var updated_on: NSDate
 
 }

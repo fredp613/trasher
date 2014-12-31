@@ -25,7 +25,6 @@ class FPTextView : NSObject, UITextViewDelegate, UIGestureRecognizerDelegate {
     init(textView: UITextView, placeholder: String) {
         super.init()
         tap.delegate = self
-        println("\(placeholder)")
         textView.delegate = self
         
         if placeholder.isEmpty {

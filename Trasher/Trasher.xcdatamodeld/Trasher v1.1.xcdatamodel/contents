@@ -2,54 +2,83 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CoreCategories" representedClassName="Trasher.CoreCategories" syncable="YES">
         <attribute name="category_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="trashers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="category" inverseEntity="CoreTrash" syncable="YES"/>
+        <relationship name="users" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="categories" inverseEntity="CoreUser" syncable="YES"/>
     </entity>
     <entity name="CoreLocation" representedClassName="Trasher.CoreLocation" syncable="YES">
         <attribute name="addressline1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="addressline2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="default_location" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="trashers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="location" inverseEntity="CoreTrash" syncable="YES"/>
+        <relationship name="trasher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="location" inverseEntity="CoreTrash" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="locations" inverseEntity="CoreUser" syncable="YES"/>
     </entity>
     <entity name="CoreTrash" representedClassName="Trasher.CoreTrash" syncable="YES">
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trash_image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreCategories" inverseName="trashers" inverseEntity="CoreCategories" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreLocation" inverseName="trashers" inverseEntity="CoreLocation" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="trashes" inverseEntity="CoreUser" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="CoreCategories" inverseName="trashers" inverseEntity="CoreCategories" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreLocation" inverseName="trasher" inverseEntity="CoreLocation" syncable="YES"/>
+        <relationship name="trashImages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTrashImage" inverseName="trash" inverseEntity="CoreTrashImage" syncable="YES"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="trashes" inverseEntity="CoreUser" syncable="YES"/>
+    </entity>
+    <entity name="CoreTrashImage" representedClassName="Trasher.CoreTrashImage" syncable="YES">
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="trash_image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="trash" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="trashImages" inverseEntity="CoreTrash" syncable="YES"/>
     </entity>
     <entity name="CoreUser" representedClassName="Trasher.CoreUser" syncable="YES">
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notifications_on" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="preferred_distance" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="remember" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="tutorial_complete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="verified" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreUserLocations" inverseName="user" inverseEntity="CoreUserLocations" syncable="YES"/>
-        <relationship name="trashes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="user" inverseEntity="CoreTrash" syncable="YES"/>
+        <relationship name="categories" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreCategories" inverseName="users" inverseEntity="CoreCategories" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreLocation" inverseName="user" inverseEntity="CoreLocation" syncable="YES"/>
+        <relationship name="trashes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTrash" inverseName="user" inverseEntity="CoreTrash" syncable="YES"/>
     </entity>
     <entity name="CoreUserCategories" representedClassName="Trasher.CoreUserCategories" syncable="YES">
         <attribute name="category_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="uc_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CoreUserLocations" representedClassName="Trasher.CoreUserLocations" syncable="YES">
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="defaultLocation" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="location_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="locations" inverseEntity="CoreUser" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CoreCategories" positionX="-54" positionY="27" width="128" height="88"/>
-        <element name="CoreLocation" positionX="-18" positionY="81" width="128" height="163"/>
-        <element name="CoreTrash" positionX="-36" positionY="63" width="128" height="148"/>
-        <element name="CoreUser" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="CoreUserCategories" positionX="0" positionY="126" width="128" height="88"/>
-        <element name="CoreUserLocations" positionX="-27" positionY="90" width="128" height="90"/>
+        <element name="CoreCategories" positionX="-54" positionY="27" width="128" height="133"/>
+        <element name="CoreLocation" positionX="-18" positionY="81" width="128" height="255"/>
+        <element name="CoreTrash" positionX="-36" positionY="63" width="128" height="208"/>
+        <element name="CoreTrashImage" positionX="-27" positionY="117" width="128" height="103"/>
+        <element name="CoreUser" positionX="-63" positionY="-18" width="128" height="238"/>
+        <element name="CoreUserCategories" positionX="0" positionY="126" width="128" height="120"/>
+        <element name="CoreUserLocations" positionX="-27" positionY="90" width="128" height="118"/>
     </elements>
 </model>

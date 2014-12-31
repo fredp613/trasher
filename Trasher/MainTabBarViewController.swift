@@ -48,7 +48,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         
         if viewController == self.viewControllers?[1] as UIViewController {
-            if CoreUser.userIsRegistered() {
+            if CoreUser.userIsRegistered(managedObjectContext!) {
                 if CoreUser.userIsLoggedIn(managedObjectContext!) {
                     navigationController?.navigationBar.topItem?.title = "Profile"
                 } else {

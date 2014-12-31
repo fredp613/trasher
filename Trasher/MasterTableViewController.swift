@@ -64,25 +64,21 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     }
     
     
-    
-
-    
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        println("textfield cleared")
         return true
     }
     
     func performTrashTypeFilter(arrayOfTrash: [Trash]) -> [Trash] {
         
+        
         if searchBar.selectedScopeButtonIndex == 0 {
             self.filteredTrash = testData.filterRequestedTrash(arrayOfTrash)
-//            println(self.filteredTrash)
         } else {
             self.filteredTrash = testData.filterWantedTrash(arrayOfTrash)
-//            println(self.filteredTrash)
         }
+
         
-        return arrayOfTrash
+        return filteredTrash
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -93,7 +89,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
 
     func addTrashButtonTouch(sender: UIButton) {
-        if CoreUser.userIsRegistered() {
+        if CoreUser.userIsRegistered(managedObjectContext!) {
             
             if CoreUser.userIsLoggedIn(managedObjectContext!) {
                 self.performSegueWithIdentifier("addTrashFromMasterSegue", sender: self)
@@ -107,7 +103,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
-        if CoreUser.userIsRegistered() {
+        if CoreUser.userIsRegistered(managedObjectContext!) {
             if CoreUser.userIsLoggedIn(managedObjectContext!) {
                 self.performSegueWithIdentifier("requestTrashFromMasterSegue", sender: self)
             } else {
@@ -161,6 +157,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.filteredTrash = filterTextForSearch(searchText)
+        self.trashArray = filterTextForSearch(searchText)
         performTrashTypeFilter(self.trashArray)
         self.tableView.reloadData()
     }
@@ -173,6 +170,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     func clearSearch() {
         self.searchBar.text = ""
+        self.trashArray = testData.generateTestData()
+        self.trashAssets = testData.generateFilteredTrashAssets()
         performTrashTypeFilter(self.trashArray)
         searchBar.resignFirstResponder()
         maskView.removeFromSuperview()
@@ -183,7 +182,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         searchState = true
         
         self.filteredTrash = self.filteredTrash.filter({(trash:Trash) -> Bool in
-            let descriptionMatch = trash.title.rangeOfString(keyword, options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil, locale: nil)
+            let descriptionMatch = trash.title.rangeOfString(keyword, options: NSStringCompareOptions.LiteralSearch, range: nil, locale: nil)
             return descriptionMatch != nil
         })
         

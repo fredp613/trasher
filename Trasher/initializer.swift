@@ -56,6 +56,13 @@ class InitializeTestData {
 
     
     func generateTestData() -> [Trash] {
+        
+        
+        if !trashArray.isEmpty {
+            trashArray.removeAll(keepCapacity: false)
+        }
+        
+        
         defaulCategories = self.generateDefaultCategories()
         
         
@@ -155,6 +162,10 @@ class InitializeTestData {
     func generateFilteredTrashAssets() -> [TrashAssets] {
         var trashArray = self.trashArray
         
+        if !trashAssets.isEmpty {
+            trashAssets.removeAll(keepCapacity: false)
+        }
+        
         var images : [NSData] = [
             UIImageJPEGRepresentation(UIImage(named: "used-tv"), 0.75),
             UIImageJPEGRepresentation(UIImage(named: "used-bbq"), 0.75),
@@ -247,9 +258,7 @@ class InitializeCoreData {
         
         moc = CoreDataStack().managedObjectContext!
         CoreCategories.generateCategories(moc)
-        let cats = CoreCategories.retrieveCategories(moc)
-        println(cats.count)
-        
+        let cats = CoreCategories.retrieveCategories(moc)        
         
     }
     
