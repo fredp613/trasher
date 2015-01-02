@@ -29,8 +29,13 @@ import MobileCoreServices
 import CoreLocation
 import SystemConfiguration
 
+
+protocol ProfileDelegate {
+   func updateDefaultLocationDelegate(moc: NSManagedObjectContext)
+}
+
 class ProfileViewController: UIViewController, UITableViewDataSource,
-UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol,CLLocationManagerDelegate, UINavigationControllerDelegate  {
+UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol, ProfileDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate  {
     
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var addCategory: UIButton!
@@ -45,10 +50,13 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     var locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     
-    var addCatsController: AddCategoriesTableViewController?
+//    var addCatsController: AddCategoriesTableViewController?
     var tableData: [CoreUserCategories] = [CoreUserCategories]()
     var menuButtons = FPGoogleButton()
     var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,13 +82,23 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
        
         if let cl : CoreLocation = CoreLocation.getDefaultLocationByUser(moc) {
-            defaultAddressLabel.text = cl.city
+            defaultAddressLabel.text = cl.addressline1 + " " +  cl.city
+            if cl.country == "United States" {
+                kmMiButton.setTitle("mi", forState: UIControlState.Normal)
+            } else {
+                kmMiButton.setTitle("km", forState: UIControlState.Normal)
+            }
         } else {
             getCurrentLocation()
         }
         
     }
     
+    func updateDefaultLocationDelegate(moc: NSManagedObjectContext) {
+        let cl = CoreLocation.getDefaultLocationByUser(moc)
+        defaultAddressLabel.text = cl!.addressline1 + " " + cl!.city
+    }
+
     
     func addTrashButtonTouch(sender: UIButton) {
         
@@ -94,15 +112,10 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
-        LocationHelper(managedObjectCtx: moc)
-//        defaultAddressLabel.text = CoreLocation.getDefaultLocationByUser(moc).city
-
     }
 
     
@@ -192,11 +205,18 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
-        addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
-        addCatsController?.delegate = self
-        addCatsController?.currentData = tableData
         
+        if segue.identifier == "addCategoriesSegue" {
+            var addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
+            addCatsController?.delegate = self
+            addCatsController?.currentData = tableData
+        }
         
+        if segue.identifier == "showLocationsSegue" {
+            let navigationController = segue.destinationViewController as UINavigationController
+            var locationsController = navigationController.topViewController as LocationsTableViewController
+            locationsController.delegate = self
+        }        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -273,12 +293,17 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
                     coreLocation.city = pm.locality
                     coreLocation.zip = pm.postalCode
                     coreLocation.country = pm.country
+                    println(pm.countryCode)
+//                    coreLocation.country_code = pm.countryCode
                     coreLocation.default_location = true
                     coreLocation.user = coreUser
                     
                     var error : NSError? = nil
                     if self.moc.save(&error) {
                         self.defaultAddressLabel.text = pm.name + " " + pm.locality
+                        if pm.country == "United States" {
+                            self.kmMiButton.setTitle("mi", forState: UIControlState.Normal)
+                        }
                     } else {
                         println(error?.userInfo)
                     }
@@ -303,7 +328,6 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         var av = UIAlertView(title: "est", message: nil, delegate: self, cancelButtonTitle: "ok")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        //        locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }

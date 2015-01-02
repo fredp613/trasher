@@ -13,6 +13,7 @@
         <attribute name="addressline2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="default_location" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -74,7 +75,7 @@
     </entity>
     <elements>
         <element name="CoreCategories" positionX="-54" positionY="27" width="128" height="133"/>
-        <element name="CoreLocation" positionX="-18" positionY="81" width="128" height="255"/>
+        <element name="CoreLocation" positionX="-18" positionY="81" width="128" height="270"/>
         <element name="CoreTrash" positionX="-36" positionY="63" width="128" height="208"/>
         <element name="CoreTrashImage" positionX="-27" positionY="117" width="128" height="103"/>
         <element name="CoreUser" positionX="-63" positionY="-18" width="128" height="238"/>

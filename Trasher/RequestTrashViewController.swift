@@ -8,9 +8,11 @@
 
 import UIKit
 import CoreData
+import MobileCoreServices
+import CoreLocation
 
 
-class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,PopulateMasterTableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,PopulateMasterTableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate {
 
     var fpTextView = FPTextView()
     var trashArray = [Trash]()
@@ -19,7 +21,10 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
     var categories = InitializeTestData().generateDefaultCategories()
     var delegate : PopulateMasterTableViewDelegate? = nil
     var categoryPickerView = UIView()
-    
+    var currentLocation = NSString()
+    var locationManager = CLLocationManager()
+    var currentLoc = CLLocation()
+    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var chooseCategoryButton: UIButton!
@@ -31,7 +36,12 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
         fpTextView = FPTextView(textView: textView, placeholder: "Enter description")
         trash.trashType = 2
         
-        
+        if let cl = CoreLocation.getDefaultLocationByUser(moc) {
+//            currentLocationLabel.text = cl.city
+        } else {
+//            actvityIndicatorView.startAnimating()
+            getCurrentLocation()
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -198,5 +208,85 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
 //        })
 //        
 //    }
+    
+    
+    
+    //MARK: - CLLocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        var alertView = UIAlertView(title: "Location error", message: "You are not connected to either wifi or your mobile network", delegate: self, cancelButtonTitle: "OK")
+//        self.actvityIndicatorView.stopAnimating()
+        alertView.show()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        var currentLocation = newLocation as CLLocation!
+        
+        if (currentLocation != nil) {
+            var geoCoder = CLGeocoder()
+            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
+                sleep(1)
+                if (error == nil) {
+                    
+                    let moc = CoreDataStack().managedObjectContext!
+                    let pm: AnyObject = placemarks.last!
+                    let coreUser = CoreUser.currentUser(moc)
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as CoreLocation
+                    let loc : CLLocation = pm.location
+                    let coord : CLLocationCoordinate2D = loc.coordinate
+                    
+                    coreLocation.latitude = coord.latitude
+                    coreLocation.longitude = coord.longitude
+                    coreLocation.addressline1 = pm.name
+                    coreLocation.city = pm.locality
+                    coreLocation.zip = pm.postalCode
+                    coreLocation.country = pm.country
+                    coreLocation.default_location = true
+                    coreLocation.user = coreUser
+                    
+                    var error : NSError? = nil
+                    if moc.save(&error) {
+//                        self.actvityIndicatorView.stopAnimating()
+//                        self.currentLocationLabel.text = pm.name + " " + pm.locality
+                    } else {
+                        println(error?.userInfo)
+                    }
+                    
+                    
+                    
+//                    if self.changeLocationButton.titleLabel?.text == "Add location" {
+//                        self.changeLocationButton.setTitle("Change", forState: UIControlState.Normal)
+//                    }
+//                    
+//                    self.actvityIndicatorView.stopAnimating()
+                    
+                    
+                } else {
+                    
+                    
+//                    self.currentLocationLabel.text = "Cannot get your current location, please click on add location to find an address for pickup"
+//                    self.changeLocationButton.setTitle("Add location", forState: UIControlState.Normal)
+//                    self.actvityIndicatorView.stopAnimating()
+                }
+            })
+            
+            manager.stopUpdatingLocation()
+            
+        } else {
+            println("Something went wrong")
+        }
+        
+    }
+    
+    
+    func getCurrentLocation() {
+        var av = UIAlertView(title: "est", message: nil, delegate: self, cancelButtonTitle: "ok")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+
 
 }

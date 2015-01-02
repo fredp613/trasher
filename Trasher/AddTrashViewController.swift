@@ -438,14 +438,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) -> Void in
                sleep(1)
                 if (error == nil) {
-//                    let pm: AnyObject = placemarks.last!
-//                    var currentAddress =  pm.name + " " + pm.locality + " " + pm.postalCode
-//                    self.currentLocationLabel.text = currentAddress
-//                    self.trash.latitude = currentLocation.coordinate.latitude
-//                    self.trash.longitude = currentLocation.coordinate.longitude
-//                    self.trash.addressLine1 = pm.name
-//                    self.trash.city = pm.locality
-//                    self.trash.postalCode = pm.postalCode
                     
                     let moc = CoreDataStack().managedObjectContext!
                     let pm: AnyObject = placemarks.last!
