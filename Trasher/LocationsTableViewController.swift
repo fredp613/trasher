@@ -161,6 +161,7 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
     func getCurrentLocation(sender: UIButton?) {
         getCurrentLocation()
         modalContainer.removeFromSuperview()
+        updateDefaultLocationDelegate(moc)
     }
     
     func addManualLocation(sender: UIButton?) {

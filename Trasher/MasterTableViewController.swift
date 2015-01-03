@@ -37,6 +37,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     var requestedTrash = [Trash]()
     var wantedTrash = [Trash]()
     var managedObjectContext = CoreDataStack().managedObjectContext
+    var refreshControl : UIRefreshControl = UIRefreshControl()
     
      override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +62,68 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
         
+        
+        refreshControl.backgroundColor = UIColor.lightGrayColor()
+        refreshControl.tintColor = UIColor.whiteColor()
+        refreshControl.addTarget(self, action: "refreshTableView", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        
+        
+        
+//        UITextField *searchBarTextField = nil;
+//        for (UIView *searchBarSubview in [mySearchBar subviews]) {
+//            if ( [searchBarSubview isKindOfClass:[UITextField class] ] ) {
+//                // ios 6 and earlier
+//                searchBarTextField = (UITextField *)searchBarSubview;
+//                searchBarTextField.delegate = self;
+//            } else {
+//                // for ios 7 what we need is nested inside another container
+//                for (UIView *subSubView in [searchBarSubview subviews]) {
+//                    if ( [subSubView isKindOfClass:[UITextField class] ] ) {
+//                        searchBarTextField = (UITextField *)subSubView;
+//                        searchBarTextField.delegate = self;
+//                    }
+//                }
+//            }
+//        }
+//        if (searchBarTextField) {
+//            [searchBarTextField setReturnKeyType:UIReturnKeyNext];
+//        }
+        
+        var searchBarTextField : UITextField = UITextField()
+        println(searchBar.subviews[0].description)
+        
+        
+//        for view in searchBar.subviews as [UIView] {
+////            if let textField = view as? UITextField {
+////               searchBarTextField = textField
+////               searchBarTextField.delegate = self
+////               println("test")
+////            }
+//            println("testing")
+//            if view.isKindOfClass(UITextField) {
+//                println("test")
+//            }
+//        }
+        
     }
-    
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
+        println("hihi")
         return true
     }
+    
+    func refreshTableView() {
+        tableView.reloadData()
+        println("refreshing")
+        refreshControl.endRefreshing()
+        
+    }
+    
+    
+    
+    
+   
     
     func performTrashTypeFilter(arrayOfTrash: [Trash]) -> [Trash] {
         
@@ -306,6 +363,13 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
        
     }
    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+
+    
+    
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.searchBar.resignFirstResponder()
@@ -315,7 +379,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         //add blocking view
         
-        maskView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.width, self.tableView.frame.height)
+        maskView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y - 75, self.tableView.frame.width, self.tableView.frame.height)
         maskView.backgroundColor = UIColor(white: 0.98, alpha: 0.8)
         maskView.bounds = CGRectMake(0, -150, self.tableView.frame.width, (self.view.frame.height -  350))
         self.view.addSubview(maskView)

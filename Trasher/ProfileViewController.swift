@@ -6,20 +6,6 @@
 //  Copyright (c) 2014 Frederick Pearson. All rights reserved.
 //
 
-//email: String
-//id: String
-//tutorial_complete: NSNumber
-//username: String
-//verified: NSNumber
-//remember: NSNumber
-//categories: NSSet
-//locations: NSSet
-//trashes: NSSet
-//created_on: NSDate
-//updated_on: NSDate
-//preferred_distance:NSNumber
-//notifications:NSNumber (bool)
-//
 
 
 
@@ -98,6 +84,12 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
     func updateDefaultLocationDelegate(moc: NSManagedObjectContext) {
         let cl = CoreLocation.getDefaultLocationByUser(moc)
         defaultAddressLabel.text = cl!.addressline1 + " " + cl!.city
+        
+        if cl!.country == "United States" {
+            kmMiButton.setTitle("mi", forState: UIControlState.Normal)
+        } else {
+            kmMiButton.setTitle("km", forState: UIControlState.Normal)
+        }
     }
     
 

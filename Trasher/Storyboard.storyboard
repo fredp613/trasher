@@ -193,38 +193,37 @@ or log in with TouchID</string>
                         <viewControllerLayoutGuide type="bottom" id="mXH-z5-A3f"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qRc-zD-wcI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZHm-uG-EUf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                            <searchBar opaque="NO" clipsSubviews="YES" contentMode="redraw" fixedFrame="YES" showsCancelButton="YES" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="137-TT-Anf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="88"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <scopeButtonTitles>
+                                    <string>Getting rid of</string>
+                                    <string>Wanted</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="gjY-lN-UN9" id="QLw-Qy-6IQ"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="t1M-kK-tUn">
+                                <rect key="frame" x="0.0" y="152" width="375" height="466"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" showsCancelButton="YES" showsScopeBar="YES" id="137-TT-Anf">
-                                    <rect key="frame" x="0.0" y="64" width="375" height="88"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                    <scopeButtonTitles>
-                                        <string>Getting rid of</string>
-                                        <string>Wanted</string>
-                                    </scopeButtonTitles>
-                                    <connections>
-                                        <outlet property="delegate" destination="gjY-lN-UN9" id="QLw-Qy-6IQ"/>
-                                    </connections>
-                                </searchBar>
                                 <prototypes>
-                                    <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="1" reuseIdentifier="Cell" textLabel="7oP-6P-RVL" detailTextLabel="lAS-ad-FMC" rowHeight="80" style="IBUITableViewCellStyleSubtitle" id="NqH-op-asf">
+                                    <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="1" reuseIdentifier="Cell" textLabel="hUa-mo-ygo" detailTextLabel="2ey-oG-q9d" rowHeight="80" style="IBUITableViewCellStyleSubtitle" id="0EC-GB-zTW">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NqH-op-asf" id="jKx-sd-bC9">
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0EC-GB-zTW" id="oHA-bu-lT3">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7oP-6P-RVL">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hUa-mo-ygo">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lAS-ad-FMC">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ey-oG-q9d">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -233,13 +232,13 @@ or log in with TouchID</string>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="l8V-9m-DsQ" kind="show" identifier="showDetailsSegue" id="Rl6-Nc-3g6"/>
+                                            <segue destination="l8V-9m-DsQ" kind="show" identifier="showDetailsSegue" id="rmO-rf-13K"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="gjY-lN-UN9" id="TUB-uz-KGd"/>
-                                    <outlet property="delegate" destination="gjY-lN-UN9" id="dbX-XE-OJN"/>
+                                    <outlet property="dataSource" destination="gjY-lN-UN9" id="LSK-w0-xpS"/>
+                                    <outlet property="delegate" destination="gjY-lN-UN9" id="FpN-pt-A2E"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -251,7 +250,7 @@ or log in with TouchID</string>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="searchBar" destination="137-TT-Anf" id="LEH-5c-xG1"/>
-                        <outlet property="tableView" destination="ZHm-uG-EUf" id="zHg-ha-lYc"/>
+                        <outlet property="tableView" destination="t1M-kK-tUn" id="CJy-Pv-bCn"/>
                         <segue destination="1m3-kK-HGN" kind="presentation" identifier="addTrashFromMasterSegue" modalPresentationStyle="fullScreen" id="5jj-oe-tJg"/>
                         <segue destination="1E2-cX-ufm" kind="presentation" identifier="signUpFromMasterSegue" id="qEL-pg-66I"/>
                         <segue destination="2f1-x8-Nqm" kind="presentation" identifier="requestTrashFromMasterSegue" id="ndf-bQ-G53"/>
@@ -260,7 +259,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4UX-Gd-zLP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2927.5" y="535.5"/>
+            <point key="canvasLocation" x="2927.5" y="547.5"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="G0p-P4-tyF">
@@ -271,7 +270,7 @@ or log in with TouchID</string>
                         <viewControllerLayoutGuide type="bottom" id="5aq-pt-Tgt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XaE-pw-VIE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SR5-4K-OJM">
@@ -1163,9 +1162,9 @@ or log in with TouchID</string>
         <image name="trash-can-tab-icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="l7A-rA-V1A"/>
-        <segue reference="VjE-DM-eRH"/>
-        <segue reference="mSu-WB-pSA"/>
-        <segue reference="HMs-WP-Km4"/>
+        <segue reference="5jj-oe-tJg"/>
+        <segue reference="iab-S1-FWu"/>
+        <segue reference="ndf-bQ-G53"/>
+        <segue reference="qEL-pg-66I"/>
     </inferredMetricsTieBreakers>
 </document>
