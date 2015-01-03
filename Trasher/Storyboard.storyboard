@@ -430,7 +430,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYi-pM-oYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4123.5" y="1166.5"/>
+            <point key="canvasLocation" x="3405.5" y="1423.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Koe-Sl-KPy">
@@ -560,7 +560,7 @@ or log in with TouchID</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Dg2-Fh-Ig9" kind="presentation" id="pvY-RK-AxB"/>
+                                    <segue destination="Dg2-Fh-Ig9" kind="presentation" identifier="manageCategoriesSegue" id="pvY-RK-AxB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0s-hi-C1h">
@@ -787,7 +787,7 @@ or log in with TouchID</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZj-fU-cBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2750.5" y="2101.5"/>
+            <point key="canvasLocation" x="2750.5" y="2119.5"/>
         </scene>
         <!--Locations Table View Controller-->
         <scene sceneID="wQm-mk-0C7">

@@ -9,7 +9,12 @@
 import UIKit
 import CoreData
 
-class MyTrashTableTableViewController: UITableViewController {
+
+protocol MyTrashTableViewDelegate {
+   func updateTableViewDelegate(moc: NSManagedObjectContext)
+}
+
+class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDelegate {
 
     @IBOutlet weak var scopeBar: UISegmentedControl!
 
@@ -29,6 +34,11 @@ class MyTrashTableTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func updateTableViewDelegate(moc: NSManagedObjectContext) {
+        tableView.reloadData()
+    }
+    
 
     // MARK: - Table view data source
 
@@ -143,6 +153,7 @@ class MyTrashTableTableViewController: UITableViewController {
             let trash = userTrash[path!.row] as CoreTrash
             
             detailSegue.currentTrash = trash
+            detailSegue.delegate = self
             detailSegue.moc = moc
             
         }

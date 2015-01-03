@@ -9,13 +9,10 @@
 import UIKit
 import CoreData
 
-protocol tableViewProtocol {
-    func tableViewDelegate(tableData: [CoreUserCategories])
-}
 
-class AddCategoriesTableViewController: UITableViewController {
+class AddCategoriesTableViewController: UITableViewController, ProfileDelegate {
 
-    var delegate: tableViewProtocol?
+    var delegate:ProfileDelegate? = nil
     var currentData = [CoreUserCategories]()
     var categories : [CoreCategories]! = [CoreCategories]()
     var pvc: ProfileViewController! = ProfileViewController()
@@ -24,13 +21,7 @@ class AddCategoriesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         categories = CoreCategories.retrieveCategories(moc)
-        
-//                currentData = category.initialCategories
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        println(delegate)
         self.tableView.reloadData()
     }
     
@@ -84,19 +75,23 @@ class AddCategoriesTableViewController: UITableViewController {
             //this is where you update coreusercategories
             CoreUserCategories.insertUserCategory(moc, category_id: catId)
             currentData = CoreUserCategories.retrieveUserCategories(moc)
-            delegate?.tableViewDelegate(self.currentData)
+//            delegate?.tableViewDelegate(self.currentData)
+
         } else {
                         //this is where you update coreusercategories
             cell?.accessoryType = UITableViewCellAccessoryType.None
             CoreUserCategories.deleteUserCategory(moc, category_id: catId)
             currentData = CoreUserCategories.retrieveUserCategories(moc)
-            delegate?.tableViewDelegate(self.currentData)
+//            delegate?.tableViewDelegate(self.currentData)
             
         }
+        updateCategories(moc)
         
     }
     
-
+    func updateCategories(moc: NSManagedObjectContext) {
+        delegate?.updateCategories!(moc)
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell

@@ -30,12 +30,13 @@ import CoreLocation
 import SystemConfiguration
 
 
-protocol ProfileDelegate {
-   func updateDefaultLocationDelegate(moc: NSManagedObjectContext)
+@objc protocol ProfileDelegate {
+    optional func updateDefaultLocationDelegate(moc: NSManagedObjectContext)
+    optional func updateCategories(moc: NSManagedObjectContext)
 }
 
 class ProfileViewController: UIViewController, UITableViewDataSource,
-UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol, ProfileDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate  {
+UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate  {
     
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var addCategory: UIButton!
@@ -98,6 +99,19 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
         let cl = CoreLocation.getDefaultLocationByUser(moc)
         defaultAddressLabel.text = cl!.addressline1 + " " + cl!.city
     }
+    
+
+    func updateCategories(moc: NSManagedObjectContext) {
+        tableData = CoreUserCategories.retrieveUserCategories(moc)
+        categoriesTableView.reloadData()
+    }
+
+    
+//    func updateCategories(moc: NSManagedObjectContext) {
+//        println("delegate called")
+//        self.tableData = CoreUserCategories.retrieveUserCategories(moc)
+//        self.categoriesTableView.reloadData()
+//    }
 
     
     func addTrashButtonTouch(sender: UIButton) {
@@ -179,11 +193,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
 //    }
     
     
-    //MARK: Delegate table view method
-    func tableViewDelegate(tableData: [CoreUserCategories]) {
-        self.tableData = tableData
-        self.categoriesTableView.reloadData()
-    }
+   
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
@@ -206,10 +216,10 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, tableViewProtocol
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
         
-        if segue.identifier == "addCategoriesSegue" {
-            var addCatsController = segue.destinationViewController as? AddCategoriesTableViewController
-            addCatsController?.delegate = self
-            addCatsController?.currentData = tableData
+        if segue.identifier == "manageCategoriesSegue" {
+            var addCatsController = segue.destinationViewController as AddCategoriesTableViewController
+            addCatsController.delegate = self
+            addCatsController.currentData = tableData
         }
         
         if segue.identifier == "showLocationsSegue" {

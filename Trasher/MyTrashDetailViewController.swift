@@ -11,7 +11,7 @@ import CoreData
 import SystemConfiguration
 import AssetsLibrary
 
-class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAssetsPickerControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAssetsPickerControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MyTrashTableViewDelegate {
 
    
     @IBOutlet weak var categoryButton: UIButton!
@@ -20,6 +20,9 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     @IBOutlet weak var imageViewContainer: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
+    
+    
+    var delegate:MyTrashTableViewDelegate? = nil
     var ctPicker = CTAssetsPickerController()
     var pageViews: [UIImageView?] = []
     var categoryPickerView = UIView()
@@ -68,6 +71,11 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: MYTrashTableViewDelegate method
+    func updateTableViewDelegate(moc: NSManagedObjectContext) {
+        delegate?.updateTableViewDelegate(moc)
     }
     
     
@@ -372,8 +380,9 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
                 }
             }
             
-            
+            updateTableViewDelegate(moc)
             return true
+            
         }
         return false
         

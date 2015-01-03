@@ -23,21 +23,10 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         moc = CoreDataStack().managedObjectContext!
-//        delegate = self
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -97,7 +86,7 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
     }
     
     func updateDefaultLocationDelegate(moc: NSManagedObjectContext) {
-        delegate?.updateDefaultLocationDelegate(moc)
+        delegate?.updateDefaultLocationDelegate!(moc)
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
