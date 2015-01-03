@@ -98,18 +98,10 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
         categoriesTableView.reloadData()
     }
 
-    
-//    func updateCategories(moc: NSManagedObjectContext) {
-//        println("delegate called")
-//        self.tableData = CoreUserCategories.retrieveUserCategories(moc)
-//        self.categoriesTableView.reloadData()
-//    }
 
     
     func addTrashButtonTouch(sender: UIButton) {
-        
         self.performSegueWithIdentifier("addTrashFromProfileSegue", sender: self)
-//        menuButtons.toggleMenuButtons()
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
