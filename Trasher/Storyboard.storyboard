@@ -562,9 +562,10 @@ or log in with TouchID</string>
                                     <segue destination="Dg2-Fh-Ig9" kind="presentation" identifier="manageCategoriesSegue" id="pvY-RK-AxB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0s-hi-C1h">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0s-hi-C1h">
                                 <rect key="frame" x="250" y="134" width="30" height="30"/>
                                 <state key="normal" title="km">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -656,7 +657,7 @@ or log in with TouchID</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="5Be-DO-W4e">
-                        <barButtonItem key="rightBarButtonItem" title="back to profile" id="nam-Jd-nGJ">
+                        <barButtonItem key="leftBarButtonItem" title="back to profile" id="nam-Jd-nGJ">
                             <connections>
                                 <action selector="backToProfileWasPressed:" destination="hNm-Tc-cKN" id="bQ6-e6-sPQ"/>
                             </connections>
@@ -669,7 +670,7 @@ or log in with TouchID</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6G-rh-lp7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5937.5" y="1766.5"/>
+            <point key="canvasLocation" x="4389.5" y="1423.5"/>
         </scene>
         <!--My Trash Detail View Controller-->
         <scene sceneID="KPm-50-dzw">
@@ -747,7 +748,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOH-fb-dIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6615.5" y="1968.5"/>
+            <point key="canvasLocation" x="4881.5" y="1464.5"/>
         </scene>
         <!--Categories-->
         <scene sceneID="z1Z-on-s5F">
@@ -1133,7 +1134,7 @@ or log in with TouchID</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AL2-mW-EAC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5577.5" y="1653.5"/>
+            <point key="canvasLocation" x="3900.5" y="1423.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5Bh-ot-EPc">
@@ -1162,9 +1163,9 @@ or log in with TouchID</string>
         <image name="trash-can-tab-icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5jj-oe-tJg"/>
         <segue reference="iab-S1-FWu"/>
-        <segue reference="ndf-bQ-G53"/>
         <segue reference="qEL-pg-66I"/>
+        <segue reference="l7A-rA-V1A"/>
+        <segue reference="HMs-WP-Km4"/>
     </inferredMetricsTieBreakers>
 </document>

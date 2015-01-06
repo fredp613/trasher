@@ -19,12 +19,10 @@ class InitializeTestData {
     var filterRequestedTrash = [Trash]()
     var filterWantedTrash = [Trash]()
     var filteredTrash = [Trash]()
-   
     
     init() {
                        
     }
-    
     func generateDefaultCategories() -> [Int:String] {
         defaulCategories = [
             1 : "Clothes",
@@ -258,8 +256,40 @@ class InitializeCoreData {
         
         moc = CoreDataStack().managedObjectContext!
         CoreCategories.generateCategories(moc)
-        let cats = CoreCategories.retrieveCategories(moc)        
+        let cats = CoreCategories.retrieveCategories(moc)
+        testJSON()
+
         
+    }
+    
+    //move this to trash class and call it from tableview with loading icon until loaded - fetch first 30 trash per page - also add a data generator file in your rails app with like 150 trash mixed requested and wanted
+    func testJSON() -> [String]? {
+        
+        var testData = [String]()
+        
+        let urlAsString = "https://trasher.herokuapp.com/trashes.json"
+        let url: NSURL  = NSURL(string: urlAsString)!
+        let urlSession = NSURLSession.sharedSession()
+        
+        let task = urlSession.dataTaskWithURL(url, completionHandler: { data, response, error -> Void in
+            if (error != nil) {
+                println(error.localizedDescription)
+            }
+            var err: NSError?
+            
+            var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSArray?
+            if (err != nil) {
+                println("JSON Error \(err!.localizedDescription)")
+            }
+            
+            println(jsonResult!)
+        })
+        task.resume()
+        
+        if !testData.isEmpty {
+            return testData
+        }
+        return nil
     }
     
 

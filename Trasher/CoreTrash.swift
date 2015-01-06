@@ -39,8 +39,6 @@ class CoreTrash: NSManagedObject {
         return coreTrash
     }
     
-  
-    
     class func getRequestedTrashByUser(moc: NSManagedObjectContext) -> [CoreTrash] {
         
         let fetchRequest = NSFetchRequest(entityName: "CoreTrash")
