@@ -340,7 +340,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juD-3Z-ZGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3449.5" y="507.5"/>
+            <point key="canvasLocation" x="3889.5" y="471.5"/>
         </scene>
         <!--Request Trash View Controller-->
         <scene sceneID="s9r-mL-mev">
@@ -1164,8 +1164,8 @@ or log in with TouchID</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="iab-S1-FWu"/>
-        <segue reference="qEL-pg-66I"/>
-        <segue reference="l7A-rA-V1A"/>
-        <segue reference="HMs-WP-Km4"/>
+        <segue reference="mSu-WB-pSA"/>
+        <segue reference="X2o-TD-aTx"/>
+        <segue reference="ITQ-ly-PSn"/>
     </inferredMetricsTieBreakers>
 </document>

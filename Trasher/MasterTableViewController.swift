@@ -1,4 +1,4 @@
-//
+
 //  MasterTableViewController.swift
 //  Trasher
 //
@@ -22,13 +22,14 @@ class MasterTableViewController: UIViewController, UITableViewDataSource, UITabl
 CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITabBarDelegate,  PopulateMasterTableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     var locationManager = CLLocationManager()
-
-
+    
+    
     var trashArray = [Trash]()
     var trashAssets = [TrashAssets]()
+    var thumbnail = NSData()
     var filteredTrash = [Trash]()
     var maskView = UIView()
     var searchState : Bool = false
@@ -39,20 +40,15 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     var managedObjectContext = CoreDataStack().managedObjectContext
     var refreshControl : UIRefreshControl = UIRefreshControl()
     
-     override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         self.tableView.delegate = self
         self.searchBar.delegate = self
         
-        if (self.trashArray.isEmpty) {
-            self.trashArray =  testData.generateTestData()
-            self.trashAssets = testData.generateFilteredTrashAssets()
-        }
         
-        performTrashTypeFilter(self.trashArray)
-
-        self.tableView.reloadData()
+        setTrashArrays()
+      
         self.navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
         
         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
@@ -62,89 +58,92 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
         
-        
         refreshControl.backgroundColor = UIColor.lightGrayColor()
         refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: "refreshTableView", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
         
-        
-        
-//        UITextField *searchBarTextField = nil;
-//        for (UIView *searchBarSubview in [mySearchBar subviews]) {
-//            if ( [searchBarSubview isKindOfClass:[UITextField class] ] ) {
-//                // ios 6 and earlier
-//                searchBarTextField = (UITextField *)searchBarSubview;
-//                searchBarTextField.delegate = self;
-//            } else {
-//                // for ios 7 what we need is nested inside another container
-//                for (UIView *subSubView in [searchBarSubview subviews]) {
-//                    if ( [subSubView isKindOfClass:[UITextField class] ] ) {
-//                        searchBarTextField = (UITextField *)subSubView;
-//                        searchBarTextField.delegate = self;
-//                    }
-//                }
-//            }
-//        }
-//        if (searchBarTextField) {
-//            [searchBarTextField setReturnKeyType:UIReturnKeyNext];
-//        }
-        
         var searchBarTextField : UITextField = UITextField()
-        println(searchBar.subviews[0].description)
-        
-        
-//        for view in searchBar.subviews as [UIView] {
-////            if let textField = view as? UITextField {
-////               searchBarTextField = textField
-////               searchBarTextField.delegate = self
-////               println("test")
-////            }
-//            println("testing")
-//            if view.isKindOfClass(UITextField) {
-//                println("test")
-//            }
-//        }
         
     }
     
+    func setTrashArrays() {
+//        if (self.trashArray.isEmpty) {
+        
+            Trash.getTrashFromAPI({ data, error -> Void in
+                if (data != nil) {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.setTrashArray(data)
+                        self.tableView.reloadData()
+                    })
+                    
+                } else {
+                    println(error)
+                }
+            })
+            
+            Trash.getTrashImageFromAPI({ data, error -> Void in
+                if (data != nil) {
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.setTrashAssetArray(data)
+                        self.tableView.reloadData()
+                    })
+                    
+                } else {
+                    println(error)
+                }
+                
+            })
+            
+            
+            
+//        }
+    }
+    
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        println("hihi")
         return true
     }
     
     func refreshTableView() {
+        setTrashArrays()
         tableView.reloadData()
-        println("refreshing")
         refreshControl.endRefreshing()
-        
     }
     
     
+    func setTrashArray(arrayOfTrash: [Trash]) {
+        self.trashArray = arrayOfTrash
+        performTrashTypeFilter(self.trashArray)
+    }
     
-    
-   
+    func setTrashAssetArray(arrayOfTrashAsset: [TrashAssets]) {
+        self.trashAssets = arrayOfTrashAsset
+        self.thumbnail = self.trashAssets[0].trashImage
+    }
     
     func performTrashTypeFilter(arrayOfTrash: [Trash]) -> [Trash] {
         
         
         if searchBar.selectedScopeButtonIndex == 0 {
-            self.filteredTrash = testData.filterRequestedTrash(arrayOfTrash)
+            self.filteredTrash = Trash.filterRequestedTrash(arrayOfTrash)
+            
         } else {
-            self.filteredTrash = testData.filterWantedTrash(arrayOfTrash)
+            self.filteredTrash = Trash.filterWantedTrash(arrayOfTrash)
         }
-
-        
+//        self.filteredTrash = arrayOfTrash
         return filteredTrash
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         searchBar.text = ""
-        performTrashTypeFilter(self.trashArray)
+//        performTrashTypeFilter(self.trashArray)
+        setTrashArrays()
         tableView.reloadData()
     }
     
-
+    
     func addTrashButtonTouch(sender: UIButton) {
         if CoreUser.userIsRegistered(managedObjectContext!) {
             
@@ -156,7 +155,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         } else {
             self.performSegueWithIdentifier("signUpFromMasterSegue", sender: self)
         }
-//        menuButtons.toggleMenuButtons()
+        //        menuButtons.toggleMenuButtons()
     }
     
     func requestTrashButtonTouch(sender: UIButton) {
@@ -172,11 +171,11 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     }
     
     func drawRoundButton(btn: UIButton) {
-//        btn.frame = CGRectMake(200, 100, 50, 50)
+        //        btn.frame = CGRectMake(200, 100, 50, 50)
         btn.layer.cornerRadius = 30
         btn.clipsToBounds = true
     }
- 
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         self.tableView.reloadData()
@@ -191,27 +190,25 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
-
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-            return self.filteredTrash.count
+        
+        return self.filteredTrash.count
     }
-
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80.00
     }
     
-
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.filteredTrash = filterTextForSearch(searchText)
         self.trashArray = filterTextForSearch(searchText)
@@ -220,9 +217,9 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-
+        
         clearSearch()
-
+        
     }
     
     func clearSearch() {
@@ -246,10 +243,10 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         if keyword.isEmpty {
             searchState = false
             self.filteredTrash = performTrashTypeFilter(self.trashArray)
-//            self.trashArray = self.trashArray
+            //            self.trashArray = self.trashArray
         }
         
-//        return self.trashArray
+        //        return self.trashArray
         return self.filteredTrash
         
     }
@@ -259,11 +256,11 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-
+        
         var trash : Trash
         trash = self.filteredTrash[indexPath.row]
         
-        
+
         cell.textLabel?.text = trash.title + " " + String(trash.categoryName(trash.trash_category))
         cell.detailTextLabel?.text = trash.fullAddress()
         
@@ -273,72 +270,77 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         cell.addSubview(imageView)
         cell.indentationLevel = 70
         
-        var mainTrashImage: NSData = TrashAssets.getMainTrashImage(self.trashAssets, trashId: trash.trashId)
+//        var mainTrashImage: NSData = TrashAssets.getMainTrashImage(self.trashAssets, trashId: trash.trashId)
         
-        if (UIImage(data: trash.image) != nil) {
-//            imageView.image = UIImage(data: trash.image)
-            imageView.image = UIImage(data: mainTrashImage)
-        } else {
-            imageView.image = UIImage(named: "trash-can-icon")
-
-        }
+        
+//        if (UIImage(data: trash.image) != nil) {
+//            //            imageView.image = UIImage(data: trash.image)
+//            imageView.image = UIImage(data: mainTrashImage)
+//        } else {
+//            imageView.image = UIImage(named: "trash-can-icon")
+        
+//            imageView.image = self.thumbnail
+//        }
+//        let tImage : NSData = self.trashAssets[0].trashImage
+        imageView.image = UIImage(data: self.thumbnail)
+        
+        
         
         return cell
     }
     
     
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    // Return NO if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
     }
     */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView!, moveRowAtIndexPath fromIndexPath: NSIndexPath!, toIndexPath: NSIndexPath!) {
-
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView!, canMoveRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    // Return NO if you do not want the item to be re-orderable.
+    return true
     }
     */
-
+    
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         // Get the new view controller using [segue destinationViewController].
         if (segue.identifier == "showDetailsSegue") {
-          
-          var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
-          var trash : Trash
-          let path = self.tableView.indexPathForSelectedRow()
-          trash = filteredTrash[path!.row] as Trash
-
-          detailSegue.currentTrash = trash
-          detailSegue.trashAssets = trashAssets
-
+            
+            var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
+            var trash : Trash
+            let path = self.tableView.indexPathForSelectedRow()
+            trash = filteredTrash[path!.row] as Trash
+            
+            detailSegue.currentTrash = trash
+            detailSegue.trashAssets = trashAssets
+            
         }
         
         if segue.identifier == "addTrashFromMasterSegue" {
@@ -360,14 +362,14 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
             
         }
         
-       
+        
     }
-   
+    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
-
+    
     
     
     
@@ -388,20 +390,12 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     //MARK: Master table view delegate implementation
     
     func refreshRequestedData(tableData: [Trash], tableDataAssets: [TrashAssets]) {
-        self.trashArray = tableData
-        self.trashAssets = tableDataAssets
-        performTrashTypeFilter(trashArray)
-        self.tableView.reloadData()
+        setTrashArrays()
     }
     
     func refreshWantedData(tableData: [Trash]) {
-        self.trashArray = tableData
-        performTrashTypeFilter(trashArray)
-        self.tableView.reloadData()
+        setTrashArrays()
     }
-
-    
-
     
     
     
@@ -422,5 +416,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     
     
-
+    
+    
+    
+    
 }

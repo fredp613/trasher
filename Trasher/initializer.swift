@@ -1,4 +1,3 @@
-//
 //  initializer.swift
 //  Trasher
 //
@@ -21,7 +20,7 @@ class InitializeTestData {
     var filteredTrash = [Trash]()
     
     init() {
-                       
+        
     }
     func generateDefaultCategories() -> [Int:String] {
         defaulCategories = [
@@ -51,7 +50,7 @@ class InitializeTestData {
         return initialCategories
     }
     
-
+    
     
     func generateTestData() -> [Trash] {
         
@@ -231,7 +230,7 @@ class InitializeTestData {
         })
         
         return filterRequestedTrash
-   
+        
     }
     
     func filterWantedTrash(arrayOfTrash: [Trash]) -> [Trash] {
@@ -243,7 +242,7 @@ class InitializeTestData {
         return filterWantedTrash
     }
     
-   
+    
     
     
 }
@@ -258,7 +257,7 @@ class InitializeCoreData {
         CoreCategories.generateCategories(moc)
         let cats = CoreCategories.retrieveCategories(moc)
         testJSON()
-
+        
         
     }
     
@@ -282,7 +281,7 @@ class InitializeCoreData {
                 println("JSON Error \(err!.localizedDescription)")
             }
             
-            println(jsonResult!)
+//            println(jsonResult!)
         })
         task.resume()
         
@@ -292,13 +291,9 @@ class InitializeCoreData {
         return nil
     }
     
-
+    
     
 }
-
-
-
-
 
 
 
