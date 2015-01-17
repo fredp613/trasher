@@ -71,8 +71,11 @@ class Trash : Address {
             for (index, ti) in enumerate(trashAssetsJsonResults!) {
                 
                 trashImage = TrashAssets()
-     
+                
+                let tId = ti["trash_id"] as Int
+                trashImage.trashId = String(tId)
                 if let t_Image = ti["trash_image"] as? NSDictionary {
+                   
                     if let t_Image_level = ti["trash_image"] as? NSDictionary {
                         if let t_Image_level_1 = t_Image_level["trash_image"] as? NSDictionary {
                             if let t_Image_main = t_Image_level_1["main"] as? NSDictionary {
@@ -80,7 +83,7 @@ class Trash : Address {
                                     let imageUrl = NSURL(string: t_image_url)
                                     let imageData = NSData(contentsOfURL: imageUrl!)
                                     trashImage.trashImage = UIImageJPEGRepresentation(UIImage(data: imageData!), 0.75)
-                                    trashImage.trashId = "testingID"
+                                    println(trashImage.trashId)
                                     tAssetsArray.append(trashImage)                                    
                                 }
                             }
@@ -135,7 +138,8 @@ class Trash : Address {
                 var trash = Trash()
                 for ti in trashesJsonResults! {
                     trash = Trash()
-                    trash.trashId = ti["id"] as? String
+                    let tId = ti["id"] as Int
+                    trash.trashId = String(tId)
                     trash.desc = ti["description"] as? String
                     trash.title = ti["title"] as? String
                     trash.addressLine1 = "934 torovin private"

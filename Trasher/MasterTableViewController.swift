@@ -336,7 +336,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
             var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
             var trash : Trash
             let path = self.tableView.indexPathForSelectedRow()
-            trash = filteredTrash[path!.row] as Trash
+            trash = self.filteredTrash[path!.row] as Trash
             
             detailSegue.currentTrash = trash
             detailSegue.trashAssets = trashAssets
