@@ -17,6 +17,7 @@
 		2A1877061A2436C80021F9AD /* TrashAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1877051A2436C80021F9AD /* TrashAssets.swift */; };
 		2A2B1B831A52363900FE9E73 /* CoreTrashImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B1B821A52363900FE9E73 /* CoreTrashImage.swift */; };
 		2A2B1B851A523C5900FE9E73 /* MyTrashDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B1B841A523C5900FE9E73 /* MyTrashDetailViewController.swift */; };
+		2A3173EF1A880B5400018C53 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3173EE1A880B5400018C53 /* Alamofire.swift */; };
 		2A43AACA19F82659003F7BC7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */; };
 		2A43AACC19F87D90003F7BC7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */; };
 		2A515C5D1A2C24A600EC4988 /* FPGoogleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */; };
@@ -101,6 +102,7 @@
 		2A1877051A2436C80021F9AD /* TrashAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashAssets.swift; sourceTree = "<group>"; };
 		2A2B1B821A52363900FE9E73 /* CoreTrashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTrashImage.swift; sourceTree = "<group>"; };
 		2A2B1B841A523C5900FE9E73 /* MyTrashDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTrashDetailViewController.swift; sourceTree = "<group>"; };
+		2A3173EE1A880B5400018C53 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2A43AAC919F82659003F7BC7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2A43AACB19F87D90003F7BC7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPGoogleButton.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		2A77FF7E1A16DDAF00127F10 /* external_libs */ = {
 			isa = PBXGroup;
 			children = (
+				2A3173EE1A880B5400018C53 /* Alamofire.swift */,
 				2AE6DC891A1E9AD200F5C397 /* CTAssetsPickerController */,
 				2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */,
 				2A77FF861A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
@@ -553,6 +556,7 @@
 				2A9A7E381A5354C600E3B9D8 /* CoreLocation.swift in Sources */,
 				2A12DB7E1A0EC01300CE7175 /* AddCategoriesTableViewController.swift in Sources */,
 				2AE6DCB21A1E9AD200F5C397 /* CTAssetScrollView.m in Sources */,
+				2A3173EF1A880B5400018C53 /* Alamofire.swift in Sources */,
 				2AE6DC471A1E738F00F5C397 /* CoreTrash.swift in Sources */,
 				2AE6DCB91A1E9AD200F5C397 /* CTAssetsViewCell.m in Sources */,
 				2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */,

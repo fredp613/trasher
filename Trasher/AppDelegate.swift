@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
 //        InitializeTestData()
         InitializeCoreData()
+        Trash.login()
 
 
     
