@@ -152,12 +152,14 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     @IBAction func verifyCode(sender: AnyObject) {
         
         if self.textVerification != "dpg613" {
-            let email = "fredp620@gmail.com"
+            let email = "fredp613@gmail.com"
             let password = "fredp613"
             if textPwd.text == textConfirmPwd.text {
             activateProgressIndicator(true)
                 let apiRequest: () = TrasherAPI.APIUserRegistrationRequest(managedContext!, email: email, password: password, completionHandler: { (responseObject, error) -> Void in
                     let json = responseObject
+                    println(responseObject)
+                    println(error)
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                         if json["state_code"] == 0 {
