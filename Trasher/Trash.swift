@@ -46,49 +46,8 @@ class Trash : Address {
     }
     
     
-    class func login() {
-        let params = [
-            "user": ["email" : "fredp202@gmail.com",
-            "password" : "fredp613",
-            "password_confirmation" : "fredp613"]
-            
-        ]
-        request(Method.POST, "https://trasher.herokuapp.com/users", parameters: params, encoding: ParameterEncoding.URL).response {
-            (request, response, data, error) in
-            println(request)
-            println(response)
-            println(error)
-            println(data)
-        }
+   
         
-    }
-    
-    class func test() {
-        enum Router: URLRequestConvertible {
-            static let baseUrlString = "some url string"
-            
-            case Get(query: String)
-            
-            var URLRequest: NSURLRequest {
-                let (path: String, parameters: [String: AnyObject]?) = {
-                    switch self {
-                    case .Get(let query):
-                        return ("/get", ["q": query])
-                    }
-                    }()
-                
-                let URL = NSURL(string: Router.baseUrlString)!
-                let URLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-                // set header fields
-                URLRequest.setValue("fredp613@gmail.com", forHTTPHeaderField: "email")
-                URLRequest.setValue("whatevertoken", forHTTPHeaderField: "token")
-                
-                let encoding = ParameterEncoding.URL
-                return encoding.encode(URLRequest, parameters: parameters).0
-            }
-        }
-        
-    }
     
     class func getTrashImageFromAPI(completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
         
@@ -117,7 +76,6 @@ class Trash : Address {
             for (index, ti) in enumerate(trashAssetsJsonResults!) {
                 
                 trashImage = TrashAssets()
-                
                 let tId = ti["trash_id"] as Int
                 trashImage.trashId = String(tId)
                 if let t_Image = ti["trash_image"] as? NSDictionary {
@@ -129,7 +87,6 @@ class Trash : Address {
                                     let imageUrl = NSURL(string: t_image_url)
                                     let imageData = NSData(contentsOfURL: imageUrl!)
                                     trashImage.trashImage = UIImageJPEGRepresentation(UIImage(data: imageData!), 0.75)
-                                    println(trashImage.trashId)
                                     tAssetsArray.append(trashImage)                                    
                                 }
                             }

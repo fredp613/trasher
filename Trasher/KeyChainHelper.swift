@@ -56,7 +56,7 @@ class KeyChainHelper {
   
     
     
-    class func createORupdatePasswordForKey(value: String, keyName: String) -> Bool {
+    class func createORupdateForKey(value: String, keyName: String) -> Bool {
         
         if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
             return self.setData(data, forKey: keyName)
@@ -65,7 +65,7 @@ class KeyChainHelper {
         return false
     }
     
-    class func deletePasswordForKey(keyName: String) -> Bool {
+    class func deleteForKey(keyName: String) -> Bool {
         
         let keychainQueryDictionary : NSMutableDictionary = self.setupKeychainQueryDictionaryForKey(keyName)
         let status: OSStatus = SecItemDelete(keychainQueryDictionary)
@@ -77,7 +77,8 @@ class KeyChainHelper {
         }
     }
     
-    class func retrievePasswordForKey(keyName: String) -> String {
+    
+    class func retrieveForKey(keyName: String) -> String? {
         
         var keychainData: NSData? = self.dataForKey(keyName)
         var stringValue: String?

@@ -46,7 +46,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         self.tableView.delegate = self
         self.searchBar.delegate = self
         
-        
+
         setTrashArrays()
       
         self.navigationController?.navigationBar.topItem?.title = "Trash \(User().distance) km from you"
@@ -64,6 +64,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         tableView.addSubview(refreshControl)
         
         var searchBarTextField : UITextField = UITextField()
+        
+        
         
     }
     
@@ -97,8 +99,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
                 
             })
             
-            
-            
+                        
 //        }
     }
     

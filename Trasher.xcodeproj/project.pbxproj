@@ -37,6 +37,8 @@
 		2A8DE0FB1A3CC3190003CE3D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8DE0FA1A3CC3190003CE3D /* CoreDataStack.swift */; };
 		2A9A7E321A53504200E3B9D8 /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9A7E311A53504200E3B9D8 /* LocationHelper.swift */; };
 		2A9A7E381A5354C600E3B9D8 /* CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9A7E371A5354C600E3B9D8 /* CoreLocation.swift */; };
+		2AA2DB011A8D6B7B001C9EA7 /* TrashAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2DB001A8D6B7B001C9EA7 /* TrashAPI.swift */; };
+		2AA2DB031A8D8E11001C9EA7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2DB021A8D8E11001C9EA7 /* SwiftyJSON.swift */; };
 		2AA5E4501A35482200BABCA8 /* MyTrashTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */; };
 		2AAC9D831A17C65A00AB01A9 /* FPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */; };
 		2AB1199B19FD6D3F00AC8A06 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */; };
@@ -125,6 +127,8 @@
 		2A8DE0FA1A3CC3190003CE3D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		2A9A7E311A53504200E3B9D8 /* LocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		2A9A7E371A5354C600E3B9D8 /* CoreLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = SOURCE_ROOT; };
+		2AA2DB001A8D6B7B001C9EA7 /* TrashAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashAPI.swift; sourceTree = "<group>"; };
+		2AA2DB021A8D8E11001C9EA7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTrashTableTableViewController.swift; sourceTree = "<group>"; };
 		2AAC9D821A17C65A00AB01A9 /* FPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FPTextView.swift; path = ../FPTextView.swift; sourceTree = "<group>"; };
 		2AB1199A19FD6D3F00AC8A06 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -226,6 +230,7 @@
 				2A1078461A4114FB00637A7C /* KeyChainHelper.swift */,
 				2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */,
 				2A68E3131A193660005A7529 /* TextViewHelper.swift */,
+				2AA2DB001A8D6B7B001C9EA7 /* TrashAPI.swift */,
 			);
 			name = helpers;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 				2A77FF801A16DE7800127F10 /* TPKeyboardAvoidingScrollView.h */,
 				2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */,
 				2A77FF7F1A16DE7700127F10 /* Trasher-Bridging-Header.h */,
+				2AA2DB021A8D8E11001C9EA7 /* SwiftyJSON.swift */,
 			);
 			name = external_libs;
 			sourceTree = "<group>";
@@ -525,6 +531,7 @@
 				2A8224F81A142B3600F76CEB /* Address.swift in Sources */,
 				2A2B1B831A52363900FE9E73 /* CoreTrashImage.swift in Sources */,
 				2A8A91C31A1151E70004D3E5 /* initializer.swift in Sources */,
+				2AA2DB011A8D6B7B001C9EA7 /* TrashAPI.swift in Sources */,
 				2AE6DCB41A1E9AD200F5C397 /* CTAssetsGroupViewController.m in Sources */,
 				2AE6DCAE1A1E9AD200F5C397 /* ALAsset+assetType.m in Sources */,
 				2AC0553019F2E7970068B2E2 /* SearchViewController.swift in Sources */,
@@ -576,6 +583,7 @@
 				2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */,
 				2A8DE0FB1A3CC3190003CE3D /* CoreDataStack.swift in Sources */,
 				2AE6DCB01A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m in Sources */,
+				2AA2DB031A8D8E11001C9EA7 /* SwiftyJSON.swift in Sources */,
 				2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */,
 				2AE6DCBB1A1E9AD200F5C397 /* CTAssetsViewControllerTransition.m in Sources */,
 			);

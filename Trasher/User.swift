@@ -19,6 +19,7 @@ class User {
     var userName = String()
     var verified = NSNumber()
     var notifications = NSNumber()
+    var auth_token = String()
     var user_addresses = NSSet()
     var user_categories = NSSet()
     

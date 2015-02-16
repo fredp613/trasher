@@ -152,22 +152,43 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     @IBAction func verifyCode(sender: AnyObject) {
         
         if self.textVerification != "dpg613" {
-            
+            let email = "fredp620@gmail.com"
+            let password = "fredp613"
             if textPwd.text == textConfirmPwd.text {
-            
-//                NSEntityDescription *entity = [NSEntityDescription entityForName:@"Challenges" inManagedObjectContext:self.managedObjectContext]
-                
+            activateProgressIndicator(true)
+                let apiRequest: () = TrasherAPI.APIUserRegistrationRequest(managedContext!, email: email, password: password, completionHandler: { (responseObject, error) -> Void in
+                    let json = responseObject
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
-//                var entity  = NSEntityDescription.entityForName("CoreUser", inManagedObjectContext: managedContext!)
-//                let cu : CoreUser = CoreUser()
-//                
-//                cu.email = "fredp613@gmail.com"
-//                cu.username = "fredp613"
-                CoreUser.createInManagedObjectContext(managedContext!, email: "fredp613@gmail.com", pwd: "xxx")
-                self.dismissViewControllerAnimated(true, completion: nil) }
-            else {
-                var alertView = UIAlertView(title: "Passwords do not match", message: "Please ensure you typed in the same password in both password fields, try again", delegate: self, cancelButtonTitle: "OK")
-                 alertView.show()
+                        if json["state_code"] == 0 {
+                            //create user
+                            CoreUser.createInManagedObjectContext(self.managedContext!, email: email, pwd: password)
+                            let token : String = json["user"]["authentication_token"].string!
+                            KeyChainHelper.createORupdateForKey("fredp613", keyName: email)
+                            KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
+                            var alertView = UIAlertView(title: "You are registered!", message: "Hope you enjoy the app", delegate: self, cancelButtonTitle: nil)
+                            alertView.show()
+                            self.dismissAlert(alertView)
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            
+                        } else {
+                            var messages = [String]()
+                            var full_message = String()
+                            for (key: String, subJson: JSON) in json["messages"] {
+                                messages.append(subJson.string!)
+                            }
+                            for m in messages {
+                                full_message += "\(m) "
+                            }
+                            
+                            var alertView = UIAlertView(title: "Registration error", message: full_message, delegate: self, cancelButtonTitle: "OK")
+                            alertView.show()
+                            
+                        }
+
+                    })
+                })
+               
             }
             
         } else {
@@ -175,30 +196,40 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
             alertView.show()
         
         }
-        
-       
     }
-    
-
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == alertView.cancelButtonIndex {
-            println("delete")
+            self.activateProgressIndicator(false)
         }
     }
     
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        self.textEmail.resignFirstResponder()
-//        self.view.endEditing(true)
-//        return true
-//    }
 
+    func activateProgressIndicator(state: Bool) {
+        var maskView = UIView(frame: self.view.frame)
+        maskView.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
+        var activityIndicator = UIActivityIndicatorView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.width / 10, self.view.frame.height / 10))
+        
+        if state == true {
+            self.view.addSubview(activityIndicator)
+        } else {
+            activityIndicator.removeFromSuperview()
+        }
+    }
     
+    func dismissAlert(alertView: UIAlertView) {
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { () -> Void in
+            sleep(2)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                alertView.dismissWithClickedButtonIndex(0, animated: true)
 
-
+            })
+        })
+    }
+ 
     // MARK: - Nav
     
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

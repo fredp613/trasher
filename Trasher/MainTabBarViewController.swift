@@ -49,6 +49,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         
         if viewController == self.viewControllers?[1] as UIViewController {
             if CoreUser.userIsRegistered(managedObjectContext!) {
+                //here you should check if user is logged in via API and core data
                 if CoreUser.userIsLoggedIn(managedObjectContext!) {
                     navigationController?.navigationBar.topItem?.title = "Profile"
                 } else {

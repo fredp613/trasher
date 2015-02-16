@@ -23,12 +23,8 @@ class CoreTrash: NSManagedObject {
     @NSManaged var updated_on: NSDate
     @NSManaged var trash_images: NSSet
     
-    
-//    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
-    
     class func getTrashByUser(moc: NSManagedObjectContext) -> [CoreTrash] {
         
-//        let managedObjectContext = CoreDataStack().managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "CoreTrash")
         fetchRequest.returnsObjectsAsFaults = false
         var coreTrash = [CoreTrash]()
@@ -40,7 +36,7 @@ class CoreTrash: NSManagedObject {
     }
     
     class func getRequestedTrashByUser(moc: NSManagedObjectContext) -> [CoreTrash] {
-        
+        //fetch from API in background make sure match, if not update core data
         let fetchRequest = NSFetchRequest(entityName: "CoreTrash")
         fetchRequest.returnsObjectsAsFaults = false
         let predicate = NSPredicate(format: "type == %@", false)
@@ -57,6 +53,8 @@ class CoreTrash: NSManagedObject {
     
     class func getWantedTrashByUser(moc: NSManagedObjectContext) -> [CoreTrash] {
         
+        //fetch from API in background make sure match, if not update core data
+        
         let fetchRequest = NSFetchRequest(entityName: "CoreTrash")
         fetchRequest.returnsObjectsAsFaults = false
         let predicate = NSPredicate(format: "type == %@", true)
@@ -72,7 +70,7 @@ class CoreTrash: NSManagedObject {
     }
     
     class func getCategoryName(trash: CoreTrash) -> String {
-        
+        //fetch from API in background make sure match, if not update core data
         let moc = CoreDataStack().managedObjectContext!
         let fetchRequest = NSFetchRequest(entityName: "CoreCategories")
         
@@ -100,38 +98,27 @@ class CoreTrash: NSManagedObject {
         var error: NSError? = nil
         
         if moc.save(&error) {
+            //save to API - fetch token here - maybe create a class for the api to abstract
             println("saved")
             return true
         } else {
             println("\(error?.userInfo)")
             return false
         }
-
-        
-
     }
     
     class func updateTrash(moc: NSManagedObjectContext, coreTrash: CoreTrash) -> Bool {
+        
+        
         coreTrash.updated_on = NSDate()
         if moc.save(nil) {
+            //save to API - fetch token here - maybe create a class for the api to abstract
             return true
         }
         return false
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
 

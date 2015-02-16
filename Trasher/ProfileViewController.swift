@@ -92,7 +92,6 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
         }
     }
     
-
     func updateCategories(moc: NSManagedObjectContext) {
         tableData = CoreUserCategories.retrieveUserCategories(moc)
         categoriesTableView.reloadData()

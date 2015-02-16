@@ -29,7 +29,7 @@ class CoreUser: NSManagedObject {
     
     
     class func createInManagedObjectContext(managedObjectContext: NSManagedObjectContext, email: String, pwd: String) -> Bool {
-        
+        // here you should validate and wrap the code below
 
         let coreUser : CoreUser = NSEntityDescription.insertNewObjectForEntityForName("CoreUser", inManagedObjectContext: managedObjectContext) as CoreUser
         
@@ -44,24 +44,14 @@ class CoreUser: NSManagedObject {
 
         println("core user saved")
         if managedObjectContext.save(nil) {
-          let saveSuccessful: Bool = KeyChainHelper.createORupdatePasswordForKey(pwd, keyName: email)
-           
-            if saveSuccessful {
-                println("successful")
-//                CoreCategories.generateCategories(managedObjectContext)
-                CoreUserCategories.generateDefaultCategoriesForNewUser(managedObjectContext, currentUser: coreUser)
-                return true
-            } else {
-                managedObjectContext.rollback()
-                println("unsuccessful")
-                return false
-            }
-
+            println("user registration successfull")
+            return true
         } else {
           return false
         }
-
+//        return false
     }
+
     
     class func updateUser(managedObjectContext: NSManagedObjectContext, coreUser: CoreUser) {
         coreUser.updated_on = NSDate()
@@ -107,7 +97,7 @@ class CoreUser: NSManagedObject {
         
 
         var user = CoreUser.currentUser(managedObjectContext)
-        if user.remember == 1  {
+        if user.remember == true  {
           return true
         }
         
@@ -160,21 +150,38 @@ class CoreUser: NSManagedObject {
     }
     
     
+//    class func apiAuthenticated(email: String, password: String) -> Bool {
+//        let moc = CoreDataStack().managedObjectContext!
+//        let cu = CoreUser.currentUser(moc)
+//        
+//        let retrieveTokenFromKeyChain: String = KeyChainHelper.retrieveTokenForKey("fredp613@gmail.com")
+//        
+//        
+//        return false
+//    }
     
     class func authenticated(email: String, password: String) -> Bool {
         let managedObjectContext = CoreDataStack().managedObjectContext!
         let cu = CoreUser.currentUser(managedObjectContext)
         
         
-        let retrievePwdFromKeychain: String = KeyChainHelper.retrievePasswordForKey("fredp613@gmail.com")
+        if let retrievePwdFromKeychain: String = KeyChainHelper.retrieveForKey("fredp613@gmail.com") {
         
-        if cu.email == email && (password == retrievePwdFromKeychain) {
-            cu.remember = true
-            managedObjectContext.save(nil)
-            return true
+            if cu.email == email && (password == retrievePwdFromKeychain) {
+                cu.remember = true
+                managedObjectContext.save(nil)
+                return true
+            }
+        }
+        return false
+    }
+    
+    class func getUserToken(user: CoreUser) -> String? {
+        if let tokenFromKeychain: String = KeyChainHelper.retrieveForKey("auth_token") {
+            return tokenFromKeychain
         }
         
-        return false
+        return nil
     }
     
     class func fetchUser(managedObjectContext: NSManagedObjectContext) -> Int {
