@@ -52,7 +52,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
         self.categoriesTableView.delegate = self
         self.categoriesTableView.dataSource = self
         //setup
-        var currentUser = CoreUser.currentUser(moc)
+        var currentUser = CoreUser.currentUser(moc)!
         self.kmText.text = "\(currentUser.preferred_distance)"
         self.distanceSlider.value = currentUser.preferred_distance.floatValue
         self.tableData = CoreUserCategories.retrieveUserCategories(moc)
@@ -122,7 +122,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
     }
     
     @IBAction func kmTextChanged(sender: AnyObject) {
-        var currentUser = CoreUser.currentUser(moc)
+        var currentUser = CoreUser.currentUser(moc)!
         if (self.kmText.text.toInt() > 500) {
             var alertView = UIAlertView(title: "Range to far", message: "The maximum distance is 500KM", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
@@ -147,7 +147,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
     
     @IBAction func changeDistance(sender: AnyObject) {
 //        self.kmLabel.text = NSString(format: "%.2f" , self.distanceSlider.value)
-        var currentUser = CoreUser.currentUser(moc)
+        var currentUser = CoreUser.currentUser(moc)!
         var sliderValue = self.distanceSlider.value
         currentUser.preferred_distance = sliderValue
         self.kmText.text = "\(Int(sliderValue))"
@@ -238,7 +238,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
     }
     
     @IBAction func notificationSwitched(sender: AnyObject) {
-        var currentUser = CoreUser.currentUser(moc)
+        var currentUser = CoreUser.currentUser(moc)!
         if self.notificationsSwitch.on {
             currentUser.notifications_on = true
             CoreUser.updateUser(moc, coreUser: currentUser)
@@ -249,7 +249,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
     }
     
     func toggleNotificationState() -> Bool {
-        var currentUser = CoreUser.currentUser(moc)
+        var currentUser = CoreUser.currentUser(moc)!
         if currentUser.notifications_on.boolValue {
             self.notificationsSwitch.setOn(true, animated: true)
             return true
@@ -289,7 +289,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
                     println(pm.countryCode)
 //                    coreLocation.country_code = pm.countryCode
                     coreLocation.default_location = true
-                    coreLocation.user = coreUser
+                    coreLocation.user = coreUser!
                     
                     var error : NSError? = nil
                     if self.moc.save(&error) {

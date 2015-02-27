@@ -95,12 +95,52 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
     }
     
     @IBAction func logoutWasPressed(sender: AnyObject) {
+    
+        if let user = CoreUser.currentUser(managedObjectContext!) {
+            user.remember = false
+            CoreUser.updateUser(managedObjectContext!, coreUser: user)
+            println(CoreUser.getUserToken(user))
+        }
         
-        let user = CoreUser.currentUser(managedObjectContext!)
-        user.remember = false
-        CoreUser.updateUser(managedObjectContext!, coreUser: user)
+        let params = [
+            "user": ["email" : "fredp613@gmail.com",
+                "password" : "fredp613"]
+        ]
+        
+        TrasherAPI.APIUserAuth(managedObjectContext!, httpMethod: httpMethodEnum.DELETE, url: "https://trasher.herokuapp.com/users/sign_out", params: params) { (responseObject, error) -> () in
+            let json = responseObject
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if json["state_code"] == 0 {
+                    //update user token
+                    let token : String = json["new_user_token"].string!
+                    KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
+                    let new_token = KeyChainHelper.retrieveForKey("auth_token")
+                    println("\(new_token) new token worked! so the keychain has updated")
+                    var alertView = UIAlertView(title: "Logged out!", message: "You have successfully logged out!!", delegate: self, cancelButtonTitle: nil)
+                    alertView.show()
+                    self.dismissAlert(alertView)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    var jsonError = json["message"].string!
+                    var alertView = UIAlertView(title: "Logout error", message: jsonError, delegate: self, cancelButtonTitle: "OK")
+                    alertView.show()
+                }
+            })
+        }
+        
         self.selectedIndex = 0
         logoutButton.alpha = 0
+    }
+    
+    func dismissAlert(alertView: UIAlertView) {
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { () -> Void in
+            sleep(2)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                alertView.dismissWithClickedButtonIndex(0, animated: true)
+                
+            })
+        })
     }
 
     // MARK: - Navigation

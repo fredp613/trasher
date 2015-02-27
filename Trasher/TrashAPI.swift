@@ -9,20 +9,20 @@
 import Foundation
 import CoreData
 
+enum httpMethodEnum : String {
+    case GET = "GET"
+    case POST = "POST"
+    case DELETE = "DELETE"
+    case PATCH = "PATCH"
+    case UPDATE = "UPDATE"
+}
 
 class TrasherAPI : NSObject, UIAlertViewDelegate {
 
-    class func APIUserRegistrationRequest(moc: NSManagedObjectContext, email: String, password: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-        
-        let params = [
-            "user": ["email" : email,
-                "password" : password,
-                "password_confirmation" : password]
-        ]
-        
-        request(Method.POST, "https://trasher.herokuapp.com/users", parameters: params, encoding: ParameterEncoding.URL).responseJSON {
+    class func APIGetRequest(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
             (request, response, jsonFromNetworking, error) in
-            
+        
             if response?.statusCode == 200 {
                 let json = JSON(jsonFromNetworking!)
                 if (error == nil) {
@@ -31,112 +31,46 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
                     return completionHandler(responseObject: nil, error: error)
                 }
             }
-            
         }
     }
-    
-//    class func APIPostRequest(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-//
-//
-//        request(Method.POST, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-//            (request, response, jsonFromNetworking, error) in
-//            
-//            if response?.statusCode == 200 {
-//                let json = JSON(jsonFromNetworking!)
-//                if (error != nil) {
-//                    return completionHandler(responseObject: json, error: nil)
-//                } else {
-//                    return completionHandler(responseObject: nil, error: error)
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    class func APIGetRequest(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-//        
-//        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-//            (request, response, jsonFromNetworking, error) in
-//        
-//            if response?.statusCode == 200 {
-//                let json = JSON(jsonFromNetworking!)
-//                if (error != nil) {
-//                    return completionHandler(responseObject: json, error: nil)
-//                } else {
-//                    return completionHandler(responseObject: nil, error: error)
-//                }
-//            }
-//        }
-//    }
-//    
-//    class func APIPostRequestWithAuth(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-//        let aManager = Manager.sharedInstance
-//        aManager.session.configuration.HTTPAdditionalHeaders = [
-//            "X-API-TOKEN": "teasdfasfsdfds", "X-API-EMAIL": "coreuser.email"]
-//        
-//        request(Method.POST, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-//            (request, response, jsonFromNetworking, error) in
-//            
-//
-//            if response?.statusCode == 200 {
-//                let json = JSON(jsonFromNetworking!)
-//                if (error != nil) {
-//                    return completionHandler(responseObject: json, error: nil)
-//                } else {
-//                    return completionHandler(responseObject: nil, error: error)
-//                }
-//            }
-//        }
-//    }
-//    
-//    class func APIGetRequestWithAuth(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-//        let aManager = Manager.sharedInstance
-//        aManager.session.configuration.HTTPAdditionalHeaders = [
-//            "X-API-TOKEN": "teasdfasfsdfds", "X-API-EMAIL": "coreuser.email"]
-//        
-//        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-//            (request, response, jsonFromNetworking, error) in
-//            
-//            if response?.statusCode == 200 {
-//                let json = JSON(jsonFromNetworking!)
-//                if (error != nil) {
-//                    return completionHandler(responseObject: json, error: nil)
-//                } else {
-//                    return completionHandler(responseObject: nil, error: error)
-//                }
-//            }
-//
-//        }
-//    }
-    
-    class func loginUserInAPI(user: CoreUser) -> Bool {
-        return false
-    }
-    
-    class func logoutUserInAPI(user: CoreUser) -> Bool {
-        return false
-    }
-    
-    class func destroyUserInAPI(user: CoreUser) -> Bool {
-        return false
-    }
-    
-    //CRUD Trash
-    
-    class func createTrashInAPI() -> Bool {
-        return false
-    }
-    
-    class func updateTrashInAPI() -> Bool {
-        return false
-    }
-    
-    class func getTrashFromAPI() -> Bool {
-        return false
-    }
-    
-    class func destroyTrashInAPI() -> Bool {
-        return false
+
+    class func APIUserAuth(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+        
+        let urlSession = NSURLSession.sharedSession()
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = httpMethod.rawValue
+        
+        
+        if let currentUser = CoreUser.currentUser(moc) {
+            request.setValue("fredp613@gmail.com", forHTTPHeaderField: "X-API-EMAIL")
+            request.setValue(CoreUser.getUserToken(currentUser)!, forHTTPHeaderField: "X-API-TOKEN")
+            println("\(CoreUser.getUserToken(currentUser)) This is the current user's token")
+        }
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+                
+        var err: NSError?
+        if let params = params {
+            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        }
+
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+            if let err = error {
+                println(err)
+            }
+            
+            if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
+                let parsedData = JSON(json!)
+//                println(JSON(json!))
+                return completionHandler(responseObject: parsedData, error: nil)
+            } else {
+                return completionHandler(responseObject: nil, error: error)
+            }
+            
+        }
+        
+        
     }
     
     

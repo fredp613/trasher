@@ -406,7 +406,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         cTrash.title = self.trash.title
         cTrash.id = self.trash.trashId
         cTrash.type = false
-        cTrash.user = CoreUser.currentUser(moc)
+        cTrash.user = CoreUser.currentUser(moc)!
         let category : CoreCategories = CoreCategories.findCategoryById(moc, id: self.trash.trash_category) as CoreCategories
         cTrash.category = category
         CoreTrash.saveTrash(cTrash, moc: moc)
@@ -453,7 +453,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                     coreLocation.zip = pm.postalCode
                     coreLocation.country = pm.country
                     coreLocation.default_location = true
-                    coreLocation.user = coreUser
+                    coreLocation.user = coreUser!
                     
                     var error : NSError? = nil
                     if moc.save(&error) {

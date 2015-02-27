@@ -209,7 +209,7 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
                         coreLocation.zip = pm.postalCode
                         coreLocation.country = pm.country
                         coreLocation.default_location = true
-                        coreLocation.user = coreUser
+                        coreLocation.user = coreUser!
                         
                         var error : NSError? = nil
                         if self.moc.save(&error) {

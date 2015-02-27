@@ -64,7 +64,7 @@ class CoreUserCategories: NSManagedObject {
     
     class func insertUserCategory(moc: NSManagedObjectContext, category_id: NSNumber) -> Bool {
         
-        let currentUser : CoreUser = CoreUser.currentUser(moc)
+        let currentUser : CoreUser = CoreUser.currentUser(moc)!
         
         let ccUserCat : CoreUserCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreUserCategories", inManagedObjectContext: moc) as CoreUserCategories
         

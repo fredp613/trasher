@@ -148,56 +148,84 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
         
     
     }
-        
+    
     @IBAction func verifyCode(sender: AnyObject) {
+        let email = "fredp613@gmail.com"
+        let pwd = "fredp613"
+        let params = [
+            "user": ["email" : email,
+                "password" : pwd,
+                "password_confirmation" : pwd]
+        ]
         
-        if self.textVerification != "dpg613" {
-            let email = "fredp613@gmail.com"
-            let password = "fredp613"
-            if textPwd.text == textConfirmPwd.text {
-            activateProgressIndicator(true)
-                let apiRequest: () = TrasherAPI.APIUserRegistrationRequest(managedContext!, email: email, password: password, completionHandler: { (responseObject, error) -> Void in
-                    let json = responseObject
-                    println(responseObject)
-                    println(error)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                        if json["state_code"] == 0 {
-                            //create user
-                            CoreUser.createInManagedObjectContext(self.managedContext!, email: email, pwd: password)
-                            let token : String = json["user"]["authentication_token"].string!
-                            KeyChainHelper.createORupdateForKey("fredp613", keyName: email)
-                            KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
-                            var alertView = UIAlertView(title: "You are registered!", message: "Hope you enjoy the app", delegate: self, cancelButtonTitle: nil)
-                            alertView.show()
-                            self.dismissAlert(alertView)
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                            
-                        } else {
-                            var messages = [String]()
-                            var full_message = String()
-                            for (key: String, subJson: JSON) in json["messages"] {
-                                messages.append(subJson.string!)
-                            }
-                            for m in messages {
-                                full_message += "\(m) "
-                            }
-                            
-                            var alertView = UIAlertView(title: "Registration error", message: full_message, delegate: self, cancelButtonTitle: "OK")
-                            alertView.show()
-                            
-                        }
-
-                    })
-                })
-               
-            }
-            
-        } else {
-            var alertView = UIAlertView(title: "Code is invalid", message: "Please ensure you typed in the correct code, otherwise try again", delegate: self, cancelButtonTitle: "OK")
-            alertView.show()
+        //        validateCredentials(email, password: pwd)
         
+
+        TrasherAPI.APIUserAuth(managedContext!, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users.json", params: params) { (responseObject, error) -> () in
+            let json = responseObject
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if json["state_code"] == 0 {
+                    // create user
+                    //create user
+                    CoreUser.createInManagedObjectContext(self.managedContext!, email: email, pwd: pwd)
+                    let token : String = json["user"]["authentication_token"].string!
+                    KeyChainHelper.createORupdateForKey("fredp613", keyName: email)
+                    KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
+                    var alertView = UIAlertView(title: "You are registered!", message: "Hope you enjoy the app", delegate: self, cancelButtonTitle: nil)
+                    alertView.show()
+                    self.dismissAlert(alertView)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                } else {
+                    var messages = [String]()
+                    var full_message = String()
+                    for (key: String, subJson: JSON) in json["messages"] {
+                        messages.append(subJson.string!)
+                    }
+                    for m in messages {
+                        full_message += "\(m) "
+                    }
+                    var alertView = UIAlertView(title: "Registration error", message: full_message, delegate: self, cancelButtonTitle: "OK")
+                    alertView.show()
+                    
+                }
+                
+            })
+
         }
+        
+
+//            let json = responseObject
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                if json["state_code"] == 0 {
+//                    // create user
+//                    //create user
+//                    CoreUser.createInManagedObjectContext(self.managedContext!, email: email, pwd: pwd)
+//                    let token : String = json["user"]["authentication_token"].string!
+//                    KeyChainHelper.createORupdateForKey("fredp613", keyName: email)
+//                    KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
+//                    var alertView = UIAlertView(title: "You are registered!", message: "Hope you enjoy the app", delegate: self, cancelButtonTitle: nil)
+//                    alertView.show()
+//                    self.dismissAlert(alertView)
+//                    self.dismissViewControllerAnimated(true, completion: nil)
+//                    
+//                } else {
+//                    var messages = [String]()
+//                    var full_message = String()
+//                    for (key: String, subJson: JSON) in json["messages"] {
+//                        messages.append(subJson.string!)
+//                    }
+//                    for m in messages {
+//                        full_message += "\(m) "
+//                    }
+//                    var alertView = UIAlertView(title: "Registration error", message: full_message, delegate: self, cancelButtonTitle: "OK")
+//                    alertView.show()
+//                    
+//                }
+//                
+//            })
+//        }
+//    
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {

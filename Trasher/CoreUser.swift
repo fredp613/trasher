@@ -95,8 +95,8 @@ class CoreUser: NSManagedObject {
     
     class func userIsLoggedIn(managedObjectContext: NSManagedObjectContext) -> Bool {
         
-
-        var user = CoreUser.currentUser(managedObjectContext)
+        
+        var user = CoreUser.currentUser(managedObjectContext)!
         if user.remember == true  {
           return true
         }
@@ -122,17 +122,20 @@ class CoreUser: NSManagedObject {
         
     }
     
-    class func currentUser(managedObjectContext: NSManagedObjectContext) -> CoreUser {
+    class func currentUser(managedObjectContext: NSManagedObjectContext) -> CoreUser? {
 //        let moc = CoreDataStack().managedObjectContext!
         let fetchRequest = NSFetchRequest(entityName: "CoreUser")
         var coreUser = [CoreUser]()
         var error : NSError? = nil
         if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [CoreUser] {
             coreUser = fetchResults
+            if fetchResults.count > 0 {
+                return coreUser[0]
+            }
         } else {
             println("\(error?.userInfo)")
         }
-       return coreUser[0]
+       return nil
     }
     
  
@@ -162,14 +165,22 @@ class CoreUser: NSManagedObject {
     
     class func authenticated(email: String, password: String) -> Bool {
         let managedObjectContext = CoreDataStack().managedObjectContext!
-        let cu = CoreUser.currentUser(managedObjectContext)
-        
+        let cu = CoreUser.currentUser(managedObjectContext)!
         
         if let retrievePwdFromKeychain: String = KeyChainHelper.retrieveForKey("fredp613@gmail.com") {
         
             if cu.email == email && (password == retrievePwdFromKeychain) {
                 cu.remember = true
                 managedObjectContext.save(nil)
+                let params = [
+                    "user": ["email" : "fredp613@gmail.com",
+                        "password" : "fredp613"]
+                ]
+                TrasherAPI.APIUserAuth(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
+                    println("logged in successfully")
+                })
+
+               
                 return true
             }
         }

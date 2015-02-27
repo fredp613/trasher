@@ -59,6 +59,7 @@ class KeyChainHelper {
     class func createORupdateForKey(value: String, keyName: String) -> Bool {
         
         if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
+            println("key chain create/update success")
             return self.setData(data, forKey: keyName)
         }
         
