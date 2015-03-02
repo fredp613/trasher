@@ -22,7 +22,7 @@ class CoreTrashImage: NSManagedObject {
         trashImage.updated_on = trashImage.created_on
         
         var error: NSError? = nil
-        
+        saveTrashImage(trashImage, moc: moc)
         if moc.save(&error) {
             return true
         } else {
@@ -30,6 +30,8 @@ class CoreTrashImage: NSManagedObject {
             return false
         }
     }
+    
+   
     
     class func fetchAllTrashImages(moc: NSManagedObjectContext) -> [CoreTrashImage] {
         let fetchRequest = NSFetchRequest(entityName: "CoreTrashImage")

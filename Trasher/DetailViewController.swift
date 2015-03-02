@@ -18,11 +18,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var detailTitle: UILabel!
 
 
-
-
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    
     
     @IBOutlet weak var pageControl: UIPageControl!
     var currentTrash = Trash()
@@ -47,9 +43,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         self.navigationItem.hidesBackButton = false
         self.detailAddress.text = currentTrash.fullAddress()
         self.detailTitle.text = currentTrash.title
-
-        
-        self.trashImages = TrashAssets.getTrashImagesByTrashId(trashAssets, trashId: currentTrash.trashId)
+                
         let pageCount = trashImages.count
         
         // Set up the page control

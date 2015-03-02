@@ -145,8 +145,6 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
             })
 
         })
-        
-    
     }
     
     @IBAction func verifyCode(sender: AnyObject) {
@@ -161,7 +159,7 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
         //        validateCredentials(email, password: pwd)
         
 
-        TrasherAPI.APIUserAuth(managedContext!, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users.json", params: params) { (responseObject, error) -> () in
+        TrasherAPI.APIAuthenticatedRequest(managedContext!, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users.json", params: params) { (responseObject, error) -> () in
             let json = responseObject
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if json["state_code"] == 0 {

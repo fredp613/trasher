@@ -29,7 +29,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     var trashArray = [Trash]()
     var trashAssets = [TrashAssets]()
-    var thumbnail = NSData()
+    var thumbnails = [NSData]()
     var filteredTrash = [Trash]()
     var maskView = UIView()
     var searchState : Bool = false
@@ -62,45 +62,32 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: "refreshTableView", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
-        
         var searchBarTextField : UITextField = UITextField()
-        
-        
-        
     }
     
     func setTrashArrays() {
-//        if (self.trashArray.isEmpty) {
         
-            Trash.getTrashFromAPI({ data, error -> Void in
-                if (data != nil) {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.setTrashArray(data)
-                        self.tableView.reloadData()
-                    })
-                    
-                } else {
-                    println(error)
-                }
-            })
-            
-            Trash.getTrashImageFromAPI({ data, error -> Void in
-                if (data != nil) {
-                    
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.setTrashAssetArray(data)
-                        self.tableView.reloadData()
-                    })
-                    
-                } else {
-                    println(error)
-                }
+        Trash.getTrashFromAPI(managedObjectContext!, completionHandler: { (data, error) -> Void in
+            if (data != nil) {
+                self.setTrashArray(data)
+                self.tableView.reloadData()
+            } else {
+                println(error)
+            }
+        })
+        
+        Trash.getTrashImageFromAPI1(managedObjectContext!, completionHandler: { (data, error) -> Void in
+            if (data != nil) {
+                self.setTrashAssetArray(data)
+                self.tableView.reloadData()
                 
-            })
-            
-                        
-//        }
+            } else {
+                println(error)
+            }
+
+        })
+   
+
     }
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
@@ -116,16 +103,17 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     func setTrashArray(arrayOfTrash: [Trash]) {
         self.trashArray = arrayOfTrash
+        println(self.trashArray.map{$0.trashId})
         performTrashTypeFilter(self.trashArray)
     }
     
     func setTrashAssetArray(arrayOfTrashAsset: [TrashAssets]) {
         self.trashAssets = arrayOfTrashAsset
-        self.thumbnail = self.trashAssets[0].trashImage
+        self.thumbnails = self.trashAssets.map{$0.trashImage}
+        
     }
     
     func performTrashTypeFilter(arrayOfTrash: [Trash]) -> [Trash] {
-        
         
         if searchBar.selectedScopeButtonIndex == 0 {
             self.filteredTrash = Trash.filterRequestedTrash(arrayOfTrash)
@@ -252,45 +240,28 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
     }
     
-
-    
-    
+        
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
         var trash : Trash
         trash = self.filteredTrash[indexPath.row]
         
-
         cell.textLabel?.text = trash.title + " " + String(trash.categoryName(trash.trash_category))
         cell.detailTextLabel?.text = trash.fullAddress()
         
         var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
         imageView.layer.cornerRadius = 30
         imageView.clipsToBounds = true
+        
         cell.addSubview(imageView)
         cell.indentationLevel = 70
-        
-//        var mainTrashImage: NSData = TrashAssets.getMainTrashImage(self.trashAssets, trashId: trash.trashId)
-        
-        
-//        if (UIImage(data: trash.image) != nil) {
-//            //            imageView.image = UIImage(data: trash.image)
-//            imageView.image = UIImage(data: mainTrashImage)
-//        } else {
-//            imageView.image = UIImage(named: "trash-can-icon")
-        
-//            imageView.image = self.thumbnail
-//        }
-//        let tImage : NSData = self.trashAssets[0].trashImage
-        imageView.image = UIImage(data: self.thumbnail)
-        
-        
-        
+        if let thumbnail = TrashAssets.getThumbnail(self.trashAssets, trashId: trash.trashId) {
+            imageView.image = UIImage(data: thumbnail)
+        }
         return cell
     }
-    
-    
     
     /*
     // Override to support conditional editing of the table view.
@@ -339,8 +310,20 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
             let path = self.tableView.indexPathForSelectedRow()
             trash = self.filteredTrash[path!.row] as Trash
             
+            
+            var filteredAssets = trashAssets.filter({ m in
+                m.trashId == trash.trashId
+            })
+            
+            println(filteredAssets)
+            
+            var trashImages = filteredAssets.map{$0.trashImage!}
+            
+            
             detailSegue.currentTrash = trash
-            detailSegue.trashAssets = trashAssets
+            detailSegue.trashImages = trashImages
+            
+
             
         }
         

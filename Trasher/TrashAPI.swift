@@ -19,7 +19,7 @@ enum httpMethodEnum : String {
 
 class TrasherAPI : NSObject, UIAlertViewDelegate {
 
-    class func APIGetRequest(url: String, params: [String:AnyObject], completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+    class func APIGetRequest(url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
             (request, response, jsonFromNetworking, error) in
         
@@ -33,18 +33,27 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
             }
         }
     }
+    
+//    class func generateBoundaryString() -> String {
+//        return "Boundary-\(NSUUID().UUIDString)"
+//    }
 
-    class func APIUserAuth(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+    class func APIAuthenticatedRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         
         let urlSession = NSURLSession.sharedSession()
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = httpMethod.rawValue
+//        let boundary = TrasherAPI.generateBoundaryString()
+//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
+        if url != "http://trasher.herokuapp.com/trashes" {
         
-        if let currentUser = CoreUser.currentUser(moc) {
-            request.setValue("fredp613@gmail.com", forHTTPHeaderField: "X-API-EMAIL")
-            request.setValue(CoreUser.getUserToken(currentUser)!, forHTTPHeaderField: "X-API-TOKEN")
-            println("\(CoreUser.getUserToken(currentUser)) This is the current user's token")
+            if let currentUser = CoreUser.currentUser(moc) {
+                request.setValue("fredp613@gmail.com", forHTTPHeaderField: "X-API-EMAIL")
+                request.setValue(CoreUser.getUserToken(currentUser)!, forHTTPHeaderField: "X-API-TOKEN")
+//                request.setValue("xasdfsdfas", forHTTPHeaderField: "X-API-TOKEN")
+               
+            }
         }
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -57,27 +66,20 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
 
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             if let err = error {
+                //alertview class
                 println(err)
             }
             
             if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
                 let parsedData = JSON(json!)
-//                println(JSON(json!))
                 return completionHandler(responseObject: parsedData, error: nil)
             } else {
                 return completionHandler(responseObject: nil, error: error)
             }
             
         }
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
+  
     
 }

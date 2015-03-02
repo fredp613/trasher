@@ -373,8 +373,28 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     
 
     // MARK: - Navigation
+    
+    func saveTrashAPI() {
+        
+        if let currentUser = CoreUser.currentUser(moc) {
+            let params : [String:AnyObject] = [
+                "title" : trash.title,
+                "description" : trash.desc,
+                "catetory_id" : trash.trash_category,
+                "trash_type" : true,
+                "created_by" : currentUser.id,
+                "updated_by" : currentUser.id
+            ]
 
-
+            TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trashes", params: params) { (responseObject, error) -> () in
+                println("success")
+            }
+        } else {
+            //something went wrong
+        }
+    }
+    
+   
     @IBAction func saveTrash(sender: AnyObject) {
         
         if !(self.textTitle.text.isEmpty || self.textTitle.text == placeholder) {
@@ -410,12 +430,36 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         let category : CoreCategories = CoreCategories.findCategoryById(moc, id: self.trash.trash_category) as CoreCategories
         cTrash.category = category
         CoreTrash.saveTrash(cTrash, moc: moc)
+        //here you need to get the trashID
+        saveTrashAPI()
         
         for ta in pickedAssets {
-            let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as CoreTrashImage
-            trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75)
-            trashAsset.trash = cTrash
-            CoreTrashImage.saveTrashImage(trashAsset, moc: moc)
+//            let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as CoreTrashImage
+//            trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75)
+//            trashAsset.trash = cTrash
+//            CoreTrashImage.saveTrashImage(trashAsset, moc: moc)
+            
+            var trashImage = TrashAssets()
+//            trashImage.trashImage = UIImagePNGRepresentation(ta)
+            trashImage.trashImage = UIImageJPEGRepresentation(ta, 0.75)
+            //encode the image
+            var base64String = trashImage.trashImage.base64EncodedStringWithOptions(nil)
+                if let currentUser = CoreUser.currentUser(moc) {
+                    if let tImage = trashImage.trashImage {
+                        let params : [String:AnyObject] = [
+                              "trash_image": ["trash_image" : base64String,
+                                "trash_id" : 31,
+                                "name" : "from IOS"
+                            ]
+                        ]
+                        
+                        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trash_images", params: params) { (responseObject, error) -> () in
+                            println("success")
+                        }
+                    }
+                }
+                
+            
         }
 
         self.dismissViewControllerAnimated(true, completion: nil)

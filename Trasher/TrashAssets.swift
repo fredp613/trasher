@@ -44,6 +44,21 @@ class TrashAssets {
         return UIImageJPEGRepresentation(UIImage(named: "trash-can-icon"), 0.75)
     }
     
+    class func getThumbnail(trashAssetsArray: [TrashAssets], trashId: String) -> NSData? {
+        
+        var mainImage = trashAssetsArray.filter({ m in
+            m.trashId == trashId
+        })
+        
+        if mainImage.count > 0 {
+            return mainImage[0].trashImage
+        }
+        
+        return nil
+        
+        
+    }
+    
     class func getTrashImagesByTrashId(trashAssetArray: [TrashAssets], trashId: String!) -> [NSData] {
         
         var trashAssets = trashAssetArray

@@ -176,7 +176,7 @@ class CoreUser: NSManagedObject {
                     "user": ["email" : "fredp613@gmail.com",
                         "password" : "fredp613"]
                 ]
-                TrasherAPI.APIUserAuth(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
+                TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
                     println("logged in successfully")
                 })
 

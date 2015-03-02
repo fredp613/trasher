@@ -107,7 +107,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
                 "password" : "fredp613"]
         ]
         
-        TrasherAPI.APIUserAuth(managedObjectContext!, httpMethod: httpMethodEnum.DELETE, url: "https://trasher.herokuapp.com/users/sign_out", params: params) { (responseObject, error) -> () in
+        TrasherAPI.APIAuthenticatedRequest(managedObjectContext!, httpMethod: httpMethodEnum.DELETE, url: "https://trasher.herokuapp.com/users/sign_out", params: params) { (responseObject, error) -> () in
             let json = responseObject
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if json["state_code"] == 0 {

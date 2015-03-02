@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 
 enum TrashType: Int {
@@ -46,8 +47,70 @@ class Trash : Address {
     }
     
     
-   
+    class func getTrashFromAPI(moc: NSManagedObjectContext, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
+        var tArray : [Trash] = [Trash]()
         
+        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.GET, url: "http://trasher.herokuapp.com/trashes", params: nil) { (responseObject, error) -> () in
+            let json = responseObject
+            for (key: String, t: JSON) in json {
+                var trash = Trash()
+
+                trash.trashId = t["id"].stringValue
+                trash.title = t["title"].stringValue
+                trash.desc = t["description"].stringValue
+                trash.trash_category = t["catetory_id"].stringValue.toInt()
+                trash.addressLine1 = "934 torovin private"
+                trash.city = "Ottawa"
+                trash.postalCode = "K1B0A4"
+                trash.latitude = 45.415416
+                trash.longitude = -75.606957
+                trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
+                
+                if t["trash_type"] == true {
+                    trash.trashType = TrashType.requested.rawValue
+                } else {
+                    trash.trashType = TrashType.wanted.rawValue
+                }
+                tArray.append(trash)
+            }
+            
+            if (error != nil) {
+                return completionHandler(nil, error)
+            } else {
+                return completionHandler(tArray, nil)
+            }
+        }
+        
+    }
+    
+    class func getTrashImageFromAPI1(moc: NSManagedObjectContext, completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
+        var trashAssets : [TrashAssets] = [TrashAssets]()
+        
+        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.GET, url: "http://trasher.herokuapp.com/trash_images", params: nil) { (responseObject, error) -> () in
+            let json = responseObject
+            var trashImage = TrashAssets()
+            for (key: String, t: JSON) in json {
+                trashImage = TrashAssets()
+                trashImage.trashId = t["trash_id"].stringValue
+                let imageUrl = NSURL(string: t["trash_image"]["trash_image"]["main"]["url"].stringValue)
+                let imageData = NSData(contentsOfURL: imageUrl!)
+                trashImage.trashImage = UIImageJPEGRepresentation(UIImage(data: imageData!), 0.75)
+                if key == "0" {
+                    trashImage.defaultImage = true
+                }
+                trashAssets.append(trashImage)
+            }
+            
+            if (error != nil) {
+                println(error)
+                return completionHandler(nil, error)
+            } else {
+                return completionHandler(trashAssets, nil)
+            }
+        }
+        
+    }
+           
     
     class func getTrashImageFromAPI(completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
         
@@ -115,75 +178,78 @@ class Trash : Address {
     
     
     
-    class func getTrashFromAPI(completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
-    
-        var tArray : [Trash] = [Trash]()
-        
-        let urlAsString = "https://trasher.herokuapp.com/trashes.json"
-        let url: NSURL  = NSURL(string: urlAsString)!
-        let urlSession = NSURLSession.sharedSession()
-        
-        let task = urlSession.dataTaskWithURL(url, completionHandler: { data, response, error -> Void in
-            if (error != nil) {
-                println(error.localizedDescription)
-            }
-            var err: NSError?
-            
-            
-            var trashesJsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSArray
-            
-            if (err != nil) {
-                println("JSON Error \(err!.localizedDescription)")
-            }
-            
-            
-
-                var trash = Trash()
-                for ti in trashesJsonResults! {
-                    trash = Trash()
-                    let tId = ti["id"] as Int
-                    trash.trashId = String(tId)
-                    trash.desc = ti["description"] as? String
-                    trash.title = ti["title"] as? String
-                    trash.addressLine1 = "934 torovin private"
-                    trash.city = "Ottawa"
-                    trash.postalCode = "K1B0A4"
-                    trash.latitude = 45.415416
-                    trash.longitude = -75.606957
-                    var tType : Int?
-                    if let trash_type_from_api = ti["trash_type"] as? Bool {
-                        
-                        if trash_type_from_api {
-                            tType = TrashType.requested.rawValue
-                        } else {
-                            tType = TrashType.wanted.rawValue
-                        }
-                    } else {
-                        tType = TrashType.wanted.rawValue
-                    }
-                    trash.trashType = tType
-                    trash.trash_category = 3
-                    trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
-                    tArray.append(trash)
-
-                }
-
-            
-                if (err != nil) {
-                    return completionHandler(nil, err)
-                } else {
-                    return completionHandler(tArray, nil)
-                }
-            
-            
-
-            
-            })
-
-        task.resume()
-
-        
-    }
+//    class func getTrashFromAPI(completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
+//    
+//        
+//        
+//        
+//        var tArray : [Trash] = [Trash]()
+//        
+//        let urlAsString = "https://trasher.herokuapp.com/trashes.json"
+//        let url: NSURL  = NSURL(string: urlAsString)!
+//        let urlSession = NSURLSession.sharedSession()
+//        
+//        let task = urlSession.dataTaskWithURL(url, completionHandler: { data, response, error -> Void in
+//            if (error != nil) {
+//                println(error.localizedDescription)
+//            }
+//            var err: NSError?
+//            
+//            
+//            var trashesJsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSArray
+//            
+//            if (err != nil) {
+//                println("JSON Error \(err!.localizedDescription)")
+//            }
+//            
+//            
+//
+//                var trash = Trash()
+//                for ti in trashesJsonResults! {
+//                    trash = Trash()
+//                    let tId = ti["id"] as Int
+//                    trash.trashId = String(tId)
+//                    trash.desc = ti["description"] as? String
+//                    trash.title = ti["title"] as? String
+//                    trash.addressLine1 = "934 torovin private"
+//                    trash.city = "Ottawa"
+//                    trash.postalCode = "K1B0A4"
+//                    trash.latitude = 45.415416
+//                    trash.longitude = -75.606957
+//                    var tType : Int?
+//                    if let trash_type_from_api = ti["trash_type"] as? Bool {
+//                        
+//                        if trash_type_from_api {
+//                            tType = TrashType.requested.rawValue
+//                        } else {
+//                            tType = TrashType.wanted.rawValue
+//                        }
+//                    } else {
+//                        tType = TrashType.wanted.rawValue
+//                    }
+//                    trash.trashType = tType
+//                    trash.trash_category = 3
+//                    trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
+//                    tArray.append(trash)
+//
+//                }
+//
+//            
+//                if (err != nil) {
+//                    return completionHandler(nil, err)
+//                } else {
+//                    return completionHandler(tArray, nil)
+//                }
+//            
+//            
+//
+//            
+//            })
+//
+//        task.resume()
+//
+//        
+//    }
     
     func setTrashArray(ta: [Trash]) {
         self.trashArray = ta
