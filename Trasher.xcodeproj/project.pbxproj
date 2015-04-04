@@ -55,6 +55,7 @@
 		2AD380B31A55CC4C00ABC374 /* LocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD380B21A55CC4C00ABC374 /* LocationsTableViewController.swift */; };
 		2AD380B51A55CC7200ABC374 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD380B41A55CC7200ABC374 /* AddLocationViewController.swift */; };
 		2ADFD5541A0EEEE1001585D1 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */; };
+		2AE54A221AD02CCB00551968 /* CustomActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE54A211AD02CCB00551968 /* CustomActivityIndicator.swift */; };
 		2AE6DC431A1E738E00F5C397 /* CoreUserLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC421A1E738E00F5C397 /* CoreUserLocations.swift */; };
 		2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC441A1E738F00F5C397 /* CoreCategories.swift */; };
 		2AE6DC471A1E738F00F5C397 /* CoreTrash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE6DC461A1E738F00F5C397 /* CoreTrash.swift */; };
@@ -176,6 +177,7 @@
 		2AD380B21A55CC4C00ABC374 /* LocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTableViewController.swift; sourceTree = "<group>"; };
 		2AD380B41A55CC7200ABC374 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		2ADFD5531A0EEEE1001585D1 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		2AE54A211AD02CCB00551968 /* CustomActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicator.swift; sourceTree = "<group>"; };
 		2AE6DC281A1E6AE000F5C397 /* Trasher v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Trasher v1.1.xcdatamodel"; sourceTree = "<group>"; };
 		2AE6DC421A1E738E00F5C397 /* CoreUserLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreUserLocations.swift; sourceTree = "<group>"; };
 		2AE6DC441A1E738F00F5C397 /* CoreCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreCategories.swift; sourceTree = "<group>"; };
@@ -1529,6 +1531,7 @@
 		2A68E3151A19366C005A7529 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2AE54A211AD02CCB00551968 /* CustomActivityIndicator.swift */,
 				2A9A7E311A53504200E3B9D8 /* LocationHelper.swift */,
 				2A1078461A4114FB00637A7C /* KeyChainHelper.swift */,
 				2A515C5C1A2C24A600EC4988 /* FPGoogleButton.swift */,
@@ -3301,6 +3304,7 @@
 				2A68E3141A193660005A7529 /* TextViewHelper.swift in Sources */,
 				2AC0552819F2E57F0068B2E2 /* DetailViewController.swift in Sources */,
 				2AE6DC491A1E738F00F5C397 /* CoreUser.swift in Sources */,
+				2AE54A221AD02CCB00551968 /* CustomActivityIndicator.swift in Sources */,
 				2AE6DC451A1E738F00F5C397 /* CoreCategories.swift in Sources */,
 				2A8DE0FB1A3CC3190003CE3D /* CoreDataStack.swift in Sources */,
 				2AE6DCB01A1E9AD200F5C397 /* ALAssetsGroup+isEqual.m in Sources */,

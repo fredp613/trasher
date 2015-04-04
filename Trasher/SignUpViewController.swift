@@ -148,7 +148,7 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     }
     
     @IBAction func verifyCode(sender: AnyObject) {
-        let email = "fredp613@gmail.com"
+        let email = "fredp@gmail.com"
         let pwd = "fredp613"
         let params = [
             "user": ["email" : email,
@@ -160,6 +160,8 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
         
 
         TrasherAPI.APIAuthenticatedRequest(managedContext!, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users.json", params: params) { (responseObject, error) -> () in
+            
+            
             let json = responseObject
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if json["state_code"] == 0 {

@@ -13,13 +13,9 @@ import SystemConfiguration
 import AssetsLibrary
 import CoreData
 
-
-
 class AddTrashViewController: UIViewController, UIActionSheetDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, PopulateMasterTableViewDelegate,
 UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
-   
-   
     @IBOutlet weak var textTitle: UITextView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -28,7 +24,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var actvityIndicatorView: UIActivityIndicatorView!
     
-
     var pickedImage = UIImage()
     var trashArray  = [Trash]()
     var trashAssetsArray = [TrashAssets]()
@@ -387,10 +382,42 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
             ]
 
             TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trashes", params: params) { (responseObject, error) -> () in
-                println("success")
+                  let json = responseObject
+                
+                if self.pickedAssets.count > 0 {
+                    if let trashId = json["id"].int? {
+                        self.saveTrashImagesAPI(trashId)
+                    } else {
+                        println("something went wrong")
+                    }
+                }
             }
         } else {
-            //something went wrong
+            println("something went wrong")
+        }
+    }
+    
+    func saveTrashImagesAPI(trashId: Int) {
+        for ta in pickedAssets {
+            
+            var trashImage = TrashAssets()
+            trashImage.trashImage = UIImageJPEGRepresentation(ta, 0.75)
+            //encode the image
+            var base64String = trashImage.trashImage.base64EncodedStringWithOptions(nil)
+            if let currentUser = CoreUser.currentUser(moc) {
+                if let tImage = trashImage.trashImage {
+                    let params : [String:AnyObject] = [
+                        "trash_image": ["temp_image" : base64String,
+                            "trash_id" : trashId,
+                            "name" : "from IOS"
+                        ]
+                    ]
+                    
+                    TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trash_images", params: params) { (responseObject, error) -> () in
+                        println("success")
+                    }
+                }
+            }
         }
     }
     
@@ -434,21 +461,16 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         saveTrashAPI()
         
         for ta in pickedAssets {
-//            let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as CoreTrashImage
-//            trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75)
-//            trashAsset.trash = cTrash
-//            CoreTrashImage.saveTrashImage(trashAsset, moc: moc)
             
             var trashImage = TrashAssets()
-//            trashImage.trashImage = UIImagePNGRepresentation(ta)
             trashImage.trashImage = UIImageJPEGRepresentation(ta, 0.75)
             //encode the image
             var base64String = trashImage.trashImage.base64EncodedStringWithOptions(nil)
                 if let currentUser = CoreUser.currentUser(moc) {
                     if let tImage = trashImage.trashImage {
                         let params : [String:AnyObject] = [
-                              "trash_image": ["trash_image" : base64String,
-                                "trash_id" : 31,
+                              "trash_image": ["temp_image" : base64String,
+                                "trash_id" : cTrash.id,
                                 "name" : "from IOS"
                             ]
                         ]
@@ -458,8 +480,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                         }
                     }
                 }
-                
-            
         }
 
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -533,7 +553,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
 
     }
     
-    
     func getCurrentLocation() {
         var av = UIAlertView(title: "est", message: nil, delegate: self, cancelButtonTitle: "ok")
         locationManager.delegate = self
@@ -542,8 +561,6 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
-
     
     func refreshRequestedData(tableData: [Trash], tableDataAssets: [TrashAssets]) {
         delegate?.refreshRequestedData!(tableData, tableDataAssets: tableDataAssets)

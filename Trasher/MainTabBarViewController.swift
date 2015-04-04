@@ -103,7 +103,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         }
         
         let params = [
-            "user": ["email" : "fredp613@gmail.com",
+            "user": ["email" : "fredp@gmail.com",
                 "password" : "fredp613"]
         ]
         

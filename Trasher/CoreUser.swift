@@ -167,17 +167,17 @@ class CoreUser: NSManagedObject {
         let managedObjectContext = CoreDataStack().managedObjectContext!
         let cu = CoreUser.currentUser(managedObjectContext)!
         
-        if let retrievePwdFromKeychain: String = KeyChainHelper.retrieveForKey("fredp613@gmail.com") {
+        if let retrievePwdFromKeychain: String = KeyChainHelper.retrieveForKey("fredp@gmail.com") {
         
             if cu.email == email && (password == retrievePwdFromKeychain) {
                 cu.remember = true
                 managedObjectContext.save(nil)
                 let params = [
-                    "user": ["email" : "fredp613@gmail.com",
+                    "user": ["email" : "fredp@gmail.com",
                         "password" : "fredp613"]
                 ]
-                TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
-                    println("logged in successfully")
+                TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "http://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
+                    println(responseObject)
                 })
 
                

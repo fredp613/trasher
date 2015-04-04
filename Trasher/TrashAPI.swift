@@ -34,27 +34,51 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
         }
     }
     
-//    class func generateBoundaryString() -> String {
-//        return "Boundary-\(NSUUID().UUIDString)"
-//    }
+    class func APIPublicRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+        
+        let urlSession = NSURLSession.sharedSession()
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = httpMethod.rawValue
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+            if let err = error {
+                
+                let alert = UIAlertView(title: "Something went wrong please try again", message: "Connection error", delegate: self, cancelButtonTitle: "Ok")
+                alert.show()
+                println("hi \(err)")
+                return
+            }
+            
+            if error == nil {
+                if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
+                    let parsedData = JSON(json!)
+                    return completionHandler(responseObject: parsedData, error: nil)
+                } else {
+                    return completionHandler(responseObject: nil, error: error)
+                }
+            }
+            
+        }
+
+        
+        
+    }
+
 
     class func APIAuthenticatedRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         
         let urlSession = NSURLSession.sharedSession()
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = httpMethod.rawValue
-//        let boundary = TrasherAPI.generateBoundaryString()
-//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        if url != "http://trasher.herokuapp.com/trashes" {
-        
+
             if let currentUser = CoreUser.currentUser(moc) {
-                request.setValue("fredp613@gmail.com", forHTTPHeaderField: "X-API-EMAIL")
+                request.setValue("fredp@gmail.com", forHTTPHeaderField: "X-API-EMAIL")
                 request.setValue(CoreUser.getUserToken(currentUser)!, forHTTPHeaderField: "X-API-TOKEN")
-//                request.setValue("xasdfsdfas", forHTTPHeaderField: "X-API-TOKEN")
-               
             }
-        }
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -66,15 +90,21 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
 
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             if let err = error {
-                //alertview class
-                println(err)
+                
+                let alert = UIAlertView(title: "Something went wrong please try again", message: "Connection error", delegate: self, cancelButtonTitle: "Ok")
+                alert.show()
+                println("hi \(err)")
+                return
             }
             
-            if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
-                let parsedData = JSON(json!)
-                return completionHandler(responseObject: parsedData, error: nil)
-            } else {
-                return completionHandler(responseObject: nil, error: error)
+            if error == nil {
+                println(error)
+                if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
+                    let parsedData = JSON(json!)
+                    return completionHandler(responseObject: parsedData, error: nil)
+                } else {
+                    return completionHandler(responseObject: nil, error: error)
+                }
             }
             
         }
