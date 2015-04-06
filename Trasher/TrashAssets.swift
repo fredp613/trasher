@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class TrashAssets {
     var trashImage : NSData!
@@ -51,27 +52,39 @@ class TrashAssets {
         if mainImage.count > 0 {
             return mainImage[0].trashImage
         }
-        
         return nil
-        
-        
     }
     
-    class func getTrashImagesByTrashId(trashAssetArray: [TrashAssets], trashId: String!) -> [NSData] {
-        
-        var trashAssets = trashAssetArray
-        var results : [NSData] = [NSData]()
-        
-        
-        for ta in trashAssets {
-           let tId = ta.trashId
-            
-            if trashId == tId {
-                results.append(ta.trashImage)
+    class func getTrashImagesByIdFromAPI(moc: NSManagedObjectContext, trashId: String, completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
+       var trashAssets : [TrashAssets] = [TrashAssets]()
+        let url = "http://trasher.herokuapp.com/trash_images?trash_id=" + trashId
+        println(url)
+        TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, params: nil, url: url) { (responseObject, error) -> () in
+           let json = responseObject
+           var trashImage = TrashAssets()
+           for (key: String, t: JSON) in json {
+                trashImage = TrashAssets()
+                trashImage.trashId = t["trash_id"].stringValue
+                let imageUrl = NSURL(string: t["trash_image"]["trash_image"]["main"]["url"].stringValue)
+                let imageData = NSData(contentsOfURL: imageUrl!)
+                trashImage.trashImage = UIImageJPEGRepresentation(UIImage(data: imageData!), 0.75)
+                if key == "0" {
+                    trashImage.defaultImage = true
+               }
+                trashAssets.append(trashImage)
             }
-        }
 
-        return results
-    }
+            if (error != nil) {
+                return completionHandler(nil, error)
+            } else {
+             println(trashAssets.count)
+                
+             return completionHandler(trashAssets, nil)
+           }
+       }
+        
+   }
+    
+    
     
 }

@@ -61,52 +61,40 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         var searchBarTextField : UITextField = UITextField()
     }
     
-    func setTrashArrays(setActivityIndicator: Bool = true) {
+    func setTrashArrays(setActivityIndicator: Bool = true, dataRefresh: Bool = true) {
         
         var activityIndicator : UIActivityIndicatorView!
-        
-        if setActivityIndicator {
-            activityIndicator = CustomActivityIndicator.activate(self.view)
-        }
-        
-        var trashType : String!
-        
-        if searchBar.selectedScopeButtonIndex == 0 {
-            trashType = "Wanted"
-        } else {
-            trashType = "rid"
-        }
-//        println(trashType)
-        
-            Trash.getTrashFromAPI(self.managedObjectContext!, trashType: trashType, completionHandler: { (data, error) -> Void in
+        if dataRefresh {
+            if setActivityIndicator {
+                activityIndicator = CustomActivityIndicator.activate(self.view)
+            }
+            
+            Trash.getTrashFromAPI(self.managedObjectContext!, completionHandler: { (data, error) -> Void in
                 if (data != nil) {
-                        var trashData = data
-                        Trash.getTrashImageFromAPI(self.managedObjectContext!, completionHandler: { (data, error) -> Void in
-                            if (data != nil) {
-                                self.trashArray = trashData
-                                self.trashAssets = data
-                                self.thumbnails = self.trashAssets.map{$0.trashImage}
-                                self.filteredTrash = self.trashArray
-//                                if self.searchBar.selectedScopeButtonIndex == 0 {
-//                                    self.filteredTrash = Trash.filterRequestedTrash(self.trashArray)
-//                                } else {
-//                                    self.filteredTrash = Trash.filterWantedTrash(self.trashArray)
-//                                }
-                            } else {
-                                println(error)
-                            }
-                            self.tableView.reloadData()
-                            if setActivityIndicator {
-                                CustomActivityIndicator.deactivate(activityIndicator)
-                            }
-
-                        })
-                    
+                    var trashData = data
+                    self.trashArray = trashData
+                    self.thumbnails = self.trashAssets.map{$0.trashImage}
+                    self.performTrashTypeFilter(self.trashArray)
+                    self.tableView.reloadData()
+                    if setActivityIndicator {
+                        CustomActivityIndicator.deactivate(activityIndicator)
+                    }
                 } else {
                     println(error)
                 }
             })
-       
+        } else {
+            performTrashTypeFilter(self.trashArray)
+            self.tableView.reloadData()
+        }
+    }
+    
+    func performTrashTypeFilter(trashArray: [Trash]) {
+        if searchBar.selectedScopeButtonIndex == 0 {
+            self.filteredTrash = Trash.filterTrash(trashArray)
+        } else {
+            self.filteredTrash = Trash.filterWantedTrash(trashArray)
+        }
     }
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
@@ -120,10 +108,10 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        searchBar.text = ""
-        self.filteredTrash.removeAll(keepCapacity: false)
-        self.tableView.reloadData()
-        setTrashArrays()
+//        searchBar.text = ""
+//        self.filteredTrash.removeAll(keepCapacity: false)
+//        self.tableView.reloadData()
+        self.setTrashArrays(dataRefresh: false)
     }
     
 
@@ -237,7 +225,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         
         cell.addSubview(imageView)
         cell.indentationLevel = 70
-        if let thumbnail = TrashAssets.getThumbnail(self.trashAssets, trashId: trash.trashId) {
+        if let thumbnail = trash.image {
             imageView.image = UIImage(data: thumbnail)
         }
         return cell
@@ -289,15 +277,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
             var trash : Trash
             let path = self.tableView.indexPathForSelectedRow()
             trash = self.filteredTrash[path!.row] as Trash
-            
-            var filteredAssets = trashAssets.filter({ m in
-                m.trashId == trash.trashId
-            })
-            
-            var trashImages = filteredAssets.map{$0.trashImage!}
             detailSegue.currentTrash = trash
-            detailSegue.trashImages = trashImages
-            
+                        
         }
         
         if segue.identifier == "addTrashFromMasterSegue" {

@@ -10,24 +10,23 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class DetailViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBOutlet weak var detailAddress: UILabel!
     @IBOutlet weak var detailTitle: UILabel!
-
-
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var pageControl: UIPageControl!
     var currentTrash = Trash()
-    var trashAssets = [TrashAssets]()
     var assets = []
     var trashImages = [NSData]()
     var containerView : UIView!
     var pageViews: [UIImageView?] = []
     var menuButtons = FPGoogleButton()
+    var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+
     
     @IBAction func viewAddditionalDetailsButton(sender: AnyObject) {
 
@@ -40,27 +39,42 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.hidesBackButton = false
-        self.detailAddress.text = currentTrash.fullAddress()
-        self.detailTitle.text = currentTrash.title
+        
+        TrashAssets.getTrashImagesByIdFromAPI(moc, trashId: currentTrash.trashId, completionHandler: { (responseObject, error) -> Void in
+            if error == nil {
+                for t in responseObject {
+                    self.trashImages.append(t.trashImage)
+                }
                 
-        let pageCount = trashImages.count
+                self.navigationItem.hidesBackButton = false
+                self.detailAddress.text = self.currentTrash.fullAddress()
+                self.detailTitle.text = self.currentTrash.title
+                
+                let pageCount = self.trashImages.count
+                
+                // Set up the page control
+                self.pageControl.currentPage = 0
+                self.pageControl.numberOfPages = pageCount
+                
+                // Set up the array to hold the views for each page
+                for _ in 0..<pageCount {
+                    self.pageViews.append(nil)
+                }
+                
+                // Set up the content size of the scroll view
+                let pagesScrollViewSize = self.scrollView.frame.size
+                self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(self.trashImages.count), pagesScrollViewSize.height)
+                
+                // Load the initial set of pages that are on screen
+                self.loadVisiblePages()
+                
+            } else {
+                // some error handling (i.e alertview)
+            }
+            
+        })
         
-        // Set up the page control
-        pageControl.currentPage = 0
-        pageControl.numberOfPages = pageCount
         
-        // Set up the array to hold the views for each page
-        for _ in 0..<pageCount {
-            pageViews.append(nil)
-        }
-        
-        // Set up the content size of the scroll view
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(trashImages.count), pagesScrollViewSize.height)
-        
-        // Load the initial set of pages that are on screen
-        loadVisiblePages()
 
         let btnAttr : [(UIColor, String, String?, UIImage?)] = [
             (UIColor.redColor(), "addTrashButtonTouch", "", nil),
@@ -70,6 +84,12 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         menuButtons = FPGoogleButton(controller: self, buttonAttributes: btnAttr, parentView: self.view)
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+ 
     
     func addTrashButtonTouch(sender: UIButton) {
         if User.registeredUser() {
