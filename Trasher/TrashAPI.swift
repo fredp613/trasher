@@ -19,10 +19,10 @@ enum httpMethodEnum : String {
 
 class TrasherAPI : NSObject, UIAlertViewDelegate {
 
-    class func APIGetRequest(url: String, params: [String:AnyObject]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+    class func APIGetRequest(url: String, params: [String:String]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
             (request, response, jsonFromNetworking, error) in
-        
+            
             if response?.statusCode == 200 {
                 let json = JSON(jsonFromNetworking!)
                 if (error == nil) {
@@ -34,7 +34,7 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
         }
     }
     
-    class func APIPublicRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, url: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+    class func APIPublicRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, params: [String:AnyObject]?, url: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         
         let urlSession = NSURLSession.sharedSession()
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -43,16 +43,23 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
+        var err: NSError?
+        //params are only for http post requests. For get Requests make sure not to populate the httpBody otherwise you get error
+        if httpMethod.rawValue == "POST" {
+            if let params = params {
+                request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+            }
+        }
+        
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             if let err = error {
                 
-                let alert = UIAlertView(title: "Something went wrong please try again", message: "Connection error", delegate: self, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Something went wrong please try again", message: "Server error", delegate: self, cancelButtonTitle: "Ok")
                 alert.show()
                 println("hi \(err)")
                 return
             }
-            
             if error == nil {
                 if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
                     let parsedData = JSON(json!)
@@ -61,11 +68,7 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
                     return completionHandler(responseObject: nil, error: error)
                 }
             }
-            
         }
-
-        
-        
     }
 
 
@@ -84,9 +87,12 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
                 
         var err: NSError?
-        if let params = params {
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        if httpMethod.rawValue == "POST" {
+            if let params = params {
+                request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+            }
         }
+        
 
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             if let err = error {

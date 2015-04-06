@@ -17,7 +17,6 @@ import QuartzCore
     optional func refreshWantedData(tableData: [Trash])
 }
 
-
 class MasterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate,
 CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITabBarDelegate,  PopulateMasterTableViewDelegate {
     
@@ -70,7 +69,16 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
             activityIndicator = CustomActivityIndicator.activate(self.view)
         }
         
-            Trash.getTrashFromAPI(self.managedObjectContext!, completionHandler: { (data, error) -> Void in
+        var trashType : String!
+        
+        if searchBar.selectedScopeButtonIndex == 0 {
+            trashType = "Wanted"
+        } else {
+            trashType = "rid"
+        }
+//        println(trashType)
+        
+            Trash.getTrashFromAPI(self.managedObjectContext!, trashType: trashType, completionHandler: { (data, error) -> Void in
                 if (data != nil) {
                         var trashData = data
                         Trash.getTrashImageFromAPI(self.managedObjectContext!, completionHandler: { (data, error) -> Void in
@@ -78,11 +86,12 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
                                 self.trashArray = trashData
                                 self.trashAssets = data
                                 self.thumbnails = self.trashAssets.map{$0.trashImage}
-                                if self.searchBar.selectedScopeButtonIndex == 0 {
-                                    self.filteredTrash = Trash.filterRequestedTrash(self.trashArray)
-                                } else {
-                                    self.filteredTrash = Trash.filterWantedTrash(self.trashArray)
-                                }
+                                self.filteredTrash = self.trashArray
+//                                if self.searchBar.selectedScopeButtonIndex == 0 {
+//                                    self.filteredTrash = Trash.filterRequestedTrash(self.trashArray)
+//                                } else {
+//                                    self.filteredTrash = Trash.filterWantedTrash(self.trashArray)
+//                                }
                             } else {
                                 println(error)
                             }
@@ -219,7 +228,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         var trash : Trash
         trash = self.filteredTrash[indexPath.row]
         
-        cell.textLabel?.text = trash.title + " " + String(trash.categoryName(trash.trash_category))
+        cell.textLabel?.text = "\(trash.title) - \(trash.trashType) - \(trash.trash_category)"
         cell.detailTextLabel?.text = trash.fullAddress()
         
         var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))

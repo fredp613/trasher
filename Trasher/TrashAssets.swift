@@ -29,8 +29,6 @@ class TrashAssets {
         var trashAssets = trashAssetArray
         var trashArray = InitializeTestData().trashArray
         
-
-        
         for ta in trashAssets {
             if trashId == ta.trashId {
 

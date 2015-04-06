@@ -40,9 +40,17 @@ class Trash : Address {
         return cname
     }
     
-    class func getTrashFromAPI(moc: NSManagedObjectContext, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
+    class func getTrashFromAPI(moc: NSManagedObjectContext, trashType: String, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
         var tArray : [Trash] = [Trash]()
-        TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, url: "http://trasher.herokuapp.com/trashes.json") { (responseObject, error) -> () in
+        
+        var url : String!
+        if trashType == "Wanted" {
+            url = "http://trasher.herokuapp.com/trashes?trash_type=Wanted"
+        } else {
+            url = "http://trasher.herokuapp.com/trashes?trash_type=Rid"
+        }
+        
+        TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, params: nil, url: url) { (responseObject, error) -> () in
             let json = responseObject
             for (key: String, t: JSON) in json {
                 var trash = Trash()
@@ -55,7 +63,6 @@ class Trash : Address {
                 trash.postalCode = "K1B0A4"
                 trash.latitude = 45.415416
                 trash.longitude = -75.606957
-//                trash.image = UIImageJPEGRepresentation(UIImage(named: "used-crib"), 0.75)
                 
                 if t["trash_type"] == true {
                     trash.trashType = TrashType.requested.rawValue
@@ -66,8 +73,10 @@ class Trash : Address {
             }
             
             if (error != nil) {
+                println(error)
                 return completionHandler(nil, error)
             } else {
+                println(tArray)
                 return completionHandler(tArray, nil)
             }
         }
@@ -76,7 +85,7 @@ class Trash : Address {
     class func getTrashImageFromAPI(moc: NSManagedObjectContext, completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
         var trashAssets : [TrashAssets] = [TrashAssets]()
         
-        TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, url: "http://trasher.herokuapp.com/trash_images") { (responseObject, error) -> () in
+        TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, params: nil, url: "http://trasher.herokuapp.com/trash_images") { (responseObject, error) -> () in
             let json = responseObject
             var trashImage = TrashAssets()
             for (key: String, t: JSON) in json {
