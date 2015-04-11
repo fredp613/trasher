@@ -181,7 +181,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         // Load the pages that are now on screen
         loadVisiblePages()
     }
@@ -214,7 +214,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         // Get the new view controller using [segue destinationViewController].
         if (segue.identifier == "viewMapSegue") {
-            var mapSegue : MapViewController = segue.destinationViewController as MapViewController
+            var mapSegue : MapViewController = segue.destinationViewController as! MapViewController
             mapSegue.currentTrash = currentTrash
 
         }

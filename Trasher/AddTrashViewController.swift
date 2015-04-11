@@ -86,7 +86,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     }
     
     @IBAction func chooseCategoryWasPressed(sender: AnyObject) {
-        if (self.categoryLabel.text? != nil) {
+        if (self.categoryLabel.text != nil) {
             self.chooseCategoryButton.setTitle("change", forState: UIControlState.Normal)
         } else {
             self.chooseCategoryButton.setTitle("choose category", forState: UIControlState.Normal)
@@ -175,7 +175,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         self.ctPicker.assetsFilter = ALAssetsFilter.allAssets()
         self.ctPicker.showsCancelButton = true
         self.ctPicker.delegate = self
-        self.ctPicker.selectedAssets = self.assets as NSMutableArray
+        self.ctPicker.selectedAssets = self.assets as! NSMutableArray
 
         self.presentViewController(ctPicker, animated: true, completion: nil)
 
@@ -236,7 +236,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
         
         for selectedImg in assets {
 //                cell.imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
-            let pickedAsset : ALAsset = selectedImg as ALAsset
+            let pickedAsset : ALAsset = selectedImg as! ALAsset
             var img = UIImage(CGImage: pickedAsset.thumbnail().takeUnretainedValue())
             self.pickedAssets.append(img!)
             
@@ -336,7 +336,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     }
     
     
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         // Load the pages that are now on screen
         loadVisiblePages()
     }
@@ -385,7 +385,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                   let json = responseObject
                 
                 if self.pickedAssets.count > 0 {
-                    if let trashId = json["id"].int? {
+                    if let trashId = json["id"].int  {
                         self.saveTrashImagesAPI(trashId)
                     } else {
                         println("something went wrong")
@@ -449,7 +449,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
 
         //save to core data
         let moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
-        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as CoreTrash
+        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as! CoreTrash
         cTrash.title = self.trash.title
         cTrash.id = self.trash.trashId
         cTrash.type = false
@@ -506,7 +506,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                     let moc = CoreDataStack().managedObjectContext!
                     let pm: AnyObject = placemarks.last!
                     let coreUser = CoreUser.currentUser(moc)
-                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as CoreLocation
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as! CoreLocation
                     let loc : CLLocation = pm.location
                     let coord : CLLocationCoordinate2D = loc.coordinate
                     
@@ -583,7 +583,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     
     func keyboardWillShow(notification: NSNotification) {
         var info = notification.userInfo!
-        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
+        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 
         let delay:NSTimeInterval = 0.0
         let duration:NSTimeInterval = 1.0
@@ -596,7 +596,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
     
     func keyboardWillHide(notification: NSNotification) {
         var info = notification.userInfo!
-        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as NSValue).CGRectValue()
+        var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.bottomConstraint.constant -= keyboardFrame.size.height + 105

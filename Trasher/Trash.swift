@@ -25,6 +25,9 @@ class Trash : Address {
     var trash_category: Int!
     var trashArray = [Trash]()
     var trashType : Int!
+    var updatedOn : NSDate!
+    var createdOn : NSDate!
+    var createdBy : Int!
     
     override init() {
         super.init()
@@ -34,7 +37,7 @@ class Trash : Address {
         self.trashType = TrashType.requested.rawValue
     }
     
-    func categoryName(trash_category: Int!) -> String {
+    class func categoryName(trash_category: Int!) -> String {
         var cname = Category().getCategoryName(trash_category)
         return cname
     }

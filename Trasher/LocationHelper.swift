@@ -45,7 +45,7 @@ class LocationHelper : NSObject, CLLocationManagerDelegate, UINavigationControll
                 if (error == nil) {
                     let pm: AnyObject = placemarks.last!
                     let coreUser = CoreUser.currentUser(self.moc!)
-                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc!) as CoreLocation
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc!) as! CoreLocation
                     let loc : CLLocation = pm.location
                     let coord : CLLocationCoordinate2D = loc.coordinate
                     

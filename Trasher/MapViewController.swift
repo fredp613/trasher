@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
         self.mapView.setRegion(viewRegion, animated: true)
 
         let annotation = MKPointAnnotation()
-        annotation.setCoordinate(poiCoordinates)
+        annotation.coordinate = poiCoordinates
         annotation.title = currentTrash.postalCode
         annotation.subtitle = currentTrash.title
         self.mapView.addAnnotation(annotation)

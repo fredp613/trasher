@@ -25,7 +25,7 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
     var trashArray = [Trash]()
     var trashAssetsArray = [TrashAssets]()
     
-    var managedContext = CoreDataStack().managedObjectContext?
+    var managedContext = CoreDataStack().managedObjectContext
     var fetchedResultsController = NSFetchedResultsController()
     
     
@@ -269,6 +269,11 @@ class SignUpViewController: UIViewController, UIAlertViewDelegate, UITextFieldDe
             addTrashController?.trashArray = trashArray
             addTrashController?.trashAssetsArray = trashAssetsArray
 //            addTrashController?.delegate = master
+        }
+        
+        if segue.identifier == "loginFromSignUpSegue" {
+            var lvc = segue.destinationViewController as? LoginViewController
+            lvc?.parentController = 1
         }
     }
     

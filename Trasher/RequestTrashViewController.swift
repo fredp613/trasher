@@ -69,7 +69,7 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
         
         //save to core data
         let moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
-        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as CoreTrash
+        let cTrash : CoreTrash = NSEntityDescription.insertNewObjectForEntityForName("CoreTrash", inManagedObjectContext: moc) as! CoreTrash
         cTrash.title = self.trash.title
         cTrash.id = self.trash.trashId
         cTrash.type = true
@@ -90,13 +90,15 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
 //        delegate?.trashTableViewDelegate(tableData)
 //    }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.textView.endEditing(true)
     }
     
+
+    
     
     @IBAction func chooseCategoryWasPressed(sender: AnyObject) {
-        if (self.categoryLabel.text? != nil) {
+        if (self.categoryLabel.text != nil) {
             self.chooseCategoryButton.setTitle("change", forState: UIControlState.Normal)
         } else {
             self.chooseCategoryButton.setTitle("choose category", forState: UIControlState.Normal)
@@ -231,7 +233,7 @@ class RequestTrashViewController: UIViewController, UIGestureRecognizerDelegate,
                     let moc = CoreDataStack().managedObjectContext!
                     let pm: AnyObject = placemarks.last!
                     let coreUser = CoreUser.currentUser(moc)
-                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as CoreLocation
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: moc) as! CoreLocation
                     let loc : CLLocation = pm.location
                     let coord : CLLocationCoordinate2D = loc.coordinate
                     

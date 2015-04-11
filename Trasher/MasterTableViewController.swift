@@ -211,7 +211,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         
         var trash : Trash
         trash = self.filteredTrash[indexPath.row]
@@ -273,7 +273,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         // Get the new view controller using [segue destinationViewController].
         if (segue.identifier == "showDetailsSegue") {
             
-            var detailSegue : DetailViewController = segue.destinationViewController as DetailViewController
+            var detailSegue : DetailViewController = segue.destinationViewController as! DetailViewController
             var trash : Trash
             let path = self.tableView.indexPathForSelectedRow()
             trash = self.filteredTrash[path!.row] as Trash
@@ -282,7 +282,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         }
         
         if segue.identifier == "addTrashFromMasterSegue" {
-            var addTrashController = segue.destinationViewController as AddTrashViewController
+            var addTrashController = segue.destinationViewController as! AddTrashViewController
             addTrashController.trashArray = trashArray
             addTrashController.trashAssetsArray = trashAssets
             addTrashController.delegate = self
@@ -290,7 +290,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         }
         
         if segue.identifier == "requestTrashFromMasterSegue" {
-            var requestTrashController = segue.destinationViewController as RequestTrashViewController
+            var requestTrashController = segue.destinationViewController as! RequestTrashViewController
             requestTrashController.trashArray = trashArray
             requestTrashController.trashAssets = trashAssets
             requestTrashController.delegate = self
@@ -302,7 +302,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         searchBar.resignFirstResponder()
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.searchBar.resignFirstResponder()
         maskView.removeFromSuperview()
     }

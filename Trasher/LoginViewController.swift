@@ -15,6 +15,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textPwd: UITextField!
     
+    var parentController : Int = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textPwd.delegate = self
@@ -27,14 +29,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        CoreUser.authenticated("fredp@gmail.com", password: "fredp613", completionHandler: { (authenticated) -> Void in
+        //do some
+            if (authenticated == true) {
+                if self.parentController == 1 {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    self.performSegueWithIdentifier("showMasterFromLogin", sender: self)
+                }
 
-//        if CoreUser.authenticated(textEmail.text, password: textPwd.text) {
-        if CoreUser.authenticated("fredp@gmail.com", password: "fredp613") {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } else {
-            var alertView = UIAlertView(title: "Sign in error", message: "email / password not correct, try again", delegate: self, cancelButtonTitle: "OK")
-            alertView.show()
-        }
+            } else {
+                var alertView = UIAlertView(title: "Sign in error", message: "email / password not correct, try again", delegate: self, cancelButtonTitle: "OK")
+                alertView.show()
+            }
+        })
+        
         return true
     }
     

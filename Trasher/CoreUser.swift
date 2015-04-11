@@ -31,7 +31,7 @@ class CoreUser: NSManagedObject {
     class func createInManagedObjectContext(managedObjectContext: NSManagedObjectContext, email: String, pwd: String) -> Bool {
         // here you should validate and wrap the code below
 
-        let coreUser : CoreUser = NSEntityDescription.insertNewObjectForEntityForName("CoreUser", inManagedObjectContext: managedObjectContext) as CoreUser
+        let coreUser : CoreUser = NSEntityDescription.insertNewObjectForEntityForName("CoreUser", inManagedObjectContext: managedObjectContext) as! CoreUser
         
         coreUser.id = NSUUID().UUIDString
         coreUser.email = email
@@ -163,28 +163,43 @@ class CoreUser: NSManagedObject {
 //        return false
 //    }
     
-    class func authenticated(email: String, password: String) -> Bool {
+    class func authenticated(email: String, password: String, completionHandler: ((Bool!) -> Void)!) -> Void {
         let managedObjectContext = CoreDataStack().managedObjectContext!
-        let cu = CoreUser.currentUser(managedObjectContext)!
         
-        if let retrievePwdFromKeychain: String = KeyChainHelper.retrieveForKey("fredp@gmail.com") {
+        let params = [
+            "user": ["email" : email,
+                "password" : password]
+        ]
+        let url = "https://trasher.herokuapp.com/users/sign_in"
+        var authenticated : Bool = false
         
-            if cu.email == email && (password == retrievePwdFromKeychain) {
-                cu.remember = true
-                managedObjectContext.save(nil)
-                let params = [
-                    "user": ["email" : "fredp@gmail.com",
-                        "password" : "fredp613"]
-                ]
-                TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: "http://trasher.herokuapp.com/users/sign_in", params: params, completionHandler: { (responseObject, error) -> () in
-                    println(responseObject)
-                })
+        if let cu = CoreUser.currentUser(managedObjectContext) {
+            //user exists in core data
+            TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: url, params: params, completionHandler: { (data, error) -> () in
+                if data != nil {
+                    return completionHandler(true)
+                } else {
+                    return completionHandler(false)
+                }
 
-               
-                return true
-            }
+            })
+        } else {
+            //user doesnt exist in core data
+            TrasherAPI.APIPublicRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, params: params, url: url, completionHandler: { (data, error) -> () in
+
+                if data != nil {
+                    let json = data
+                    CoreUser.createInManagedObjectContext(managedObjectContext, email: email, pwd: password)
+                    let token : String = json["user"]["auth_token"].string!
+                    KeyChainHelper.createORupdateForKey("fredp613", keyName: email)
+                    KeyChainHelper.createORupdateForKey(token, keyName: "auth_token")
+                    return completionHandler(true)
+                } else {
+                    return completionHandler(false)
+                }
+            })
         }
-        return false
+       
     }
     
     class func getUserToken(user: CoreUser) -> String? {
@@ -208,32 +223,7 @@ class CoreUser: NSManagedObject {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
+ 
 }
 
 

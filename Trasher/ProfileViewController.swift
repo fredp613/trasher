@@ -179,7 +179,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 //        var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
         var catId = self.tableData[indexPath.row].category_id
         var categoryName = CoreCategories.findCategoryById(moc, id: catId).category_name
@@ -200,19 +200,19 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
        
         
         if segue.identifier == "manageCategoriesSegue" {
-            var addCatsController = segue.destinationViewController as AddCategoriesTableViewController
+            var addCatsController = segue.destinationViewController as! AddCategoriesTableViewController
             addCatsController.delegate = self
             addCatsController.currentData = tableData
         }
         
         if segue.identifier == "showLocationsSegue" {
-            let navigationController = segue.destinationViewController as UINavigationController
-            var locationsController = navigationController.topViewController as LocationsTableViewController
+            let navigationController = segue.destinationViewController as! UINavigationController
+            var locationsController = navigationController.topViewController as! LocationsTableViewController
             locationsController.delegate = self
         }        
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.kmText.resignFirstResponder()
     }
     
@@ -276,7 +276,7 @@ UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ProfileDelegate, 
                 if (error == nil) {
                     let pm: AnyObject = placemarks.last!
                     let coreUser = CoreUser.currentUser(self.moc)
-                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc) as CoreLocation
+                    let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc) as! CoreLocation
                     let loc : CLLocation = pm.location
                     let coord : CLLocationCoordinate2D = loc.coordinate
                     

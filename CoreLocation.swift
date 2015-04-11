@@ -80,7 +80,7 @@ class CoreLocation: NSManagedObject {
         let predicateLat = NSPredicate(format: "latitude == %lf", latitude.floatValue)
         let predicateLong = NSPredicate(format: "longitude == %lf", longitude.floatValue)
         println(latitude)
-        let compoundPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [predicateLat!, predicateLong!])
+        let compoundPredicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [predicateLat, predicateLong])
         fetchRequest.predicate = compoundPredicate
         
         var coreLocation : [CoreLocation] = [CoreLocation]()

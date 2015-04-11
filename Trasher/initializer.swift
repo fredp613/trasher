@@ -276,7 +276,7 @@ class InitializeCoreData {
             }
             var err: NSError?
             
-            var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSArray?
+            var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as! NSArray?
             if (err != nil) {
                 println("JSON Error \(err!.localizedDescription)")
             }

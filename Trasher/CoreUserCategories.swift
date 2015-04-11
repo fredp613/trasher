@@ -29,7 +29,7 @@ class CoreUserCategories: NSManagedObject {
         if defaultCategories.count > 0 {
         
             for cat in defaultCategories {
-                let ccUserCat : CoreUserCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreUserCategories", inManagedObjectContext: moc) as CoreUserCategories
+                let ccUserCat : CoreUserCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreUserCategories", inManagedObjectContext: moc) as! CoreUserCategories
                 ccUserCat.uc_id = NSUUID().UUIDString
                 ccUserCat.category_id = CoreCategories.findCategoryById(moc, id: cat.id).id
                 ccUserCat.user_id = currentUser.id
@@ -66,7 +66,7 @@ class CoreUserCategories: NSManagedObject {
         
         let currentUser : CoreUser = CoreUser.currentUser(moc)!
         
-        let ccUserCat : CoreUserCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreUserCategories", inManagedObjectContext: moc) as CoreUserCategories
+        let ccUserCat : CoreUserCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreUserCategories", inManagedObjectContext: moc) as! CoreUserCategories
         
         ccUserCat.uc_id = NSUUID().UUIDString
         ccUserCat.category_id = CoreCategories.findCategoryById(moc, id: category_id).id

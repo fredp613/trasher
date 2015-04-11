@@ -27,7 +27,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
         // self.clearsSelectionOnViewWillAppear = false
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        let master = self.viewControllers?[0] as MasterTableViewController
+        let master = self.viewControllers?[0] as! MasterTableViewController
         master.trashArray = trashArray
         master.trashAssets = trashAssets
         logoutButton.alpha = 0
@@ -47,7 +47,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         
-        if viewController == self.viewControllers?[1] as UIViewController {
+        if viewController == self.viewControllers?[1] as! UIViewController {
             if CoreUser.userIsRegistered(managedObjectContext!) {
                 //here you should check if user is logged in via API and core data
                 if CoreUser.userIsLoggedIn(managedObjectContext!) {
@@ -146,7 +146,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        var master = self.viewControllers?[0] as MasterTableViewController!
+        var master = self.viewControllers?[0] as! MasterTableViewController!
         
         if segue.identifier == "addTrashSegue" {
             var addTrashController = segue.destinationViewController as? AddTrashViewController

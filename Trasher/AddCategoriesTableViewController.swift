@@ -94,7 +94,7 @@ class AddCategoriesTableViewController: UITableViewController, ProfileDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         
         var categoryItem = categories[indexPath.row].category_name
         cell.textLabel?.text = categoryItem

@@ -113,17 +113,12 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     }
     
     @IBAction func changeButtonWasPressed(sender: AnyObject) {
-        
-        
         self.assets = NSMutableArray()
         self.ctPicker.assetsFilter = ALAssetsFilter.allAssets()
         self.ctPicker.showsCancelButton = true
         self.ctPicker.delegate = self
-        self.ctPicker.selectedAssets = self.assets as NSMutableArray
-        
+        self.ctPicker.selectedAssets = self.assets as! NSMutableArray
         self.presentViewController(ctPicker, animated: true, completion: nil)
-        
-        
     }
     
     func promptForSource() {
@@ -180,7 +175,7 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
         
         for selectedImg in assets {
             //                cell.imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
-            let pickedAsset : ALAsset = selectedImg as ALAsset
+            let pickedAsset : ALAsset = selectedImg as! ALAsset
             var img = UIImage(CGImage: pickedAsset.thumbnail().takeUnretainedValue())
             self.pickedAssets.append(img!)
             
@@ -313,7 +308,7 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     }
     
     
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         // Load the pages that are now on screen
         loadVisiblePages()
     }
@@ -373,7 +368,7 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
                 println("this should execute")
                 CoreTrashImage.deleteImagesForTrash(moc, trash: currentTrash)
                 for ta in pickedAssets {
-                    let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as CoreTrashImage
+                    let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as! CoreTrashImage
                     trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75) as NSData
                     trashAsset.trash = currentTrash
                     CoreTrashImage.saveTrashImage(trashAsset, moc: moc)

@@ -42,7 +42,7 @@ class CoreCategories: NSManagedObject {
 
             for cat in defaulCategories {
                 
-                 let coreCat : CoreCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreCategories", inManagedObjectContext: moc) as CoreCategories
+                 let coreCat : CoreCategories = NSEntityDescription.insertNewObjectForEntityForName("CoreCategories", inManagedObjectContext: moc) as! CoreCategories
                 
                  coreCat.id = cat.0
                  coreCat.category_name = cat.1

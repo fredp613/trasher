@@ -19,20 +19,20 @@ enum httpMethodEnum : String {
 
 class TrasherAPI : NSObject, UIAlertViewDelegate {
 
-    class func APIGetRequest(url: String, params: [String:String]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-            (request, response, jsonFromNetworking, error) in
-            
-            if response?.statusCode == 200 {
-                let json = JSON(jsonFromNetworking!)
-                if (error == nil) {
-                    return completionHandler(responseObject: json, error: nil)
-                } else {
-                    return completionHandler(responseObject: nil, error: error)
-                }
-            }
-        }
-    }
+//    class func APIGetRequest(url: String, params: [String:String]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
+//        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
+//            (request, response, jsonFromNetworking, error) in
+//            
+//            if response?.statusCode == 200 {
+//                let json = JSON(jsonFromNetworking!)
+//                if (error == nil) {
+//                    return completionHandler(responseObject: json, error: nil)
+//                } else {
+//                    return completionHandler(responseObject: nil, error: error)
+//                }
+//            }
+//        }
+//    }
     
     class func APIPublicRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, params: [String:AnyObject]?, url: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         

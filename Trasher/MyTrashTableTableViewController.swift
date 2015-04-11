@@ -14,11 +14,13 @@ protocol MyTrashTableViewDelegate {
    func updateTableViewDelegate(moc: NSManagedObjectContext)
 }
 
-class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDelegate {
+class MyTrashTableViewController: UITableViewController, MyTrashTableViewDelegate {
 
     @IBOutlet weak var scopeBar: UISegmentedControl!
 
     var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
+    var userTrash : [Trash] = [Trash]()
+    var refreshCtrl : UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,11 @@ class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDe
 //        println("\(userTrash[0].category.category_name)" + " hihi" )
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        refreshCtrl.backgroundColor = UIColor.lightGrayColor()
+        refreshCtrl.tintColor = UIColor.whiteColor()
+        refreshCtrl.addTarget(self, action: "refreshTableView", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshCtrl)
+        setUserTrashArray(activityIndicator: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +46,18 @@ class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDe
         tableView.reloadData()
     }
     
+    func setUserTrashArray(activityIndicator: Bool = true) -> [Trash] {
+        
+        Trash.getTrashFromAPI(moc, completionHandler: { (data, error) -> Void in
+            if data != nil {
+                self.userTrash = data
+                self.tableView.reloadData()
+            } else {
+                println(error)
+            }
+        })
+        return userTrash
+    }
 
     // MARK: - Table view data source
 
@@ -51,48 +70,19 @@ class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDe
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        var userTrash = CoreTrash.getTrashByUser(moc)
-        if scopeBar.selectedSegmentIndex == 0 {
-            userTrash = CoreTrash.getRequestedTrashByUser(moc)
-        } else {
-            userTrash = CoreTrash.getWantedTrashByUser(moc)
-        }
+       
         return userTrash.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-//        let moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
-        var userTrash : [CoreTrash] = CoreTrash.getTrashByUser(moc)
-        
-        if scopeBar.selectedSegmentIndex == 0 {
-            userTrash = CoreTrash.getRequestedTrashByUser(moc)
-        } else {
-            userTrash = CoreTrash.getWantedTrashByUser(moc)
-        }
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+
         
         let trash = userTrash[indexPath.row]
-        let category : String! = CoreTrash.getCategoryName(trash)
-        cell.textLabel?.text = trash.title + " " + category! + " \(trash.type)" + "\(trash.user.id)"
-        cell.detailTextLabel?.text = "\(trash.updated_on)"
-        
-        
-//        var imageView = UIImageView(frame: CGRectMake(10, 10, cell.frame.width - 310, cell.frame.height - 15))
-//        imageView.layer.cornerRadius = 30
-//        imageView.clipsToBounds = true
-//        cell.addSubview(imageView)
-//        cell.indentationLevel = 70
-        
-//        var mainTrashImage: NSData = TrashAssets.getMainTrashImage(self.trashAssets, trashId: trash.trashId)
-//        
-//        if (UIImage(data: trash.image) != nil) {
-//            //            imageView.image = UIImage(data: trash.image)
-//            imageView.image = UIImage(data: mainTrashImage)
-//        } else {
-//            imageView.image = UIImage(named: "trash-can-icon")
-//            
-//        }
+        let category : String! = Trash.categoryName(trash.trash_category!)
+        cell.textLabel?.text = trash.title + " " + category! + " \(trash.trashType)" + "\(trash.userId)"
+        cell.detailTextLabel?.text = "\(trash.updatedOn)"
         
         return cell
     }
@@ -141,7 +131,7 @@ class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDe
         
         if (segue.identifier == "myTrashEditSegue") {
             
-            var detailSegue : MyTrashDetailViewController = segue.destinationViewController as MyTrashDetailViewController
+            var detailSegue : MyTrashDetailViewController = segue.destinationViewController as! MyTrashDetailViewController
 
             let path = self.tableView.indexPathForSelectedRow()
             var userTrash : [CoreTrash] = CoreTrash.getTrashByUser(moc)
@@ -161,18 +151,20 @@ class MyTrashTableTableViewController: UITableViewController, MyTrashTableViewDe
     }
     
     
-    
     @IBAction func backToProfileWasPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK: custom methods
     
-   
-    
-    
     @IBAction func scopeChanged(sender: AnyObject) {
         self.tableView.reloadData()
+    }
+    
+    
+    func refreshTableView() {
+        setUserTrashArray(activityIndicator: false)
+        refreshCtrl.endRefreshing()
     }
 
 

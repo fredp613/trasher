@@ -46,7 +46,7 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         
         var cls : [CoreLocation]? = CoreLocation.getAllUserLocations(moc!) as [CoreLocation]?
         let cl = cls?[indexPath.row]
@@ -201,7 +201,7 @@ class LocationsTableViewController: UITableViewController,CLLocationManagerDeleg
                         self.moc.save(nil)
                         self.tableView.reloadData()
                     } else {
-                        let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc) as CoreLocation
+                        let coreLocation : CoreLocation = NSEntityDescription.insertNewObjectForEntityForName("CoreLocation", inManagedObjectContext: self.moc) as! CoreLocation
                         coreLocation.latitude = coord.latitude
                         coreLocation.longitude = coord.longitude
                         coreLocation.addressline1 = pm.name
