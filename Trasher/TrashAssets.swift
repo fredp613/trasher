@@ -57,8 +57,8 @@ class TrashAssets {
     
     class func getTrashImagesByIdFromAPI(moc: NSManagedObjectContext, trashId: String, completionHandler: (([TrashAssets]!, NSError!) -> Void)!) -> Void {
        var trashAssets : [TrashAssets] = [TrashAssets]()
-        let url = "http://trasher.herokuapp.com/trash_images?trash_id=" + trashId
-        println(url)
+
+        var url = APIUrls.get_trash_images_with_param(["trash_id" : trashId])
         TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, params: nil, url: url) { (responseObject, error) -> () in
            let json = responseObject
            var trashImage = TrashAssets()
@@ -77,8 +77,6 @@ class TrashAssets {
             if (error != nil) {
                 return completionHandler(nil, error)
             } else {
-             println(trashAssets.count)
-                
              return completionHandler(trashAssets, nil)
            }
        }

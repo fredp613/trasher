@@ -42,11 +42,8 @@ class Trash : Address {
         return cname
     }
     
-    class func getTrashFromAPI(moc: NSManagedObjectContext, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
+    class func getTrashFromAPI(moc: NSManagedObjectContext, url: String, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
         var tArray : [Trash] = [Trash]()
-        
-        var url : String!
-        url = "http://trasher.herokuapp.com/trashes/index_api.json"
         
         TrasherAPI.APIPublicRequest(moc, httpMethod: httpMethodEnum.GET, params: nil, url: url) { (responseObject, error) -> () in
             let json = responseObject
@@ -75,7 +72,6 @@ class Trash : Address {
             }
             
             if (error != nil) {
-                println(error)
                 return completionHandler(nil, error)
             } else {
                 return completionHandler(tArray, nil)
@@ -83,6 +79,62 @@ class Trash : Address {
         }
     }
     
+    class func getAuthenticatedTrashFromAPI(moc: NSManagedObjectContext, url: String, completionHandler: (([Trash]!, NSError!) -> Void)!) -> Void {
+        var tArray : [Trash] = [Trash]()
+                
+        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.GET, url: url, params: nil) { (responseObject, error) -> () in
+            let json = responseObject
+            for (key: String, t: JSON) in json {
+                var trash = Trash()
+                trash.trashId = t["id"].stringValue
+                trash.title = t["title"].stringValue
+                trash.desc = t["description"].stringValue
+                trash.trash_category = t["catetory_id"].stringValue.toInt()
+                trash.addressLine1 = "934 torovin private"
+                trash.city = "Ottawa"
+                trash.postalCode = "K1B0A4"
+                trash.latitude = 45.415416
+                trash.longitude = -75.606957
+                if let imageUrl = NSURL(string: t["first_image"]["trash_image"]["main"]["url"].stringValue) {
+                    if let imageData = NSData(contentsOfURL: imageUrl) {
+                        trash.image = UIImageJPEGRepresentation(UIImage(data: imageData), 0.75)
+                    }
+                }
+                if t["trash_type"] == true {
+                    trash.trashType = TrashType.requested.rawValue
+                } else {
+                    trash.trashType = TrashType.wanted.rawValue
+                }
+                tArray.append(trash)
+            }
+            
+            if (error != nil) {
+                return completionHandler(nil, error)
+            } else {
+                return completionHandler(tArray, nil)
+            }
+        }
+        
+    }
+    
+    class func updateTrashFromAPI(moc: NSManagedObjectContext, url: String, trash_id: String, params: [String : AnyObject], pickedAssets: [UIImage]?, completionHandler: ((Bool, NSError!) -> Void)!) -> Void {
+        var tArray : [Trash] = [Trash]()
+            
+        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.PATCH, url: APIUrls.update_trash + trash_id, params: params) { (responseObject, error) -> () in
+            if error == nil {
+               return completionHandler(true, nil)
+            } else {
+               return completionHandler(false, error)
+            }
+            
+        }
+        
+        if pickedAssets?.count > 0 {
+            //create images
+        }
+    
+    }
+
     
     class func filterTrash(arrayOfTrash: [Trash]) -> [Trash] {
         

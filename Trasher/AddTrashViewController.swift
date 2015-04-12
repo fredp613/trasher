@@ -381,7 +381,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                 "updated_by" : currentUser.id
             ]
 
-            TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trashes", params: params) { (responseObject, error) -> () in
+            TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: APIUrls.create_trash, params: params) { (responseObject, error) -> () in
                   let json = responseObject
                 
                 if self.pickedAssets.count > 0 {
@@ -412,8 +412,8 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                             "name" : "from IOS"
                         ]
                     ]
-                    
-                    TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trash_images", params: params) { (responseObject, error) -> () in
+
+                    TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: APIUrls.create_trash_image , params: params) { (responseObject, error) -> () in
                         println("success")
                     }
                 }
@@ -475,7 +475,7 @@ UIPopoverControllerDelegate, CTAssetsPickerControllerDelegate, UIScrollViewDeleg
                             ]
                         ]
                         
-                        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: "https://trasher.herokuapp.com/trash_images", params: params) { (responseObject, error) -> () in
+                        TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: APIUrls.create_trash_image, params: params) { (responseObject, error) -> () in
                             println("success")
                         }
                     }

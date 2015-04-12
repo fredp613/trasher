@@ -18,21 +18,6 @@ enum httpMethodEnum : String {
 }
 
 class TrasherAPI : NSObject, UIAlertViewDelegate {
-
-//    class func APIGetRequest(url: String, params: [String:String]?, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
-//        request(Method.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON {
-//            (request, response, jsonFromNetworking, error) in
-//            
-//            if response?.statusCode == 200 {
-//                let json = JSON(jsonFromNetworking!)
-//                if (error == nil) {
-//                    return completionHandler(responseObject: json, error: nil)
-//                } else {
-//                    return completionHandler(responseObject: nil, error: error)
-//                }
-//            }
-//        }
-//    }
     
     class func APIPublicRequest(moc: NSManagedObjectContext, httpMethod: httpMethodEnum, params: [String:AnyObject]?, url: String, completionHandler: (responseObject: JSON, error: NSError?) -> ()) {
         
@@ -57,7 +42,6 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
                 
                 let alert = UIAlertView(title: "Something went wrong please try again", message: "Server error", delegate: self, cancelButtonTitle: "Ok")
                 alert.show()
-                println("hi \(err)")
                 return
             }
             if error == nil {
@@ -87,7 +71,7 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
                 
         var err: NSError?
-        if httpMethod.rawValue == "POST" {
+        if httpMethod.rawValue != "GET"  {
             if let params = params {
                 request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
             }
@@ -99,12 +83,11 @@ class TrasherAPI : NSObject, UIAlertViewDelegate {
                 
                 let alert = UIAlertView(title: "Something went wrong please try again", message: "Connection error", delegate: self, cancelButtonTitle: "Ok")
                 alert.show()
-                println("hi \(err)")
                 return
             }
             
             if error == nil {
-                println(error)
+
                 if let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: nil) {
                     let parsedData = JSON(json!)
                     return completionHandler(responseObject: parsedData, error: nil)

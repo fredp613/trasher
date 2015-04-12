@@ -61,6 +61,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         var searchBarTextField : UITextField = UITextField()
     }
     
+   
+    
     func setTrashArrays(setActivityIndicator: Bool = true, dataRefresh: Bool = true) {
         
         var activityIndicator : UIActivityIndicatorView!
@@ -69,7 +71,7 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
                 activityIndicator = CustomActivityIndicator.activate(self.view)
             }
             
-            Trash.getTrashFromAPI(self.managedObjectContext!, completionHandler: { (data, error) -> Void in
+            Trash.getTrashFromAPI(self.managedObjectContext!, url: APIUrls.get_trashes_public, completionHandler: { (data, error) -> Void in
                 if (data != nil) {
                     var trashData = data
                     self.trashArray = trashData
@@ -86,6 +88,9 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
         } else {
             performTrashTypeFilter(self.trashArray)
             self.tableView.reloadData()
+//            if setActivityIndicator {
+//                CustomActivityIndicator.deactivate(activityIndicator)
+//            }
         }
     }
     
@@ -108,9 +113,6 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-//        searchBar.text = ""
-//        self.filteredTrash.removeAll(keepCapacity: false)
-//        self.tableView.reloadData()
         self.setTrashArrays(dataRefresh: false)
     }
     
@@ -325,6 +327,8 @@ CLLocationManagerDelegate, UITabBarControllerDelegate, UISearchBarDelegate, UITa
     func refreshWantedData(tableData: [Trash]) {
         setTrashArrays()
     }
+    
+   
     
     
     

@@ -54,11 +54,12 @@
                     <connections>
                         <outlet property="textEmail" destination="zeB-CC-ryB" id="gYe-HN-tf0"/>
                         <outlet property="textPwd" destination="UbG-c3-oyE" id="MDM-yf-bbj"/>
+                        <segue destination="gjY-lN-UN9" kind="show" identifier="showMasterFromLogin" id="Obe-7i-WiN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJE-6G-NR2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2797.5" y="117.5"/>
+            <point key="canvasLocation" x="2841.5" y="-203.5"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="F0a-PJ-inx">
@@ -152,7 +153,7 @@ or log in with TouchID</string>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="6cc-Tu-fYL" kind="show" identifier="loginFromSignUpSegue" id="NCj-uZ-pph"/>
+                                            <segue destination="6cc-Tu-fYL" kind="presentation" identifier="loginFromSignUpSegue" id="NCj-uZ-pph"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -174,7 +175,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2LG-aj-PhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3274.5" y="-459.5"/>
+            <point key="canvasLocation" x="3460.5" y="-398.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7OR-ls-ICQ">
@@ -269,7 +270,7 @@ or log in with TouchID</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4UX-Gd-zLP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2936.5" y="618.5"/>
+            <point key="canvasLocation" x="2766.5" y="635.5"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="G0p-P4-tyF">
@@ -631,25 +632,14 @@ or log in with TouchID</string>
             </objects>
             <point key="canvasLocation" x="2750.5" y="1266.5"/>
         </scene>
-        <!--My Trash Table Table View Controller-->
+        <!--My Trash Table View Controller-->
         <scene sceneID="QFY-CF-IUC">
             <objects>
-                <tableViewController id="hNm-Tc-cKN" customClass="MyTrashTableTableViewController" customModule="Trasher" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="hNm-Tc-cKN" customClass="MyTrashTableViewController" customModule="Trasher" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Suk-qY-GYM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="G0G-7A-Iyc">
-                            <rect key="frame" x="-61" y="-14" width="375" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Requested"/>
-                                <segment title="Wanted"/>
-                            </segments>
-                            <connections>
-                                <action selector="scopeChanged:" destination="hNm-Tc-cKN" eventType="valueChanged" id="b5d-Dj-q54"/>
-                            </connections>
-                        </segmentedControl>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="TVR-bV-LUs">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -672,11 +662,9 @@ or log in with TouchID</string>
                                 <action selector="backToProfileWasPressed:" destination="hNm-Tc-cKN" id="bQ6-e6-sPQ"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="xNN-AM-KMT"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="scopeBar" destination="G0G-7A-Iyc" id="4gG-D1-PK0"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6G-rh-lp7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1173,9 +1161,10 @@ or log in with TouchID</string>
         <image name="trash-can-tab-icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5jj-oe-tJg"/>
-        <segue reference="VjE-DM-eRH"/>
-        <segue reference="M1i-iy-PHf"/>
+        <segue reference="Obe-7i-WiN"/>
+        <segue reference="iab-S1-FWu"/>
         <segue reference="ndf-bQ-G53"/>
+        <segue reference="5jj-oe-tJg"/>
+        <segue reference="qEL-pg-66I"/>
     </inferredMetricsTieBreakers>
 </document>

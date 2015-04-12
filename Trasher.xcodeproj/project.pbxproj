@@ -26,6 +26,7 @@
 		2A6B31C419FED319002DB4BB /* TopUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */; };
 		2A6B31C619FED327002DB4BB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6B31C519FED327002DB4BB /* ProfileViewController.swift */; };
 		2A727C401A2524FB001C13BB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A727C3F1A2524FB001C13BB /* MapViewController.swift */; };
+		2A7291FD1ADACD67007ADE17 /* UrlAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7291FC1ADACD67007ADE17 /* UrlAPI.swift */; };
 		2A77FF821A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */; };
 		2A77FF881A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77FF871A16E1DF00127F10 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8224F11A142AFC00F76CEB /* Trash.swift */; };
@@ -140,6 +141,7 @@
 		2A6B31C319FED319002DB4BB /* TopUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopUsersViewController.swift; sourceTree = "<group>"; };
 		2A6B31C519FED327002DB4BB /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2A727C3F1A2524FB001C13BB /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		2A7291FC1ADACD67007ADE17 /* UrlAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlAPI.swift; sourceTree = "<group>"; };
 		2A77FF7F1A16DE7700127F10 /* Trasher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trasher-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A77FF801A16DE7800127F10 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		2A77FF811A16DE7800127F10 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
@@ -1594,6 +1596,7 @@
 				2A2B1B841A523C5900FE9E73 /* MyTrashDetailViewController.swift */,
 				2AFDE2A01A3FC967006D3E72 /* LoginViewController.swift */,
 				2AA5E44F1A35482200BABCA8 /* MyTrashTableTableViewController.swift */,
+				2A7291FC1ADACD67007ADE17 /* UrlAPI.swift */,
 				2A06B1BB1A3395100087E167 /* RequestTrashViewController.swift */,
 				2AE6DC291A1E711B00F5C397 /* CoreModels */,
 				2A68E3151A19366C005A7529 /* helpers */,
@@ -3272,6 +3275,7 @@
 				2A86BFC319F96B4800B67E7D /* SignUpViewController.swift in Sources */,
 				2AE6DCAD1A1E9AD200F5C397 /* ALAsset+accessibilityLabel.m in Sources */,
 				2AE6DCB81A1E9AD200F5C397 /* CTAssetsSupplementaryView.m in Sources */,
+				2A7291FD1ADACD67007ADE17 /* UrlAPI.swift in Sources */,
 				2A8224F21A142AFC00F76CEB /* Trash.swift in Sources */,
 				2AD380B31A55CC4C00ABC374 /* LocationsTableViewController.swift in Sources */,
 				2AE6DC4D1A1E738F00F5C397 /* CoreUserCategories.swift in Sources */,

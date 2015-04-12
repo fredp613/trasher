@@ -170,12 +170,12 @@ class CoreUser: NSManagedObject {
             "user": ["email" : email,
                 "password" : password]
         ]
-        let url = "https://trasher.herokuapp.com/users/sign_in"
+
         var authenticated : Bool = false
         
         if let cu = CoreUser.currentUser(managedObjectContext) {
             //user exists in core data
-            TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: url, params: params, completionHandler: { (data, error) -> () in
+            TrasherAPI.APIAuthenticatedRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, url: APIUrls.login, params: params, completionHandler: { (data, error) -> () in
                 if data != nil {
                     return completionHandler(true)
                 } else {
@@ -185,7 +185,7 @@ class CoreUser: NSManagedObject {
             })
         } else {
             //user doesnt exist in core data
-            TrasherAPI.APIPublicRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, params: params, url: url, completionHandler: { (data, error) -> () in
+            TrasherAPI.APIPublicRequest(managedObjectContext, httpMethod: httpMethodEnum.POST, params: params, url: APIUrls.login, completionHandler: { (data, error) -> () in
 
                 if data != nil {
                     let json = data

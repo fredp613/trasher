@@ -21,7 +21,6 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    
     var delegate:MyTrashTableViewDelegate? = nil
     var ctPicker = CTAssetsPickerController()
     var pageViews: [UIImageView?] = []
@@ -30,39 +29,50 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     var pickedAssets = [UIImage]()
     
     var moc : NSManagedObjectContext = CoreDataStack().managedObjectContext!
-    var currentTrash : CoreTrash!
-    var trashImages : [CoreTrashImage]!
+    var currentTrash : Trash!
+    var trashImages = [NSData]()
     var fpTextView : FPTextView!
     var assets = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        self.trashDesc.text = currentTrash.title
+        self.navigationItem.hidesBackButton = false
         self.trashDesc.editable = false
-        trashImages = CoreTrashImage.getTrashImages(currentTrash.id, moc: moc)
-        let pageCount = trashImages.count
         
-        // Set up the page control
-        pageControl.currentPage = 0
-        pageControl.numberOfPages = pageCount
+        TrashAssets.getTrashImagesByIdFromAPI(moc, trashId: currentTrash.trashId, completionHandler: { (responseObject, error) -> Void in
+            if error == nil {
+                for t in responseObject {
+                    self.trashImages.append(t.trashImage)
+                }
+                self.trashDesc.text = self.currentTrash.desc
+                
+                let pageCount = self.trashImages.count
+                
+                // Set up the page control
+                self.pageControl.currentPage = 0
+                self.pageControl.numberOfPages = pageCount
+                
+                // Set up the array to hold the views for each page
+                for _ in 0..<pageCount {
+                    self.pageViews.append(nil)
+                }
+                
+                // Set up the content size of the scroll view
+                let pagesScrollViewSize = self.scrollView.frame.size
+                self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(self.trashImages.count), pagesScrollViewSize.height)
+                
+                // Load the initial set of pages that are on screen
+                self.loadVisiblePages()
+                
+            } else {
+                // some error handling (i.e alertview)
+            }
+            
+        })
         
-        // Set up the array to hold the views for each page
-        for _ in 0..<pageCount {
-            pageViews.append(nil)
-        }
-        
-        // Set up the content size of the scroll view
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(trashImages.count), pagesScrollViewSize.height)
-        
-        // Load the initial set of pages that are on screen
-        loadVisiblePages()
-        
-//        fpTextView = FPTextView(textView: self.trashDesc, placeholder: currentTrash.title)
         changeImagesButton.alpha = 0
-        categoryButton.setTitle(currentTrash.category.category_name, forState: UIControlState.Normal)
+        categoryButton.setTitle(Trash.categoryName(currentTrash.trash_category), forState: UIControlState.Normal)
         categoryButton.enabled = false
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.editButtonItem().action = "editButtonWasPressed:"
@@ -78,13 +88,27 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
         delegate?.updateTableViewDelegate(moc)
     }
     
+    func editButtonWasPressed(sender: AnyObject) {
+        if self.editButtonItem().title == "Edit" {
+            trashDesc.editable = true
+            changeImagesButton.alpha = 1
+            categoryButton.enabled = true
+            self.editButtonItem().title = "Done"
+        } else {
+            updateTrash()
+            self.updateTableViewDelegate(moc)
+        }
+        
+    }
+    
+    
     
     //MARK:PickerView
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         categoryButton.setTitle(categories[row], forState: UIControlState.Normal)
-        let category : CoreCategories = CoreCategories.findCategoryById(moc, id: row) as CoreCategories
-        currentTrash.category = category
+//        let category : CoreCategories = CoreCategories.findCategoryById(moc, id: row) as CoreCategories
+        currentTrash.trash_category = row
         categoryPickerView.removeFromSuperview()
     }
     
@@ -159,8 +183,6 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
     // MARK: CTPickerControllerDelegate
     
     
-    
-    
     func assetsPickerController(picker: CTAssetsPickerController!, isDefaultAssetsGroup group: ALAssetsGroup!) -> Bool {
         //        return [group.valueForProperty(ALAssetsGroupPropertyType).integerValue == ALAssetsGroupSavedPhotos
         return true
@@ -216,9 +238,6 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
                 return
             }
         }
-        
-        
-        
         // Load an individual page, first checking if you've already loaded it
         if let pageView = pageViews[page] {
             // Do nothing. The view is already loaded.
@@ -230,11 +249,7 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
             
             let newPageView = UIImageView()
             if pickedAssets.isEmpty {
-                var ta : NSData?
-                if let trashImages = CoreTrashImage.getTrashImages(currentTrash.id, moc: moc) {
-                    ta = trashImages[page].trash_image
-                }
-                newPageView.image = UIImage(data: ta!)
+                newPageView.image = UIImage(data: self.trashImages[page])
             } else {
 //                newPageView.image = UIImage(data: pickedAssets[page])
                 newPageView.image = pickedAssets[page]
@@ -338,55 +353,51 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
         return ctPicker.selectedAssets.count < 10 && asset.defaultRepresentation() != nil
     }
     
-    func editButtonWasPressed(sender: AnyObject) {
-        if self.editButtonItem().title == "Edit" {
-            trashDesc.editable = true
-            changeImagesButton.alpha = 1
-            categoryButton.enabled = true
-            self.editButtonItem().title = "Done"
-        } else {
-            if updateTrash() {
-                trashDesc.editable = false
-                changeImagesButton.alpha = 0
-                categoryButton.enabled = false
-                self.editButtonItem().title = "Edit"
-            } else {
-                // ui alert view with message
-            }
-        }
-
-        
+   
+    func deleteTrash() {
+        //to do
     }
     
-    func updateTrash() -> Bool {
+    func updateTrash()  {
         
-        let coreTrash = currentTrash
-        currentTrash.title = trashDesc.text
-        if CoreTrash.updateTrash(moc, coreTrash: coreTrash) {
-            
-            if !pickedAssets.isEmpty {
-                println("this should execute")
-                CoreTrashImage.deleteImagesForTrash(moc, trash: currentTrash)
-                for ta in pickedAssets {
-                    let trashAsset : CoreTrashImage = NSEntityDescription.insertNewObjectForEntityForName("CoreTrashImage", inManagedObjectContext: moc) as! CoreTrashImage
-                    trashAsset.trash_image = UIImageJPEGRepresentation(ta, 0.75) as NSData
-                    trashAsset.trash = currentTrash
-                    CoreTrashImage.saveTrashImage(trashAsset, moc: moc)
-                }
-            }
-            
-            updateTableViewDelegate(moc)
-            return true
-            
+        var newAssets : Bool = false
+        if pickedAssets.count > 0 {
+           newAssets = true
         }
-        return false
         
+        let params = [
+            "trash": [
+                "description" : self.trashDesc.text,
+                "title" : "man this is cool",
+                "catetory_id" : currentTrash.trash_category,
+                "images" : newAssets
+            ]
+        ]
+//        :title, :description, :catetory_id, :trash_type, :images, :temp_id)
+        Trash.updateTrashFromAPI(moc, url: APIUrls.update_trash, trash_id: currentTrash.trashId, params: params, pickedAssets: self.pickedAssets) { (success, error) -> Void in
+            
+            if success {
+                let alert = UIAlertView(title: "Trash updated!", message: "your trash has been updated!", delegate: self, cancelButtonTitle: "Ok")
+                alert.show()
+                
+                self.trashDesc.editable = false
+                self.changeImagesButton.alpha = 0
+                self.categoryButton.enabled = false
+                self.editButtonItem().title = "Edit"
+                
+                if self.pickedAssets.count > 0 {
+                        self.saveTrashImagesAPI(self.currentTrash.trashId)
+                }
+            } else {
+                let alert = UIAlertView(title: "Something went wrong!", message: "your trash has NOT been updated! Please make sure you are connected to your mobile network or wifi", delegate: self, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+        }
         
     }
     
     
     @IBAction func categoryButtonPressed(sender: AnyObject) {
-
         
         var categoryPickerContainerFrame = CGRectMake(60, 200, 250, 220)
         categoryPickerView = UIView(frame: categoryPickerContainerFrame)
@@ -403,6 +414,29 @@ class MyTrashDetailViewController: UIViewController, UIScrollViewDelegate,CTAsse
         categoryPickerView.addSubview(categoryPicker)
         self.view.addSubview(categoryPickerView)
         
+    }
+    
+    func saveTrashImagesAPI(trashId: String) {
+        for ta in pickedAssets {
+            
+            var trashImage = TrashAssets()
+            trashImage.trashImage = UIImageJPEGRepresentation(ta, 0.75)
+            //encode the image
+            var base64String = trashImage.trashImage.base64EncodedStringWithOptions(nil)
+            if let currentUser = CoreUser.currentUser(moc) {
+                if let tImage = trashImage.trashImage {
+                    let params : [String:AnyObject] = [
+                        "trash_image": ["temp_image" : base64String,
+                            "trash_id" : trashId,
+                            "name" : "from IOS"
+                        ]
+                    ]
+                    
+                    TrasherAPI.APIAuthenticatedRequest(moc, httpMethod: httpMethodEnum.POST, url: APIUrls.create_trash_image , params: params) { (responseObject, error) -> () in
+                    }
+                }
+            }
+        }
     }
 
     

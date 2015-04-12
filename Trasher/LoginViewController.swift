@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         CoreUser.authenticated("fredp@gmail.com", password: "fredp613", completionHandler: { (authenticated) -> Void in
         //do some
             if (authenticated == true) {
-                if self.parentController == 1 {
+                if self.parentController != 1 {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     self.performSegueWithIdentifier("showMasterFromLogin", sender: self)
